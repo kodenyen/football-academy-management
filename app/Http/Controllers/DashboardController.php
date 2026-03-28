@@ -17,7 +17,7 @@ class DashboardController extends Controller
         } elseif ($user->isCoach()) {
             return view('dashboard.coach');
         } elseif ($user->isWebsiteManager()) {
-            return view('dashboard.website_manager');
+            return redirect()->route('website.settings.index');
         } else {
             return view('dashboard.player');
         }
