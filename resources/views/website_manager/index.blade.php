@@ -79,7 +79,7 @@
 
                             <div class="pt-6">
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">About Us Content</label>
-                                <textarea name="about_us_content" rows="6" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-white focus:ring-green-500 focus:border-green-500">{{ $settings->about_us_content }}</textarea>
+                                <textarea name="about_us_content" rows="6" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-black focus:ring-green-500 focus:border-green-500">{{ $settings->about_us_content }}</textarea>
                             </div>
 
                             <div class="flex justify-end pt-6 border-t border-zinc-800">
@@ -149,7 +149,7 @@
                             </div>
                             <div class="mt-4">
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Short Description</label>
-                                <textarea name="description" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-white focus:ring-green-500 focus:border-green-500"></textarea>
+                                <textarea name="description" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-black focus:ring-green-500 focus:border-green-500"></textarea>
                             </div>
                             <div class="mt-4 flex justify-end">
                                 <button type="submit" class="bg-zinc-800 text-white px-6 py-2 rounded-lg font-bold text-xs uppercase hover:bg-zinc-700 transition">Add Program</button>

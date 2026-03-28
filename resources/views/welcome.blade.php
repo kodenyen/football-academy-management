@@ -49,7 +49,7 @@
     </nav>
 
     <!-- Hero Slider -->
-    <section class="relative h-[80vh] overflow-hidden">
+    <section class="relative h-[65vh] overflow-hidden">
         @if($sliders->count() > 0)
             <div class="h-full w-full">
                 @foreach($sliders as $index => $slider)
@@ -95,10 +95,10 @@
     </section>
 
     <!-- Academy Programs -->
-    <section class="py-20 bg-black">
+    <section class="py-12 bg-black relative -mt-16 z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 italic">Our Academy <span class="text-primary-custom">Programs</span></h2>
-            <div class="h-1 w-20 bg-primary-custom mx-auto mb-16"></div>
+            <div class="h-1 w-20 bg-primary-custom mx-auto mb-12"></div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($programs as $program)
