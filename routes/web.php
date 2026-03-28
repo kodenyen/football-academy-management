@@ -27,10 +27,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('website.')->group(function () {
     Route::get('/settings', [WebsiteSettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/general', [WebsiteSettingsController::class, 'updateGeneral'])->name('settings.updateGeneral');
+    Route::post('/settings/payment', [WebsiteSettingsController::class, 'updatePayment'])->name('settings.updatePayment');
     Route::post('/settings/slider', [WebsiteSettingsController::class, 'storeSlider'])->name('settings.storeSlider');
     Route::delete('/settings/slider/{slider}', [WebsiteSettingsController::class, 'deleteSlider'])->name('settings.deleteSlider');
     Route::post('/settings/program', [WebsiteSettingsController::class, 'storeProgram'])->name('settings.storeProgram');
     Route::delete('/settings/program/{program}', [WebsiteSettingsController::class, 'deleteProgram'])->name('settings.deleteProgram');
+    
+    // Form Builder
+    Route::post('/form-builder', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'store'])->name('form.store');
+    Route::delete('/form-builder/{field}', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'destroy'])->name('form.destroy');
 });
 
 Route::middleware('auth')->group(function () {

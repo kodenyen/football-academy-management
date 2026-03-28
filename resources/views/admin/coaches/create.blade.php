@@ -70,6 +70,27 @@
                         <textarea name="experience" rows="4" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-white focus:ring-green-500 focus:border-green-500"></textarea>
                     </div>
 
+                    <!-- Custom Fields -->
+                    @if($customFields->count() > 0)
+                    <div class="space-y-6 pt-6 border-t border-zinc-800">
+                        <h3 class="text-xs font-black uppercase tracking-widest text-green-500 pb-2 border-b border-zinc-800">Additional Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            @foreach($customFields as $field)
+                            <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ $field->label }}</label>
+                                @if($field->field_type == 'textarea')
+                                    <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border-zinc-800 rounded-lg text-sm text-white"></textarea>
+                                @elseif($field->field_type == 'file')
+                                    <input type="file" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="text-xs text-gray-400">
+                                @else
+                                    <x-text-input name="custom_{{ $field->field_name }}" type="{{ $field->field_type }}" class="w-full" :required="$field->is_required" />
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="flex justify-end pt-6 border-t border-zinc-800">
                         <button type="submit" class="bg-green-500 text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition transform hover:scale-[1.02] shadow-lg shadow-green-500/20">
                             Register Coach

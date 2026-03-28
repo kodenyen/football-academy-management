@@ -58,6 +58,24 @@
                     <input type="date" name="trial_date" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
                 </div>
 
+                <!-- Custom Fields -->
+                @foreach($customFields as $field)
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ $field->label }}</label>
+                    @if($field->field_type == 'textarea')
+                        <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:border-green-500 transition outline-none"></textarea>
+                    @elseif($field->field_type == 'file')
+                        <input type="file" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="text-xs text-gray-400">
+                    @elseif($field->field_type == 'number')
+                        <input type="number" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:border-green-500 transition outline-none">
+                    @elseif($field->field_type == 'date')
+                        <input type="date" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:border-green-500 transition outline-none">
+                    @else
+                        <input type="text" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:border-green-500 transition outline-none">
+                    @endif
+                </div>
+                @endforeach
+
                 <button type="submit" class="w-full bg-green-500 text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition transform hover:scale-[1.02] shadow-lg shadow-green-500/20">
                     Submit Registration
                 </button>

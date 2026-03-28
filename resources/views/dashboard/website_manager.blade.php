@@ -22,6 +22,8 @@
                              <a href="#general" class="block px-4 py-3 rounded-xl bg-zinc-800 font-bold border-l-4 border-green-500">General Settings</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
+                             <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
+                             <a href="#form-builder" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Form Builder</a>
                         </nav>
                     </div>
                 </div>
@@ -174,6 +176,99 @@
                                 </form>
                             </div>
                             @endforeach
+                        </div>
+                    </section>
+
+                    <!-- Paystack Panel -->
+                    <section id="paystack" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-credit-card text-green-500 mr-3"></i> Paystack Gateway Settings
+                        </h3>
+                        <form action="{{ route('website.settings.updatePayment') }}" method="POST" class="space-y-6">
+                            @csrf
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Paystack Public Key</label>
+                                    <x-text-input name="paystack_public_key" value="{{ $settings->paystack_public_key }}" class="w-full font-mono text-xs" placeholder="pk_test_..." />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Paystack Secret Key</label>
+                                    <x-text-input type="password" name="paystack_secret_key" value="{{ $settings->paystack_secret_key }}" class="w-full font-mono text-xs" placeholder="sk_test_..." />
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-6 border-t border-zinc-800">
+                                <button type="submit" class="bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-blue-400 transition">Save Keys</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Form Builder Panel -->
+                    <section id="form-builder" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-list-check text-green-500 mr-3"></i> Dynamic Form Builder
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Trial Registration Fields -->
+                            <div class="space-y-6">
+                                <h4 class="text-sm font-black uppercase tracking-widest text-green-500 border-b border-zinc-800 pb-2">Trial Form Fields</h4>
+                                
+                                <form action="{{ route('website.form.store') }}" method="POST" class="p-4 bg-black rounded-lg border border-zinc-800 space-y-4">
+                                    @csrf
+                                    <input type="hidden" name="form_type" value="trial">
+                                    <x-text-input name="label" placeholder="Field Label (e.g. Guardian Name)" class="w-full text-xs" required />
+                                    <select name="field_type" class="w-full bg-zinc-900 border-zinc-800 rounded text-xs text-white">
+                                        <option value="text">Text Input</option>
+                                        <option value="number">Number</option>
+                                        <option value="date">Date</option>
+                                        <option value="textarea">Text Area</option>
+                                        <option value="file">File Upload</option>
+                                    </select>
+                                    <button type="submit" class="w-full bg-zinc-800 text-white py-2 rounded font-bold text-[10px] uppercase">Add Field</button>
+                                </form>
+
+                                <div class="space-y-2">
+                                    @foreach($trialFields as $field)
+                                    <div class="flex justify-between items-center p-3 bg-zinc-800 rounded border border-zinc-700">
+                                        <span class="text-xs font-bold">{{ $field->label }} ({{ $field->field_type }})</span>
+                                        <form action="{{ route('website.form.destroy', $field) }}" method="POST">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-red-500"><i class="fa-solid fa-xmark"></i></button>
+                                        </form>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- Coach Registration Fields -->
+                            <div class="space-y-6">
+                                <h4 class="text-sm font-black uppercase tracking-widest text-green-500 border-b border-zinc-800 pb-2">Coach Form Fields</h4>
+                                
+                                <form action="{{ route('website.form.store') }}" method="POST" class="p-4 bg-black rounded-lg border border-zinc-800 space-y-4">
+                                    @csrf
+                                    <input type="hidden" name="form_type" value="coach">
+                                    <x-text-input name="label" placeholder="Field Label" class="w-full text-xs" required />
+                                    <select name="field_type" class="w-full bg-zinc-900 border-zinc-800 rounded text-xs text-white">
+                                        <option value="text">Text Input</option>
+                                        <option value="number">Number</option>
+                                        <option value="textarea">Text Area</option>
+                                        <option value="file">File Upload</option>
+                                    </select>
+                                    <button type="submit" class="w-full bg-zinc-800 text-white py-2 rounded font-bold text-[10px] uppercase">Add Field</button>
+                                </form>
+
+                                <div class="space-y-2">
+                                    @foreach($coachFields as $field)
+                                    <div class="flex justify-between items-center p-3 bg-zinc-800 rounded border border-zinc-700">
+                                        <span class="text-xs font-bold">{{ $field->label }} ({{ $field->field_type }})</span>
+                                        <form action="{{ route('website.form.destroy', $field) }}" method="POST">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-red-500"><i class="fa-solid fa-xmark"></i></button>
+                                        </form>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </section>
 

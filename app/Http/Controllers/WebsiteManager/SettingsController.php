@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use App\Models\HeroSlider;
 use App\Models\AcademyProgram;
+use App\Models\FormField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,8 +20,10 @@ class SettingsController extends Controller
         }
         $sliders = HeroSlider::orderBy('order')->get();
         $programs = AcademyProgram::orderBy('order')->get();
+        $trialFields = FormField::where('form_type', 'trial')->orderBy('order')->get();
+        $coachFields = FormField::where('form_type', 'coach')->orderBy('order')->get();
         
-        return view('website_manager.index', compact('settings', 'sliders', 'programs'));
+        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields'));
     }
 
     public function updateGeneral(Request $request)

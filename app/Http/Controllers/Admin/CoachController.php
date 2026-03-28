@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Coach;
+use App\Models\FormField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -19,12 +20,13 @@ class CoachController extends Controller
 
     public function create()
     {
-        return view('admin.coaches.create');
+        $customFields = FormField::where('form_type', 'coach')->orderBy('order')->get();
+        return view('admin.coaches.create', compact('customFields'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
@@ -34,7 +36,16 @@ class CoachController extends Controller
             'phone' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
             'certificate_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
-        ]);
+        ];
+
+        $customFields = FormField::where('form_type', 'coach')->get();
+        foreach($customFields as $field) {
+            if($field->is_required) {
+                $rules['custom_' . $field->field_name] = 'required';
+            }
+        }
+
+        $request->validate($rules);
 
         $user = User::create([
             'name' => $request->name,
@@ -53,6 +64,18 @@ class CoachController extends Controller
             $certificatePath = $request->file('certificate_file')->store('certificates', 'public');
         }
 
+        $customData = [];
+        foreach($customFields as $field) {
+            $key = 'custom_' . $field->field_name;
+            if($request->has($key)) {
+                if($field->field_type == 'file' && $request->hasFile($key)) {
+                    $customData[$field->field_name] = $request->file($key)->store('coaches/custom', 'public');
+                } else {
+                    $customData[$field->field_name] = $request->input($key);
+                }
+            }
+        }
+
         Coach::create([
             'user_id' => $user->id,
             'certification' => $request->certification,
@@ -61,6 +84,7 @@ class CoachController extends Controller
             'specialization' => $request->specialization,
             'phone' => $request->phone,
             'photo' => $photoPath,
+            'custom_fields' => $customData,
         ]);
 
         return redirect()->route('admin.coaches.index')->with('success', 'Coach registered successfully!');
