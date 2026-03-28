@@ -49,6 +49,11 @@
                                 <x-text-input name="certification" class="w-full" placeholder="e.g. UEFA Pro License" />
                             </div>
                             <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Upload Certificate (PDF/JPG)</label>
+                                <input type="file" name="certificate_file" class="text-xs text-gray-400">
+                                <x-input-error :messages="$errors->get('certificate_file')" class="mt-2" />
+                            </div>
+                            <div>
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Phone Number</label>
                                 <x-text-input name="phone" class="w-full" placeholder="+234..." />
                             </div>

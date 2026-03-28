@@ -50,6 +50,14 @@
                                 <x-text-input name="certification" class="w-full" value="{{ $coach->certification }}" />
                             </div>
                             <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Update Certificate (PDF/JPG)</label>
+                                <input type="file" name="certificate_file" class="text-xs text-gray-400">
+                                @if($coach->certificate_file)
+                                    <p class="text-[10px] text-green-500 mt-1 uppercase font-bold italic">Certificate already uploaded</p>
+                                @endif
+                                <x-input-error :messages="$errors->get('certificate_file')" class="mt-2" />
+                            </div>
+                            <div>
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Phone Number</label>
                                 <x-text-input name="phone" class="w-full" value="{{ $coach->phone }}" />
                             </div>

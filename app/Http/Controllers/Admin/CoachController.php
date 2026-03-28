@@ -33,6 +33,7 @@ class CoachController extends Controller
             'specialization' => 'nullable|string',
             'phone' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
         ]);
 
         $user = User::create([
@@ -47,9 +48,15 @@ class CoachController extends Controller
             $photoPath = $request->file('photo')->store('coaches', 'public');
         }
 
+        $certificatePath = null;
+        if ($request->hasFile('certificate_file')) {
+            $certificatePath = $request->file('certificate_file')->store('certificates', 'public');
+        }
+
         Coach::create([
             'user_id' => $user->id,
             'certification' => $request->certification,
+            'certificate_file' => $certificatePath,
             'experience' => $request->experience,
             'specialization' => $request->specialization,
             'phone' => $request->phone,
@@ -79,6 +86,7 @@ class CoachController extends Controller
             'specialization' => 'nullable|string',
             'phone' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
         ]);
 
         $coach->user->update([
@@ -97,6 +105,13 @@ class CoachController extends Controller
             $coach->photo = $request->file('photo')->store('coaches', 'public');
         }
 
+        if ($request->hasFile('certificate_file')) {
+            if ($coach->certificate_file) {
+                Storage::disk('public')->delete($coach->certificate_file);
+            }
+            $coach->certificate_file = $request->file('certificate_file')->store('certificates', 'public');
+        }
+
         $coach->update([
             'certification' => $request->certification,
             'experience' => $request->experience,
@@ -111,6 +126,9 @@ class CoachController extends Controller
     {
         if ($coach->photo) {
             Storage::disk('public')->delete($coach->photo);
+        }
+        if ($coach->certificate_file) {
+            Storage::disk('public')->delete($coach->certificate_file);
         }
         $coach->user->delete(); // This will cascade delete coach profile
         return redirect()->route('admin.coaches.index')->with('success', 'Coach deleted successfully!');

@@ -41,6 +41,14 @@
                                 <span class="text-xs uppercase font-black text-gray-500">License</span>
                                 <span class="text-sm font-bold text-blue-400">{{ $coach->certification ?? 'N/A' }}</span>
                             </div>
+                            @if($coach->certificate_file)
+                                <div class="mt-4">
+                                    <a href="{{ asset('storage/' . $coach->certificate_file) }}" target="_blank" class="flex items-center justify-center space-x-2 text-xs font-black uppercase tracking-tighter text-green-500 hover:text-green-400 border border-green-500/30 py-2 rounded-lg transition bg-green-500/5">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                        <span>View Certificate</span>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mt-8">
