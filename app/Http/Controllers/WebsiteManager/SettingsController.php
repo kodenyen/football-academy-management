@@ -1,0 +1,109 @@
+<?php
+
+namespace App\Http\Controllers\WebsiteManager;
+
+use App\Http\Controllers\Controller;
+use App\Models\SiteSetting;
+use App\Models\HeroSlider;
+use App\Models\AcademyProgram;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class SettingsController extends Controller
+{
+    public function index()
+    {
+        $settings = SiteSetting::first();
+        if (!$settings) {
+            $settings = SiteSetting::create();
+        }
+        $sliders = HeroSlider::orderBy('order')->get();
+        $programs = AcademyProgram::orderBy('order')->get();
+        
+        return view('website_manager.index', compact('settings', 'sliders', 'programs'));
+    }
+
+    public function updateGeneral(Request $request)
+    {
+        $settings = SiteSetting::first();
+        $data = $request->validate([
+            'academy_name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string',
+            'email' => 'nullable|email',
+            'footer_text' => 'nullable|string',
+            'primary_color' => 'required|string',
+            'secondary_color' => 'required|string',
+            'about_us_content' => 'nullable|string',
+        ]);
+
+        if ($request->hasFile('logo')) {
+            if ($settings->academy_logo) {
+                Storage::disk('public')->delete($settings->academy_logo);
+            }
+            $data['academy_logo'] = $request->file('logo')->store('site', 'public');
+        }
+
+        $settings->update($data);
+        return back()->with('success', 'Site settings updated successfully!');
+    }
+
+    public function storeSlider(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|max:3072',
+            'heading' => 'nullable|string',
+            'sub_heading' => 'nullable|string',
+        ]);
+
+        $path = $request->file('image')->store('sliders', 'public');
+
+        HeroSlider::create([
+            'image_path' => $path,
+            'heading' => $request->heading,
+            'sub_heading' => $request->sub_heading,
+            'order' => HeroSlider::count() + 1,
+        ]);
+
+        return back()->with('success', 'Slider image added!');
+    }
+
+    public function deleteSlider(HeroSlider $slider)
+    {
+        Storage::disk('public')->delete($slider->image_path);
+        $slider->delete();
+        return back()->with('success', 'Slider image removed!');
+    }
+
+    public function storeProgram(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'nullable|string',
+        ]);
+
+        $path = null;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('programs', 'public');
+        }
+
+        AcademyProgram::create([
+            'name' => $request->name,
+            'image' => $path,
+            'description' => $request->description,
+            'order' => AcademyProgram::count() + 1,
+        ]);
+
+        return back()->with('success', 'Program added successfully!');
+    }
+
+    public function deleteProgram(AcademyProgram $program)
+    {
+        if ($program->image) {
+            Storage::disk('public')->delete($program->image);
+        }
+        $program->delete();
+        return back()->with('success', 'Program removed!');
+    }
+}

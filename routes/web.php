@@ -12,6 +12,7 @@ Route::post('/register-trial', [RegistrationController::class, 'store'])->name('
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\CoachController as AdminCoachController;
+use App\Http\Controllers\WebsiteManager\SettingsController as WebsiteSettingsController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -20,6 +21,16 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('coaches', AdminCoachController::class);
+});
+
+// Website Manager Routes
+Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('website.')->group(function () {
+    Route::get('/settings', [WebsiteSettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/general', [WebsiteSettingsController::class, 'updateGeneral'])->name('settings.updateGeneral');
+    Route::post('/settings/slider', [WebsiteSettingsController::class, 'storeSlider'])->name('settings.storeSlider');
+    Route::delete('/settings/slider/{slider}', [WebsiteSettingsController::class, 'deleteSlider'])->name('settings.deleteSlider');
+    Route::post('/settings/program', [WebsiteSettingsController::class, 'storeProgram'])->name('settings.storeProgram');
+    Route::delete('/settings/program/{program}', [WebsiteSettingsController::class, 'deleteProgram'])->name('settings.deleteProgram');
 });
 
 Route::middleware('auth')->group(function () {

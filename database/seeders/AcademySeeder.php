@@ -41,6 +41,13 @@ class AcademySeeder extends Seeder
             'phone' => '+234 800 000 0000',
         ]);
 
+        User::create([
+            'name' => 'Manager Mike',
+            'email' => 'manager@thinkright.com',
+            'password' => Hash::make('password'),
+            'role' => 'website_manager',
+        ]);
+
         // Player
         $playerUser = User::create([
             'name' => 'Junior Messi',

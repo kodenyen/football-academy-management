@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->role === 'player';
     }
 
+    public function isWebsiteManager()
+    {
+        return $this->role === 'website_manager';
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
