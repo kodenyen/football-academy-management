@@ -54,7 +54,7 @@
             <div class="h-full w-full">
                 @foreach($sliders as $index => $slider)
                 <div class="absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" id="slide-{{ $index }}">
-                    <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-full object-cover opacity-40">
+                    <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-full object-cover opacity-40 grayscale">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center text-center p-4">
                         <div class="max-w-4xl">
@@ -73,16 +73,19 @@
                 const totalSlides = {{ $sliders->count() }};
                 if(totalSlides > 1) {
                     setInterval(() => {
-                        document.getElementById('slide-' + currentSlide).classList.replace('opacity-100', 'opacity-0');
+                        const activeSlide = document.getElementById('slide-' + currentSlide);
+                        if(activeSlide) activeSlide.classList.replace('opacity-100', 'opacity-0');
                         currentSlide = (currentSlide + 1) % totalSlides;
-                        document.getElementById('slide-' + currentSlide).classList.replace('opacity-0', 'opacity-100');
+                        const nextSlide = document.getElementById('slide-' + currentSlide);
+                        if(nextSlide) nextSlide.classList.replace('opacity-0', 'opacity-100');
                     }, 5000);
                 }
             </script>
         @else
             <!-- Placeholder Hero -->
             <div class="h-full w-full flex items-center justify-center text-center">
-                 <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover opacity-30">
+                 <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                  <div class="relative z-10 p-4">
                     <h1 class="text-5xl md:text-7xl font-extrabold italic tracking-tighter leading-none mb-6">WELCOME TO <br><span class="text-primary-custom">{{ $settings->academy_name }}</span></h1>
                     <a href="{{ route('register.trial') }}" class="bg-primary-custom text-black px-8 py-4 rounded-md text-lg font-black uppercase tracking-widest">Book a Trial</a>
