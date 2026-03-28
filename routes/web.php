@@ -11,10 +11,16 @@ Route::get('/register-trial', [RegistrationController::class, 'create'])->name('
 Route::post('/register-trial', [RegistrationController::class, 'store'])->name('register.store');
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\CoachController as AdminCoachController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// Admin Routes
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('coaches', AdminCoachController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

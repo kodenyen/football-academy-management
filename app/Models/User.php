@@ -30,6 +30,11 @@ class User extends Authenticatable
         return $this->hasOne(Player::class);
     }
 
+    public function coach()
+    {
+        return $this->hasOne(Coach::class);
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';

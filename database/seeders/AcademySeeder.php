@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\User;
 use App\Models\Player;
+use App\Models\Coach;
 use Illuminate\Support\Facades\Hash;
 
 class AcademySeeder extends Seeder
@@ -25,11 +26,19 @@ class AcademySeeder extends Seeder
         ]);
 
         // Coach
-        User::create([
+        $coachUser = User::create([
             'name' => 'Coach John',
             'email' => 'coach@thinkright.com',
             'password' => Hash::make('password'),
             'role' => 'coach',
+        ]);
+
+        Coach::create([
+            'user_id' => $coachUser->id,
+            'certification' => 'UEFA B License',
+            'experience' => '10 years coaching youth football in various academies.',
+            'specialization' => 'Tactical',
+            'phone' => '+234 800 000 0000',
         ]);
 
         // Player

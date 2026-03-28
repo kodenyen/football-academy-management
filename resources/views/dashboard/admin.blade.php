@@ -7,11 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                 <!-- Stat Card -->
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <div class="text-gray-400 text-sm uppercase font-black">Total Players</div>
                     <div class="text-3xl font-black text-green-500 mt-2">124</div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('admin.coaches.index') }}'">
+                    <div class="text-gray-400 text-sm uppercase font-black">Total Coaches</div>
+                    <div class="text-3xl font-black text-green-500 mt-2">5</div>
+                    <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Coaches →</div>
                 </div>
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <div class="text-gray-400 text-sm uppercase font-black">Pending Trials</div>
