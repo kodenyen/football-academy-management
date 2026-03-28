@@ -37,7 +37,7 @@
                             <h3 class="text-xs font-black uppercase tracking-widest text-green-500 pb-2 border-b border-zinc-800">Coach Profile</h3>
                             <div>
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Specialization</label>
-                                <select name="specialization" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-black focus:ring-green-500 focus:border-green-500">
+                                <select name="specialization" class="w-full bg-white border-zinc-300 text-black focus:ring-green-500 focus:border-green-500">
                                     <option value="Tactical">Tactical Head Coach</option>
                                     <option value="Goalkeeping">Goalkeeping Coach</option>
                                     <option value="Fitness">Fitness & Strength</option>
@@ -67,7 +67,7 @@
 
                     <div>
                         <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Detailed Experience / Bio</label>
-                        <textarea name="experience" rows="4" class="w-full bg-black border-zinc-800 rounded-lg text-sm text-black focus:ring-green-500 focus:border-green-500"></textarea>
+                        <textarea name="experience" rows="4" class="w-full bg-white border-zinc-300 text-black focus:ring-green-500 focus:border-green-500"></textarea>
                     </div>
 
                     <!-- Custom Fields -->
@@ -79,7 +79,7 @@
                             <div>
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ $field->label }}</label>
                                 @if($field->field_type == 'textarea')
-                                    <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border-zinc-800 rounded-lg text-sm text-white"></textarea>
+                                    <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm focus:ring-green-500"></textarea>
                                 @elseif($field->field_type == 'file')
                                     <input type="file" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="text-xs text-gray-400">
                                 @else

@@ -29,17 +29,17 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
-                    <input type="text" name="name" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="e.g. John Doe">
+                    <input type="text" name="name" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="e.g. John Doe">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Age</label>
-                        <input type="number" name="age" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="10">
+                        <input type="number" name="age" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="10">
                     </div>
                     <div>
                         <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Position</label>
-                        <select name="position" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
+                        <select name="position" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
                             <option value="Forward">Forward</option>
                             <option value="Midfielder">Midfielder</option>
                             <option value="Defender">Defender</option>
@@ -50,12 +50,12 @@
 
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">WhatsApp / Contact Number</label>
-                    <input type="text" name="contact_number" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="+234...">
+                    <input type="text" name="contact_number" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="+234...">
                 </div>
 
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Preferred Trial Date</label>
-                    <input type="date" name="trial_date" required class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
+                    <input type="date" name="trial_date" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
                 </div>
 
                 <!-- Custom Fields -->
@@ -63,15 +63,15 @@
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ $field->label }}</label>
                     @if($field->field_type == 'textarea')
-                        <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none"></textarea>
+                        <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none"></textarea>
                     @elseif($field->field_type == 'file')
                         <input type="file" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="text-xs text-gray-400">
                     @elseif($field->field_type == 'number')
-                        <input type="number" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
+                        <input type="number" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
                     @elseif($field->field_type == 'date')
-                        <input type="date" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
+                        <input type="date" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
                     @else
-                        <input type="text" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
+                        <input type="text" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
                     @endif
                 </div>
                 @endforeach
