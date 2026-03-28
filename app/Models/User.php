@@ -22,7 +22,28 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
+
+    public function player()
+    {
+        return $this->hasOne(Player::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isCoach()
+    {
+        return $this->role === 'coach';
+    }
+
+    public function isPlayer()
+    {
+        return $this->role === 'player';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
