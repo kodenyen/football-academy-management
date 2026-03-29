@@ -10,7 +10,7 @@ class PaymentSettingsController extends Controller
 {
     public function update(Request $request)
     {
-        $settings = SiteSetting::first();
+        $settings = SiteSetting::firstOrCreate([]);
         $data = $request->validate([
             'paystack_public_key' => 'nullable|string|max:255',
             'paystack_secret_key' => 'nullable|string|max:255',

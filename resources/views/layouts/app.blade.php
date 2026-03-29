@@ -8,40 +8,51 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     @php
         $siteSettings = \App\Models\SiteSetting::first();
-        $bgColor = '#f8fafc'; // Slate 50
         $primaryColor = $siteSettings->primary_color ?? '#00FF41';
+        $secondaryColor = $siteSettings->secondary_color ?? '#0f172a';
     @endphp
     <style>
         :root {
-            --bg-color: {{ $bgColor }};
             --primary-color: {{ $primaryColor }};
+            --secondary-color: {{ $secondaryColor }};
         }
-        body { background-color: var(--bg-color); color: #0f172a; }
+        body { background-color: #f1f5f9; color: #0f172a; }
+        .bg-primary { background-color: var(--primary-color) !important; }
+        .text-primary { color: var(--primary-color) !important; }
+        .border-primary { border-color: var(--primary-color) !important; }
     </style>
-    <body class="font-sans antialiased text-slate-900">
-        <div class="min-h-screen bg-slate-50">
+    <body class="font-sans antialiased text-slate-900 selection:bg-primary/30">
+        <div class="min-h-screen">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white border-b border-slate-200 shadow-sm">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <header class="bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-200 shadow-sm">
+                    <div class="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center space-x-3">
+                            <div class="h-8 w-1.5 bg-primary rounded-full"></div>
+                            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight uppercase">
+                                {{ $header }}
+                            </h2>
+                        </div>
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="py-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </body>

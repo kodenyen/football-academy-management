@@ -12,7 +12,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primary: {
+                    DEFAULT: 'var(--primary-color)',
+                },
+                'sports-dark': '#0f172a',
+                'sports-light': '#f8fafc',
             },
         },
     },

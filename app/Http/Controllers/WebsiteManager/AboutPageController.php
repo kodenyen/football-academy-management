@@ -12,7 +12,7 @@ class AboutPageController extends Controller
 {
     public function updateAbout(Request $request)
     {
-        $settings = SiteSetting::first();
+        $settings = SiteSetting::firstOrCreate([]);
         $data = $request->validate([
             'about_us_content' => 'nullable|string',
             'about_vision' => 'nullable|string',

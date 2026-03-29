@@ -3,86 +3,114 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register - THINK RIGHT FOOTBALL ACADEMY</title>
+    <title>Join the Elite - THINK RIGHT FOOTBALL ACADEMY</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    @php
+        $settings = \App\Models\SiteSetting::first();
+        $primaryColor = $settings->primary_color ?? '#00FF41';
+    @endphp
+    <style>
+        :root { --primary-color: {{ $primaryColor }}; }
+    </style>
 </head>
-<body class="bg-black text-white font-sans antialiased">
-    <div class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-        <div class="max-w-md w-full bg-zinc-900 rounded-2xl border border-zinc-800 p-8 shadow-2xl">
-            <div class="text-center mb-8">
-                <a href="/" class="text-green-500 font-bold text-2xl italic tracking-tighter">THINK RIGHT</a>
-                <h1 class="text-2xl font-black uppercase mt-4">Trial Registration</h1>
-                <p class="text-gray-400 text-sm mt-2">Join the next generation of football stars.</p>
+<body class="bg-slate-950 text-white font-sans antialiased min-h-screen relative overflow-x-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/5 rounded-full blur-[100px] -z-10 animate-pulse" style="animation-delay: 2s"></div>
+
+    <div class="flex flex-col items-center justify-center px-4 py-16">
+        <!-- Logo -->
+        <div class="mb-12 text-center transform transition duration-700 hover:scale-110">
+            <a href="/" class="flex items-center justify-center space-x-3">
+                <div class="bg-primary p-2 rounded-xl rotate-12 group-hover:rotate-0 transition-transform">
+                    <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">
+                    ThinkRight<span class="text-primary">FA</span>
+                </span>
+            </a>
+        </div>
+
+        <div class="max-w-xl w-full card-elite-dark bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black heading-elite tracking-tight mb-2">Book Your <span class="text-primary">Trial</span></h1>
+                <p class="text-slate-400 font-medium italic">Unleash your potential with the elite academy.</p>
             </div>
 
             @if(session('success'))
-                <div class="bg-green-500/10 border border-green-500 text-green-500 p-4 rounded-lg mb-6 text-sm font-bold text-center">
-                    {{ session('success') }}
-                    <div class="mt-2">
-                         <a href="/" class="underline">Return Home</a>
+                <div class="bg-primary/10 border border-primary text-primary p-5 rounded-2xl mb-8 flex items-center space-x-4 animate-bounce">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    <div>
+                        <p class="font-black uppercase text-sm tracking-widest">{{ session('success') }}</p>
+                        <a href="/" class="text-xs underline hover:text-white transition uppercase font-bold mt-1 inline-block">Return Home</a>
                     </div>
                 </div>
             @endif
 
-            <form action="{{ route('register.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('register.store') }}" method="POST" class="space-y-8">
                 @csrf
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
-                    <input type="text" name="name" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="e.g. John Doe">
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-6">
                     <div>
-                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Age</label>
-                        <input type="number" name="age" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="10">
+                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Personal Details</label>
+                        <div class="space-y-4">
+                            <input type="text" name="name" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="Player's Full Name">
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="number" name="age" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="Age">
+                                <select name="position" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium appearance-none">
+                                    <option value="" disabled selected>Preferred Position</option>
+                                    <option value="Forward">Forward</option>
+                                    <option value="Midfielder">Midfielder</option>
+                                    <option value="Defender">Defender</option>
+                                    <option value="Goalkeeper">Goalkeeper</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
                     <div>
-                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Position</label>
-                        <select name="position" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
-                            <option value="Forward">Forward</option>
-                            <option value="Midfielder">Midfielder</option>
-                            <option value="Defender">Defender</option>
-                            <option value="Goalkeeper">Goalkeeper</option>
-                        </select>
+                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Contact Info</label>
+                        <input type="text" name="contact_number" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="WhatsApp / Contact Number">
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">WhatsApp / Contact Number</label>
-                    <input type="text" name="contact_number" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none" placeholder="+234...">
-                </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Schedule</label>
+                        <div class="relative">
+                            <input type="date" name="trial_date" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium">
+                        </div>
+                    </div>
 
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Preferred Trial Date</label>
-                    <input type="date" name="trial_date" required class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 focus:ring-1 focus:ring-green-500 transition outline-none">
-                </div>
-
-                <!-- Custom Fields -->
-                @foreach($customFields as $field)
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ $field->label }}</label>
-                    @if($field->field_type == 'textarea')
-                        <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none"></textarea>
-                    @elseif($field->field_type == 'file')
-                        <input type="file" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="text-xs text-gray-400">
-                    @elseif($field->field_type == 'number')
-                        <input type="number" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
-                    @elseif($field->field_type == 'date')
-                        <input type="date" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
-                    @else
-                        <input type="text" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-black focus:border-green-500 transition outline-none">
+                    <!-- Custom Fields -->
+                    @if(count($customFields) > 0)
+                        <div class="pt-4 border-t border-slate-800">
+                            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-5 ml-1">Additional Information</label>
+                            <div class="space-y-4">
+                                @foreach($customFields as $field)
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 mb-2 ml-1">{{ $field->label }}</label>
+                                    @if($field->field_type == 'textarea')
+                                        <textarea name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium h-32" placeholder="Tell us more..."></textarea>
+                                    @else
+                                        <input type="{{ $field->field_type }}" name="custom_{{ $field->field_name }}" {{ $field->is_required ? 'required' : '' }} class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium">
+                                    @endif
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                     @endif
                 </div>
-                @endforeach
 
-                <button type="submit" class="w-full bg-green-500 text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition transform hover:scale-[1.02] shadow-lg shadow-green-500/20">
-                    Submit Registration
+                <button type="submit" class="w-full bg-primary text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_30px_rgba(0,255,65,0.3)] flex items-center justify-center group">
+                    <span>Submit Registration</span>
+                    <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-2 transition-transform"></i>
                 </button>
             </form>
             
-            <p class="text-center text-gray-600 text-[10px] mt-8 uppercase tracking-widest">
-                By submitting, you agree to our terms and conditions.
+            <p class="text-center text-slate-600 text-[10px] mt-10 uppercase tracking-[0.2em] font-black">
+                Think Right Football Academy &copy; {{ date('Y') }}
             </p>
         </div>
     </div>

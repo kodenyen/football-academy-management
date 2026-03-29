@@ -29,17 +29,17 @@ class SettingsController extends Controller
 
     public function updateGeneral(Request $request)
     {
-        $settings = SiteSetting::first();
+        $settings = SiteSetting::firstOrCreate([]);
         $data = $request->validate([
-            'academy_name' => 'required|string|max:255',
+            'academy_name' => 'sometimes|required|string|max:255',
             'phone_number' => 'nullable|string',
             'whatsapp_number' => 'nullable|string',
             'address' => 'nullable|string',
             'email' => 'nullable|email',
             'footer_text' => 'nullable|string',
-            'primary_color' => 'required|string',
-            'secondary_color' => 'required|string',
-            'background_color' => 'required|string',
+            'primary_color' => 'sometimes|required|string',
+            'secondary_color' => 'sometimes|required|string',
+            'background_color' => 'sometimes|required|string',
             'about_us_content' => 'nullable|string',
         ]);
 
@@ -115,7 +115,7 @@ class SettingsController extends Controller
 
     public function updateMail(Request $request)
     {
-        $settings = SiteSetting::first();
+        $settings = SiteSetting::firstOrCreate([]);
         $data = $request->validate([
             'mail_host' => 'nullable|string',
             'mail_port' => 'nullable|string',
