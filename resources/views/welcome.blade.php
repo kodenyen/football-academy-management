@@ -121,6 +121,65 @@
         </div>
     </section>
 
+    <div class="border-t border-zinc-900/50"></div>
+
+    <!-- Upcoming Matches Section (if any) -->
+    @if($upcomingMatches->count() > 0)
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-black mb-8 italic uppercase tracking-tighter">Upcoming <span class="text-primary-custom">Fixtures</span></h2>
+            <div class="space-y-4">
+                @foreach($upcomingMatches as $match)
+                <div class="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex items-center space-x-6 mb-4 md:mb-0">
+                        <div class="text-center">
+                            <span class="block text-2xl font-black uppercase tracking-tighter">TRFA</span>
+                            <span class="text-[10px] text-gray-500 uppercase font-bold">Home Team</span>
+                        </div>
+                        <span class="text-2xl font-black text-primary-custom italic italic">VS</span>
+                        <div class="text-center">
+                            <span class="block text-2xl font-black uppercase tracking-tighter">{{ $match->opponent }}</span>
+                            <span class="text-[10px] text-gray-500 uppercase font-bold">Away Team</span>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <span class="block font-bold text-gray-300">{{ \Carbon\Carbon::parse($match->match_date)->format('d M, Y | H:i') }}</span>
+                        <span class="text-sm text-gray-500">{{ $match->venue }}</span>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <div class="border-t border-zinc-900/50"></div>
+    @endif
+
+    <!-- News / Blog Section -->
+    @if($posts->count() > 0)
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-black mb-8 italic uppercase tracking-tighter">Latest <span class="text-primary-custom">News</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @foreach($posts as $post)
+                <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden group">
+                    <div class="h-40 bg-zinc-800">
+                        @if($post->featured_image)
+                            <img src="{{ asset('storage/' . $post->featured_image) }}" class="w-full h-full object-cover">
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-primary-custom uppercase tracking-widest">{{ $post->category }}</span>
+                        <h3 class="text-xl font-black mt-2 mb-4 group-hover:text-primary-custom transition italic uppercase">{{ $post->title }}</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">{{ Str::limit($post->content, 100) }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <div class="border-t border-zinc-900/50"></div>
+    @endif
+
     <!-- Footer -->
     <footer class="bg-black py-16 border-t border-zinc-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
