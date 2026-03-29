@@ -49,12 +49,67 @@
                     </div>
                 </div>
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1526232762683-217585e17a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="rounded-3xl shadow-2xl grayscale opacity-60 border border-zinc-700">
+                    <img src="https://images.unsplash.com/photo-1526232762683-217585e17a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="rounded-3xl shadow-2xl grayscale opacity-60 border border-zinc-700 w-full">
                     <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-primary-custom rounded-3xl -z-10 opacity-20"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Facilities Section -->
+    <section class="py-20 bg-zinc-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter italic">World-Class <span class="text-primary-custom">Facilities</span></h2>
+                <div class="h-1 w-20 bg-primary-custom mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1556056504-5c7696c4c28d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-xl font-black uppercase italic text-white">Main Training Pitch</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Professional-grade hybrid grass pitch designed for elite performance.</p>
+                    </div>
+                </div>
+                <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-xl font-black uppercase italic text-white">Elite Fitness Gym</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Fully equipped modern gym for strength and conditioning.</p>
+                    </div>
+                </div>
+                <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-xl font-black uppercase italic text-white">Recovery Center</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Specialized area for physio and player recovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section class="py-20 bg-zinc-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter italic">Experience <span class="text-primary-custom">The Action</span></h2>
+                <p class="text-gray-500 text-sm mt-2 uppercase font-bold tracking-widest">Watch our training sessions in action</p>
+            </div>
+            
+            <div class="aspect-video bg-zinc-800 rounded-[2rem] overflow-hidden border border-zinc-700 shadow-2xl relative group">
+                <!-- Using a standard YouTube Embed for reliability -->
+                <iframe class="w-full h-full grayscale hover:grayscale-0 transition duration-700" 
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="Academy Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-zinc-900 py-16 border-t border-zinc-800">
