@@ -26,6 +26,11 @@
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
                              <a href="#form-builder" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Form Builder</a>
+                             <div class="pt-4 border-t border-zinc-800 mt-4">
+                                <span class="text-[10px] font-black uppercase text-gray-600 px-4">Content CRUD</span>
+                                <a href="{{ route('website.news.index') }}" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage News</a>
+                                <a href="{{ route('website.fixtures.index') }}" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Fixtures</a>
+                             </div>
                         </nav>
                     </div>
                 </div>

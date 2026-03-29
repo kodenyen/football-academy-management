@@ -30,6 +30,24 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Content Management -->
+                <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl flex items-center justify-between hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('website.news.index') }}'">
+                    <div>
+                        <h3 class="font-black uppercase italic text-white">Latest News</h3>
+                        <p class="text-xs text-gray-500 mt-1">Add, edit or delete academy news posts.</p>
+                    </div>
+                    <i class="fa-solid fa-newspaper text-3xl text-green-500 opacity-50"></i>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl flex items-center justify-between hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('website.fixtures.index') }}'">
+                    <div>
+                        <h3 class="font-black uppercase italic text-white">Match Fixtures</h3>
+                        <p class="text-xs text-gray-500 mt-1">Manage upcoming matches and results.</p>
+                    </div>
+                    <i class="fa-solid fa-calendar-days text-3xl text-green-500 opacity-50"></i>
+                </div>
+            </div>
+
             <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-100">
                     <h3 class="text-xl font-black mb-4 uppercase italic">Recent Trial Registrations</h3>

@@ -49,6 +49,10 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     // Form Builder
     Route::post('/form-builder', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'store'])->name('form.store');
     Route::delete('/form-builder/{field}', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'destroy'])->name('form.destroy');
+
+    // News & Fixtures
+    Route::resource('news', \App\Http\Controllers\WebsiteManager\NewsController::class);
+    Route::resource('fixtures', \App\Http\Controllers\WebsiteManager\FixtureController::class);
 });
 
 // Player Utilities
