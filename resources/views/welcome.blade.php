@@ -17,9 +17,9 @@
         .border-primary-custom { border-color: var(--primary-color); }
     </style>
 </head>
-<body class="bg-black text-white font-sans antialiased">
+<body class="bg-zinc-950 text-white font-sans antialiased">
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800">
+    <nav class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0 flex items-center">
@@ -95,7 +95,7 @@
     </section>
 
     <!-- Academy Programs -->
-    <section class="py-12 bg-black relative -mt-16 z-20">
+    <section class="py-12 bg-zinc-950 relative -mt-16 z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 italic">Our Academy <span class="text-primary-custom">Programs</span></h2>
             <div class="h-1 w-20 bg-primary-custom mx-auto mb-12"></div>
@@ -125,7 +125,7 @@
 
     <!-- Upcoming Matches Section (if any) -->
     @if($upcomingMatches->count() > 0)
-    <section class="py-20 bg-black">
+    <section class="py-20 bg-zinc-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-black mb-8 italic uppercase tracking-tighter">Upcoming <span class="text-primary-custom">Fixtures</span></h2>
             <div class="space-y-4">
@@ -156,7 +156,7 @@
 
     <!-- News / Blog Section -->
     @if($posts->count() > 0)
-    <section class="py-20 bg-black">
+    <section class="py-20 bg-zinc-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-black mb-8 italic uppercase tracking-tighter">Latest <span class="text-primary-custom">News</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -181,7 +181,7 @@
     @endif
 
     <!-- Footer -->
-    <footer class="bg-black py-16 border-t border-zinc-900">
+    <footer class="bg-zinc-950 py-16 border-t border-zinc-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
                 <div>
