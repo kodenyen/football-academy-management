@@ -18,9 +18,10 @@
                     <div class="text-3xl font-black text-green-500 mt-2">5</div>
                     <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Coaches →</div>
                 </div>
-                <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('admin.trials.index') }}'">
                     <div class="text-gray-400 text-sm uppercase font-black">Pending Trials</div>
                     <div class="text-3xl font-black text-yellow-500 mt-2">12</div>
+                    <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Trials →</div>
                 </div>
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <div class="text-gray-400 text-sm uppercase font-black">Upcoming Matches</div>

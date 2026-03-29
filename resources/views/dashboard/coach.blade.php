@@ -12,11 +12,11 @@
                 <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl shadow-sm">
                     <h3 class="text-xl font-black mb-4 uppercase italic">Training Management</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="#" class="bg-zinc-800 border border-zinc-700 p-4 rounded-lg text-center hover:bg-green-500 hover:text-black transition">
+                        <a href="{{ route('coach.attendance.index') }}" class="bg-zinc-800 border border-zinc-700 p-4 rounded-lg text-center hover:bg-green-500 hover:text-black transition">
                             <i class="fa-solid fa-clipboard-user text-2xl mb-2"></i>
                             <span class="block font-bold">Mark Attendance</span>
                         </a>
-                        <a href="#" class="bg-zinc-800 border border-zinc-700 p-4 rounded-lg text-center hover:bg-green-500 hover:text-black transition">
+                        <a href="{{ route('coach.reports.create') }}" class="bg-zinc-800 border border-zinc-700 p-4 rounded-lg text-center hover:bg-green-500 hover:text-black transition">
                             <i class="fa-solid fa-chart-line text-2xl mb-2"></i>
                             <span class="block font-bold">Post Performance Report</span>
                         </a>

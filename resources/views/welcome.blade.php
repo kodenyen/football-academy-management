@@ -30,9 +30,8 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-primary-custom border-b-2 border-primary-custom">Home</a>
-                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">About</a>
-                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Programs</a>
+                        <a href="{{ route('gallery') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Gallery</a>
+                        <a href="{{ route('showcase') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Talent Showcase</a>
                         <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Contact</a>
                     </div>
                 </div>

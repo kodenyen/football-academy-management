@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/gallery', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
+Route::get('/showcase', [\App\Http\Controllers\ShowcaseController::class, 'index'])->name('showcase');
 Route::get('/register-trial', [RegistrationController::class, 'create'])->name('register.trial');
 Route::post('/register-trial', [RegistrationController::class, 'store'])->name('register.store');
 
@@ -21,6 +23,17 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('coaches', AdminCoachController::class);
+    Route::get('/trials', [\App\Http\Controllers\Admin\TrialController::class, 'index'])->name('trials.index');
+    Route::patch('/trials/{registration}', [\App\Http\Controllers\Admin\TrialController::class, 'updateStatus'])->name('trials.update');
+});
+
+// Coach Routes
+Route::middleware(['auth', 'verified'])->prefix('coach')->name('coach.')->group(function () {
+    Route::get('/attendance', [\App\Http\Controllers\Coach\AttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance', [\App\Http\Controllers\Coach\AttendanceController::class, 'store'])->name('attendance.store');
+    
+    Route::get('/reports/create', [\App\Http\Controllers\Coach\PerformanceReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports', [\App\Http\Controllers\Coach\PerformanceReportController::class, 'store'])->name('reports.store');
 });
 
 // Website Manager Routes
@@ -36,6 +49,12 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     // Form Builder
     Route::post('/form-builder', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'store'])->name('form.store');
     Route::delete('/form-builder/{field}', [\App\Http\Controllers\WebsiteManager\FormBuilderController::class, 'destroy'])->name('form.destroy');
+});
+
+// Player Utilities
+Route::middleware(['auth', 'verified'])->prefix('player')->name('player.')->group(function () {
+    Route::get('/{player}/pdf', [\App\Http\Controllers\PlayerController::class, 'downloadPdf'])->name('pdf');
+    Route::get('/{player}/qr', [\App\Http\Controllers\PlayerController::class, 'generateQr'])->name('qr');
 });
 
 Route::middleware('auth')->group(function () {

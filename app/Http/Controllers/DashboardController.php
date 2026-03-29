@@ -19,7 +19,10 @@ class DashboardController extends Controller
         } elseif ($user->isWebsiteManager()) {
             return redirect()->route('website.settings.index');
         } else {
-            return view('dashboard.player');
+            $player = $user->player;
+            $attendances = $player ? $player->attendances()->latest()->take(10)->get()->reverse() : collect();
+            $reports = $player ? $player->performanceReports()->latest()->take(5)->get() : collect();
+            return view('dashboard.player', compact('player', 'attendances', 'reports'));
         }
     }
 }
