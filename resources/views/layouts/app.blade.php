@@ -16,7 +16,7 @@
     </head>
     @php
         $siteSettings = \App\Models\SiteSetting::first();
-        $bgColor = $siteSettings->background_color ?? '#18181b';
+        $bgColor = '#f8fafc'; // Slate 50
         $primaryColor = $siteSettings->primary_color ?? '#00FF41';
     @endphp
     <style>
@@ -24,17 +24,15 @@
             --bg-color: {{ $bgColor }};
             --primary-color: {{ $primaryColor }};
         }
-        body { background-color: var(--bg-color) !important; }
-        .bg-zinc-900 { background-color: var(--bg-color) !important; }
-        .bg-zinc-950 { background-color: var(--bg-color) !important; }
+        body { background-color: var(--bg-color); color: #0f172a; }
     </style>
-    <body class="font-sans antialiased text-white">
-        <div class="min-h-screen" style="background-color: var(--bg-color);">
+    <body class="font-sans antialiased text-slate-900">
+        <div class="min-h-screen bg-slate-50">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-zinc-900 border-b border-zinc-800 shadow">
+                <header class="bg-white border-b border-slate-200 shadow-sm">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

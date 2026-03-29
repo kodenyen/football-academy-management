@@ -1,18 +1,18 @@
-<nav x-data="{ open: false }" class="border-b border-zinc-800" style="background-color: var(--bg-color);">
+<nav x-data="{ open: false }" class="bg-white border-b border-slate-200">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="text-green-500 font-black italic tracking-tighter">
+                    <a href="{{ route('dashboard') }}" class="text-green-600 font-black italic tracking-tighter text-xl">
                         THINK RIGHT
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-green-500">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-slate-600 hover:text-green-600 font-bold">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
@@ -22,7 +22,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-400 bg-zinc-900 hover:text-white focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-slate-200 text-sm leading-4 font-medium rounded-md text-slate-600 bg-white hover:text-slate-800 focus:outline-none transition ease-in-out duration-150 shadow-sm">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
