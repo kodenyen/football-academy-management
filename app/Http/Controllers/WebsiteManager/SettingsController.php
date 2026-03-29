@@ -38,6 +38,7 @@ class SettingsController extends Controller
             'footer_text' => 'nullable|string',
             'primary_color' => 'required|string',
             'secondary_color' => 'required|string',
+            'background_color' => 'required|string',
             'about_us_content' => 'nullable|string',
         ]);
 

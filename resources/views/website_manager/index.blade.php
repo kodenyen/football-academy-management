@@ -63,6 +63,10 @@
                                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Secondary Color</label>
                                     <input type="color" name="secondary_color" value="{{ $settings->secondary_color }}" class="w-full h-10 bg-white border-zinc-300 rounded">
                                 </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Background Color</label>
+                                    <input type="color" name="background_color" value="{{ $settings->background_color ?? '#18181b' }}" class="w-full h-10 bg-white border-zinc-300 rounded">
+                                </div>
                             </div>
                             <div class="flex justify-end pt-4">
                                 <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Branding</button>

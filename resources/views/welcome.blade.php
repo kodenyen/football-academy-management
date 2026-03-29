@@ -11,13 +11,16 @@
         :root {
             --primary-color: {{ $settings->primary_color }};
             --secondary-color: {{ $settings->secondary_color }};
+            --bg-color: {{ $settings->background_color ?? '#18181b' }};
         }
         .bg-primary-custom { background-color: var(--primary-color); }
         .text-primary-custom { color: var(--primary-color); }
         .border-primary-custom { border-color: var(--primary-color); }
+        body { background-color: var(--bg-color); }
+        .bg-zinc-900 { background-color: var(--bg-color); }
     </style>
 </head>
-<body class="bg-zinc-900 text-white font-sans antialiased">
+<body class="text-white font-sans antialiased">
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-zinc-900/90 backdrop-blur-md border-b border-gray-800" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

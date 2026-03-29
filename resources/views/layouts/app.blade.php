@@ -14,8 +14,22 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-zinc-900 text-white">
-        <div class="min-h-screen bg-zinc-900">
+    @php
+        $siteSettings = \App\Models\SiteSetting::first();
+        $bgColor = $siteSettings->background_color ?? '#18181b';
+        $primaryColor = $siteSettings->primary_color ?? '#00FF41';
+    @endphp
+    <style>
+        :root {
+            --bg-color: {{ $bgColor }};
+            --primary-color: {{ $primaryColor }};
+        }
+        body { background-color: var(--bg-color) !important; }
+        .bg-zinc-900 { background-color: var(--bg-color) !important; }
+        .bg-zinc-950 { background-color: var(--bg-color) !important; }
+    </style>
+    <body class="font-sans antialiased text-white">
+        <div class="min-h-screen" style="background-color: var(--bg-color);">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
