@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about');
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/gallery', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
 Route::get('/showcase', [\App\Http\Controllers\ShowcaseController::class, 'index'])->name('showcase');
 Route::get('/register-trial', [RegistrationController::class, 'create'])->name('register.trial');
