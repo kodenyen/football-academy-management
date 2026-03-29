@@ -56,6 +56,11 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     // News & Fixtures
     Route::resource('news', \App\Http\Controllers\WebsiteManager\NewsController::class);
     Route::resource('fixtures', \App\Http\Controllers\WebsiteManager\FixtureController::class);
+
+    // About Page Management
+    Route::post('/settings/about', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'updateAbout'])->name('settings.updateAbout');
+    Route::post('/settings/facility', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'storeFacility'])->name('settings.storeFacility');
+    Route::delete('/settings/facility/{facility}', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'deleteFacility'])->name('settings.deleteFacility');
 });
 
 // Player Utilities

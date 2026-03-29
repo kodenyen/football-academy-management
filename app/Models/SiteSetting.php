@@ -11,5 +11,6 @@ class SiteSetting extends Model
         'phone_number', 'whatsapp_number', 'address', 'email', 'about_us_content', 'footer_text', 
         'social_links', 'navigation_menu', 'paystack_public_key', 'paystack_secret_key',
         'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 
-        'mail_from_address', 'mail_from_name'
+        'mail_from_address', 'mail_from_name',
+        'about_vision', 'about_mission', 'about_video_id'
     ];}

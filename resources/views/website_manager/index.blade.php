@@ -22,6 +22,7 @@
                              <a href="#branding" class="block px-4 py-3 rounded-xl bg-zinc-800 font-bold border-l-4 border-green-500">Branding</a>
                              <a href="#contact" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Contact Info</a>
                              <a href="#content" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Site Content</a>
+                             <a href="#about-page" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-green-500">Manage About Page</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
@@ -116,14 +117,78 @@
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Footer Text</label>
                                 <x-text-input name="footer_text" value="{{ $settings->footer_text }}" class="w-full" />
                             </div>
-                            <div class="pt-4">
-                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">About Us Content</label>
-                                <textarea name="about_us_content" rows="6" class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm focus:ring-green-500 focus:border-green-500">{{ $settings->about_us_content }}</textarea>
-                            </div>
                             <div class="flex justify-end pt-4">
-                                <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Content</button>
+                                <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Footer</button>
                             </div>
                         </form>
+                    </section>
+
+                    <!-- About Page Management Panel -->
+                    <section id="about-page" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-circle-info text-green-500 mr-3"></i> Manage About Page
+                        </h3>
+                        
+                        <form action="{{ route('website.settings.updateAbout') }}" method="POST" class="space-y-6 border-b border-zinc-800 pb-10 mb-10">
+                            @csrf
+                            <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Main About Us Content</label>
+                                <textarea name="about_us_content" rows="4" class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm">{{ $settings->about_us_content }}</textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Our Vision</label>
+                                    <textarea name="about_vision" rows="3" class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm">{{ $settings->about_vision }}</textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Our Mission</label>
+                                    <textarea name="about_mission" rows="3" class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm">{{ $settings->about_mission }}</textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Side Video YouTube ID (e.g. dQw4w9WgXcQ)</label>
+                                <x-text-input name="about_video_id" value="{{ $settings->about_video_id }}" class="w-full" />
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-green-500 text-black px-8 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Update About Content</button>
+                            </div>
+                        </form>
+
+                        <!-- Facilities Management -->
+                        <div class="space-y-6">
+                            <h4 class="text-sm font-black uppercase tracking-widest text-green-500">Manage Facilities</h4>
+                            
+                            <!-- Add Facility -->
+                            <form action="{{ route('website.settings.storeFacility') }}" method="POST" enctype="multipart/form-data" class="p-6 bg-black rounded-xl border border-zinc-800 space-y-4">
+                                @csrf
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <x-text-input name="name" placeholder="Facility Name" class="w-full text-xs" required />
+                                    <input type="file" name="image" class="text-xs text-gray-400">
+                                </div>
+                                <textarea name="description" placeholder="Short Description" class="w-full bg-white text-black border-zinc-300 rounded text-xs"></textarea>
+                                <button type="submit" class="w-full bg-zinc-800 text-white py-2 rounded font-bold text-[10px] uppercase">Add Facility</button>
+                            </form>
+
+                            <!-- List Facilities -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                @foreach($facilities as $facility)
+                                <div class="flex items-center justify-between p-4 bg-zinc-800 rounded-xl border border-zinc-700">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-zinc-900 rounded overflow-hidden">
+                                            @if($facility->image)
+                                                <img src="{{ asset('storage/' . $facility->image) }}" class="w-full h-full object-cover">
+                                            @endif
+                                        </div>
+                                        <span class="text-xs font-bold uppercase italic text-white">{{ $facility->name }}</span>
+                                    </div>
+                                    <form action="{{ route('website.settings.deleteFacility', $facility) }}" method="POST">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </section>
 
                     <!-- Slider Panel -->

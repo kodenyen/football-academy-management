@@ -40,11 +40,11 @@
                     <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
                         <div class="bg-zinc-800 p-6 rounded-2xl border-l-4 border-primary-custom">
                             <span class="block text-xl font-black text-white uppercase italic">Our Vision</span>
-                            <p class="text-gray-400 text-sm mt-2">To be the leading football academy recognized globally for developing elite talent and well-rounded individuals.</p>
+                            <p class="text-gray-400 text-sm mt-2">{{ $settings->about_vision ?: 'To be the leading football academy recognized globally for developing elite talent.' }}</p>
                         </div>
                         <div class="bg-zinc-800 p-6 rounded-2xl border-l-4 border-primary-custom">
                             <span class="block text-xl font-black text-white uppercase italic">Our Mission</span>
-                            <p class="text-gray-400 text-sm mt-2">Providing world-class training facilities and professional coaching to unlock every player's full potential.</p>
+                            <p class="text-gray-400 text-sm mt-2">{{ $settings->about_mission ?: 'Providing world-class training facilities and professional coaching to unlock every player\'s full potential.' }}</p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="aspect-video sm:aspect-square bg-zinc-800 rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl relative">
                         <!-- Reliable YouTube Loop -->
                         <iframe class="absolute inset-0 w-full h-full grayscale opacity-60" 
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0" 
+                                src="https://www.youtube.com/embed/{{ $settings->about_video_id ?? 'dQw4w9WgXcQ' }}?autoplay=1&mute=1&loop=1&playlist={{ $settings->about_video_id ?? 'dQw4w9WgXcQ' }}&controls=0" 
                                 frameborder="0" allow="autoplay; encrypted-media"></iframe>
                         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
                     </div>
@@ -62,6 +62,8 @@
         </div>
     </div>
 
+    @php $facilities = \App\Models\Facility::orderBy('order')->get(); @endphp
+    @if($facilities->count() > 0)
     <!-- Facilities Section -->
     <section class="py-20 bg-zinc-800/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,30 +73,25 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($facilities as $facility)
                 <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
-                    <img src="https://images.unsplash.com/photo-1556056504-5c7696c4c28d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                    <div class="h-64 bg-zinc-800">
+                        @if($facility->image)
+                            <img src="{{ asset('storage/' . $facility->image) }}" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center text-zinc-700 text-4xl"><i class="fa-solid fa-building"></i></div>
+                        @endif
+                    </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-black uppercase italic text-white">Main Training Pitch</h3>
-                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Professional-grade hybrid grass pitch designed for elite performance.</p>
+                        <h3 class="text-xl font-black uppercase italic text-white">{{ $facility->name }}</h3>
+                        <p class="text-gray-500 text-sm mt-2 font-medium italic">{{ $facility->description }}</p>
                     </div>
                 </div>
-                <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-                    <div class="p-6">
-                        <h3 class="text-xl font-black uppercase italic text-white">Elite Fitness Gym</h3>
-                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Fully equipped modern gym for strength and conditioning.</p>
-                    </div>
-                </div>
-                <div class="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700 hover:border-primary-custom transition duration-500">
-                    <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="h-64 w-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-                    <div class="p-6">
-                        <h3 class="text-xl font-black uppercase italic text-white">Recovery Center</h3>
-                        <p class="text-gray-500 text-sm mt-2 font-medium italic">Specialized area for physio and player recovery.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Video Showcase Section -->
     <section class="py-20 bg-zinc-900">
@@ -105,9 +102,8 @@
             </div>
             
             <div class="aspect-video bg-zinc-800 rounded-[2rem] overflow-hidden border border-zinc-700 shadow-2xl relative group">
-                <!-- Using a standard YouTube Embed for reliability -->
                 <iframe class="w-full h-full grayscale hover:grayscale-0 transition duration-700" 
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        src="https://www.youtube.com/embed/{{ $settings->about_video_id ?? 'dQw4w9WgXcQ' }}" 
                         title="Academy Video" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

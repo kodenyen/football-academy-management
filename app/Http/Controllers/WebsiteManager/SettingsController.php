@@ -22,8 +22,9 @@ class SettingsController extends Controller
         $programs = AcademyProgram::orderBy('order')->get();
         $trialFields = FormField::where('form_type', 'trial')->orderBy('order')->get();
         $coachFields = FormField::where('form_type', 'coach')->orderBy('order')->get();
+        $facilities = \App\Models\Facility::orderBy('order')->get();
         
-        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields'));
+        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities'));
     }
 
     public function updateGeneral(Request $request)
