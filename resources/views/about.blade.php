@@ -50,10 +50,10 @@
                 </div>
                 <div class="relative">
                     <div class="aspect-video sm:aspect-square bg-zinc-800 rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl relative">
-                        <!-- Background Video Loop -->
-                        <video autoplay muted loop playsinline class="w-full h-full object-cover grayscale opacity-60">
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-football-player-kicking-the-ball-in-slow-motion-4100-large.mp4" type="video/mp4">
-                        </video>
+                        <!-- Reliable YouTube Background Loop -->
+                        <iframe class="absolute inset-0 w-full h-full pointer-events-none grayscale opacity-60" 
+                                src="https://www.youtube.com/embed/8_vLeSNo_TM?autoplay=1&mute=1&loop=1&playlist=8_vLeSNo_TM&controls=0&rel=0&modestbranding=1" 
+                                frameborder="0" allow="autoplay; encrypted-media"></iframe>
                         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
                     </div>
                     <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary-custom rounded-3xl -z-10 opacity-20 blur-2xl"></div>
