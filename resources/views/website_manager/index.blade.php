@@ -19,7 +19,9 @@
                     <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-xl">
                         <h3 class="text-xs font-black uppercase tracking-widest text-green-500 mb-6 border-b border-zinc-800 pb-2">Manager Menu</h3>
                         <nav class="space-y-2">
-                             <a href="#general" class="block px-4 py-3 rounded-xl bg-zinc-800 font-bold border-l-4 border-green-500">General Settings</a>
+                             <a href="#branding" class="block px-4 py-3 rounded-xl bg-zinc-800 font-bold border-l-4 border-green-500">Branding</a>
+                             <a href="#contact" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Contact Info</a>
+                             <a href="#content" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Site Content</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
@@ -31,10 +33,10 @@
                 <!-- Main Content Panels -->
                 <div class="lg:col-span-2 space-y-12">
                     
-                    <!-- General Settings Panel -->
-                    <section id="general" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                    <!-- Branding Settings -->
+                    <section id="branding" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
-                            <i class="fa-solid fa-gear text-green-500 mr-3"></i> Academy Details & Branding
+                            <i class="fa-solid fa-palette text-green-500 mr-3"></i> Branding & Identity
                         </h3>
                         <form action="{{ route('website.settings.updateGeneral') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                             @csrf
@@ -49,15 +51,27 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Primary Color</label>
-                                    <input type="color" name="primary_color" value="{{ $settings->primary_color }}" class="w-full h-10 bg-black border-zinc-800 rounded">
+                                    <input type="color" name="primary_color" value="{{ $settings->primary_color }}" class="w-full h-10 bg-white border-zinc-300 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Secondary Color</label>
-                                    <input type="color" name="secondary_color" value="{{ $settings->secondary_color }}" class="w-full h-10 bg-black border-zinc-800 rounded">
+                                    <input type="color" name="secondary_color" value="{{ $settings->secondary_color }}" class="w-full h-10 bg-white border-zinc-300 rounded">
                                 </div>
                             </div>
+                            <div class="flex justify-end pt-4">
+                                <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Branding</button>
+                            </div>
+                        </form>
+                    </section>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <!-- Contact Details Settings -->
+                    <section id="contact" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-address-book text-green-500 mr-3"></i> Contact Information
+                        </h3>
+                        <form action="{{ route('website.settings.updateGeneral') }}" method="POST" class="space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Phone</label>
                                     <x-text-input name="phone_number" value="{{ $settings->phone_number }}" class="w-full" />
@@ -71,19 +85,29 @@
                                     <x-text-input name="address" value="{{ $settings->address }}" class="w-full" />
                                 </div>
                             </div>
+                            <div class="flex justify-end pt-4">
+                                <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Contact Info</button>
+                            </div>
+                        </form>
+                    </section>
 
-                            <div class="pt-6">
+                    <!-- Site Content Settings -->
+                    <section id="content" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-file-lines text-green-500 mr-3"></i> Page Content & Footer
+                        </h3>
+                        <form action="{{ route('website.settings.updateGeneral') }}" method="POST" class="space-y-6">
+                            @csrf
+                            <div>
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Footer Text</label>
                                 <x-text-input name="footer_text" value="{{ $settings->footer_text }}" class="w-full" />
                             </div>
-
-                            <div class="pt-6">
+                            <div class="pt-4">
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">About Us Content</label>
-                                <textarea name="about_us_content" rows="6" class="w-full bg-white border-zinc-300 text-black focus:ring-green-500 focus:border-green-500">{{ $settings->about_us_content }}</textarea>
+                                <textarea name="about_us_content" rows="6" class="w-full bg-white border-zinc-300 text-black rounded-lg text-sm focus:ring-green-500 focus:border-green-500">{{ $settings->about_us_content }}</textarea>
                             </div>
-
-                            <div class="flex justify-end pt-6 border-t border-zinc-800">
-                                <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition">Update Settings</button>
+                            <div class="flex justify-end pt-4">
+                                <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Content</button>
                             </div>
                         </form>
                     </section>
