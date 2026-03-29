@@ -19,15 +19,17 @@
 </head>
 <body class="bg-zinc-900 text-white font-sans antialiased">
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-zinc-900/90 backdrop-blur-md border-b border-gray-800">
+    <nav class="sticky top-0 z-50 bg-zinc-900/90 backdrop-blur-md border-b border-gray-800" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0 flex items-center">
                     @if($settings->academy_logo)
-                        <img src="{{ asset('storage/' . $settings->academy_logo) }}" class="h-10 w-auto mr-2">
+                        <img src="{{ asset('storage/' . $settings->academy_logo) }}" class="h-8 w-auto mr-2">
                     @endif
-                    <span class="text-primary-custom font-bold text-xl tracking-tighter italic uppercase">{{ $settings->academy_name }}</span>
+                    <span class="text-primary-custom font-bold text-lg md:text-xl tracking-tighter italic uppercase truncate max-w-[150px] md:max-w-none">{{ $settings->academy_name }}</span>
                 </div>
+                
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-primary-custom border-b-2 border-primary-custom">Home</a>
@@ -37,12 +39,44 @@
                         <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Contact</a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
+
+                <div class="flex items-center space-x-2">
+                    <div class="hidden sm:flex items-center space-x-4">
+                        @auth
+                            <a href="{{ url('/dashboard') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Log in</a>
+                            <a href="{{ route('register.trial') }}" class="bg-primary-custom text-black px-4 py-2 rounded-full text-xs font-black uppercase hover:opacity-80 transition">Join</a>
+                        @endauth
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-400 hover:text-white p-2">
+                        <i class="fa-solid fa-bars-staggered text-2xl" x-show="!mobileMenuOpen"></i>
+                        <i class="fa-solid fa-xmark text-2xl" x-show="mobileMenuOpen"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="md:hidden bg-zinc-900 border-b border-zinc-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-4 rounded-md text-base font-black text-primary-custom uppercase italic">Home</a>
+                <a href="#about" @click="mobileMenuOpen = false" class="block px-3 py-4 rounded-md text-base font-bold text-gray-300 hover:bg-zinc-800 uppercase">About Us</a>
+                <a href="{{ route('gallery') }}" class="block px-3 py-4 rounded-md text-base font-bold text-gray-300 hover:bg-zinc-800 uppercase">Gallery</a>
+                <a href="{{ route('showcase') }}" class="block px-3 py-4 rounded-md text-base font-bold text-gray-300 hover:bg-zinc-800 uppercase">Talent Showcase</a>
+                <a href="#contact" @click="mobileMenuOpen = false" class="block px-3 py-4 rounded-md text-base font-bold text-gray-300 hover:bg-zinc-800 uppercase">Contact</a>
+                <div class="pt-4 pb-3 border-t border-zinc-800">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="block px-3 py-4 text-base font-black text-green-500 uppercase">My Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Log in</a>
-                        <a href="{{ route('register.trial') }}" class="bg-primary-custom text-black px-4 py-2 rounded-full text-sm font-bold hover:opacity-80 transition">Join Now</a>
+                        <a href="{{ route('login') }}" class="block px-3 py-4 text-base font-bold text-gray-300 uppercase">Log In</a>
+                        <a href="{{ route('register.trial') }}" class="block px-3 py-4 text-base font-black text-primary-custom uppercase italic">Register Now</a>
                     @endauth
                 </div>
             </div>
@@ -57,13 +91,16 @@
                 <div class="absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" id="slide-{{ $index }}">
                     <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-full object-cover opacity-40 grayscale">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center text-center p-4">
+                    <div class="absolute inset-0 flex items-center justify-center text-center p-6">
                         <div class="max-w-4xl">
-                            <h1 class="text-5xl md:text-7xl font-extrabold italic tracking-tighter leading-none mb-6 uppercase">
+                            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold italic tracking-tighter leading-tight mb-4 uppercase">
                                 {{ $slider->heading }}
                             </h1>
-                            <p class="text-lg md:text-xl text-gray-300 mb-8">{{ $slider->sub_heading }}</p>
-                            <a href="{{ route('register.trial') }}" class="bg-primary-custom text-black px-8 py-4 rounded-md text-lg font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,255,65,0.4)]">Book a Trial</a>
+                            <p class="text-sm sm:text-lg md:text-xl text-gray-300 mb-8 max-w-lg mx-auto">{{ $slider->sub_heading }}</p>
+                            <div class="flex flex-col sm:flex-row justify-center gap-4 px-4">
+                                <a href="{{ route('register.trial') }}" class="w-full sm:w-auto bg-primary-custom text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest shadow-lg">Book Trial</a>
+                                <a href="#about" class="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-xl font-bold uppercase tracking-widest">Learn More</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,20 +138,20 @@
             <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 italic">Our Academy <span class="text-primary-custom">Programs</span></h2>
             <div class="h-1 w-20 bg-primary-custom mx-auto mb-12"></div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
                 @foreach($programs as $program)
-                <div class="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden hover:border-primary-custom/50 transition">
-                    <div class="h-48 bg-zinc-800">
+                <div class="bg-zinc-800 rounded-3xl border border-zinc-700 overflow-hidden hover:border-primary-custom transition-all duration-300">
+                    <div class="h-56 bg-zinc-700">
                         @if($program->image)
                             <img src="{{ asset('storage/' . $program->image) }}" class="w-full h-full object-cover">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-zinc-700 text-4xl"><i class="fa-solid fa-futbol"></i></div>
+                            <div class="w-full h-full flex items-center justify-center text-zinc-600 text-5xl font-black italic">TRFA</div>
                         @endif
                     </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-black mb-4 italic uppercase">{{ $program->name }}</h3>
-                        <p class="text-gray-400 text-sm mb-6">{{ $program->description }}</p>
-                        <a href="{{ route('register.trial') }}" class="text-primary-custom text-xs font-black uppercase tracking-widest">Enroll Now →</a>
+                    <div class="p-8 text-left">
+                        <h3 class="text-2xl font-black mb-3 italic uppercase text-white tracking-tighter">{{ $program->name }}</h3>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">{{ $program->description }}</p>
+                        <a href="{{ route('register.trial') }}" class="inline-block bg-primary-custom text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-80 transition">Enroll Now</a>
                     </div>
                 </div>
                 @endforeach
