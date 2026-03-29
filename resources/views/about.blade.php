@@ -50,9 +50,9 @@
                 </div>
                 <div class="relative">
                     <div class="aspect-video sm:aspect-square bg-zinc-800 rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl relative">
-                        <!-- Reliable YouTube Background Loop -->
-                        <iframe class="absolute inset-0 w-full h-full pointer-events-none grayscale opacity-60" 
-                                src="https://www.youtube.com/embed/8_vLeSNo_TM?autoplay=1&mute=1&loop=1&playlist=8_vLeSNo_TM&controls=0&rel=0&modestbranding=1" 
+                        <!-- Reliable YouTube Loop -->
+                        <iframe class="absolute inset-0 w-full h-full grayscale opacity-60" 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0" 
                                 frameborder="0" allow="autoplay; encrypted-media"></iframe>
                         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
                     </div>
