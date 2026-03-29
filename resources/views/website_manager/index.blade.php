@@ -71,10 +71,14 @@
                         </h3>
                         <form action="{{ route('website.settings.updateGeneral') }}" method="POST" class="space-y-6">
                             @csrf
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                                 <div>
-                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Phone</label>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Office Phone</label>
                                     <x-text-input name="phone_number" value="{{ $settings->phone_number }}" class="w-full" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">WhatsApp Number</label>
+                                    <x-text-input name="whatsapp_number" value="{{ $settings->whatsapp_number }}" class="w-full" placeholder="+234..." />
                                 </div>
                                 <div>
                                     <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Email</label>

@@ -32,6 +32,7 @@ class SettingsController extends Controller
         $data = $request->validate([
             'academy_name' => 'required|string|max:255',
             'phone_number' => 'nullable|string',
+            'whatsapp_number' => 'nullable|string',
             'address' => 'nullable|string',
             'email' => 'nullable|email',
             'footer_text' => 'nullable|string',

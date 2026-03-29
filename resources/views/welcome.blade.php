@@ -30,9 +30,10 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-primary-custom border-b-2 border-primary-custom">Home</a>
+                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">About</a>
                         <a href="{{ route('gallery') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Gallery</a>
                         <a href="{{ route('showcase') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Talent Showcase</a>
-                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Contact</a>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -120,6 +121,41 @@
         </div>
     </section>
 
+    <div class="border-t border-zinc-800/50"></div>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-6 italic">About Our <span class="text-primary-custom">Academy</span></h2>
+                    <div class="h-1 w-20 bg-primary-custom mb-8"></div>
+                    <p class="text-gray-300 leading-relaxed text-lg italic">
+                        {{ $settings->about_us_content ?: 'Empowering the next generation of football stars through professional coaching and disciplined training.' }}
+                    </p>
+                    <div class="mt-10 grid grid-cols-2 gap-6">
+                        <div class="border-l-2 border-primary-custom pl-4">
+                            <span class="block text-2xl font-black text-white">VISION</span>
+                            <p class="text-xs text-gray-500 uppercase font-bold mt-1">Global Excellence</p>
+                        </div>
+                        <div class="border-l-2 border-primary-custom pl-4">
+                            <span class="block text-2xl font-black text-white">MISSION</span>
+                            <p class="text-xs text-gray-500 uppercase font-bold mt-1">Elite Development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-video bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700">
+                        <img src="https://images.unsplash.com/photo-1526232762683-217585e17a7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover grayscale opacity-60">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary-custom rounded-2xl flex items-center justify-center -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="border-t border-zinc-800/50"></div>
+
     <div class="border-t border-zinc-900/50"></div>
 
     <!-- Upcoming Matches Section (if any) -->
@@ -204,7 +240,7 @@
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->phone_number ?? '2340000000000') }}" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-green-500 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.5)] hover:scale-110 transition">
+    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? $settings->phone_number ?? '2340000000000') }}" target="_blank" class="fixed bottom-6 right-6 z-[100] bg-green-500 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.5)] hover:scale-110 transition">
         <i class="fa-brands fa-whatsapp text-white text-3xl"></i>
     </a>
 </body>

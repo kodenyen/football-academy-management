@@ -23,9 +23,10 @@
                     <div class="text-3xl font-black text-yellow-500 mt-2">12</div>
                     <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Trials →</div>
                 </div>
-                <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-gray-400 text-sm uppercase font-black">Upcoming Matches</div>
-                    <div class="text-3xl font-black text-blue-500 mt-2">3</div>
+                <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('website.settings.index') }}'">
+                    <div class="text-gray-400 text-sm uppercase font-black">Site Settings</div>
+                    <div class="text-3xl font-black text-blue-500 mt-2"><i class="fa-solid fa-sliders"></i></div>
+                    <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Website & WhatsApp →</div>
                 </div>
             </div>
 

@@ -8,6 +8,6 @@ class SiteSetting extends Model
 {
     protected $fillable = [
         'academy_name', 'academy_logo', 'primary_color', 'secondary_color', 
-        'phone_number', 'address', 'email', 'about_us_content', 'footer_text', 
+        'phone_number', 'whatsapp_number', 'address', 'email', 'about_us_content', 'footer_text', 
         'social_links', 'navigation_menu', 'paystack_public_key', 'paystack_secret_key'
     ];}
