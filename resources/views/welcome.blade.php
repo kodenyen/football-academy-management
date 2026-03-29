@@ -34,6 +34,7 @@
                         <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">About</a>
                         <a href="{{ route('gallery') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Gallery</a>
                         <a href="{{ route('showcase') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Talent Showcase</a>
+                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium hover:text-primary-custom transition">Contact</a>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -214,6 +215,70 @@
     </section>
     <div class="border-t border-zinc-900/50"></div>
     @endif
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-12 italic text-center">Contact <span class="text-primary-custom">Us</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-zinc-800 p-8 rounded-2xl border border-zinc-700">
+                    <form action="#" method="POST" class="space-y-6">
+                        @csrf
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Name</label>
+                            <input type="text" name="name" required class="w-full bg-white text-black rounded-lg border-zinc-300 focus:ring-primary-custom px-4 py-3">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full bg-white text-black rounded-lg border-zinc-300 focus:ring-primary-custom px-4 py-3">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Message</label>
+                            <textarea name="message" rows="4" required class="w-full bg-white text-black rounded-lg border-zinc-300 focus:ring-primary-custom px-4 py-3"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary-custom text-black py-4 rounded-xl font-black uppercase tracking-widest hover:opacity-80 transition">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Info & Map -->
+                <div class="space-y-8">
+                    <div class="bg-zinc-800 p-8 rounded-2xl border border-zinc-700 h-full">
+                        <h3 class="text-xl font-black uppercase italic mb-6">Find Us Here</h3>
+                        <div class="space-y-6 text-gray-300">
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-location-dot mt-1 text-primary-custom mr-4"></i>
+                                <div>
+                                    <span class="block font-bold text-white uppercase text-xs">Address</span>
+                                    <p class="text-sm italic">{{ $settings->address ?? 'Lagos, Nigeria' }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-phone mt-1 text-primary-custom mr-4"></i>
+                                <div>
+                                    <span class="block font-bold text-white uppercase text-xs">Phone</span>
+                                    <p class="text-sm">{{ $settings->phone_number ?? '+234...' }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-envelope mt-1 text-primary-custom mr-4"></i>
+                                <div>
+                                    <span class="block font-bold text-white uppercase text-xs">Email</span>
+                                    <p class="text-sm">{{ $settings->email ?? 'info@academy.com' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Simple Map Placeholder -->
+                        <div class="mt-8 aspect-video bg-zinc-900 rounded-xl overflow-hidden border border-zinc-700 flex items-center justify-center grayscale opacity-50">
+                             <i class="fa-solid fa-map-location-dot text-4xl text-zinc-700"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-zinc-900 py-16 border-t border-zinc-900">

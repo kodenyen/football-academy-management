@@ -41,6 +41,7 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     Route::get('/settings', [WebsiteSettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/general', [WebsiteSettingsController::class, 'updateGeneral'])->name('settings.updateGeneral');
     Route::post('/settings/payment', [WebsiteSettingsController::class, 'updatePayment'])->name('settings.updatePayment');
+    Route::post('/settings/mail', [WebsiteSettingsController::class, 'updateMail'])->name('settings.updateMail');
     Route::post('/settings/slider', [WebsiteSettingsController::class, 'storeSlider'])->name('settings.storeSlider');
     Route::delete('/settings/slider/{slider}', [WebsiteSettingsController::class, 'deleteSlider'])->name('settings.deleteSlider');
     Route::post('/settings/program', [WebsiteSettingsController::class, 'storeProgram'])->name('settings.storeProgram');

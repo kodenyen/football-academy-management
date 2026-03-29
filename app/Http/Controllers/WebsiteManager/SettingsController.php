@@ -110,4 +110,21 @@ class SettingsController extends Controller
         $program->delete();
         return back()->with('success', 'Program removed!');
     }
+
+    public function updateMail(Request $request)
+    {
+        $settings = SiteSetting::first();
+        $data = $request->validate([
+            'mail_host' => 'nullable|string',
+            'mail_port' => 'nullable|string',
+            'mail_username' => 'nullable|string',
+            'mail_password' => 'nullable|string',
+            'mail_encryption' => 'nullable|string',
+            'mail_from_address' => 'nullable|email',
+            'mail_from_name' => 'nullable|string',
+        ]);
+
+        $settings->update($data);
+        return back()->with('success', 'SMTP settings updated successfully!');
+    }
 }

@@ -25,6 +25,7 @@
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
+                             <a href="#smtp" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">SMTP Settings</a>
                              <a href="#form-builder" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Form Builder</a>
                              <div class="pt-4 border-t border-zinc-800 mt-4">
                                 <span class="text-[10px] font-black uppercase text-gray-600 px-4">Content CRUD</span>
@@ -231,6 +232,55 @@
                             </div>
                             <div class="flex justify-end pt-6 border-t border-zinc-800">
                                 <button type="submit" class="bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-blue-400 transition">Save Keys</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- SMTP Panel -->
+                    <section id="smtp" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-envelope text-green-500 mr-3"></i> SMTP Email Settings
+                        </h3>
+                        <form action="{{ route('website.settings.updateMail') }}" method="POST" class="space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Mail Host</label>
+                                    <x-text-input name="mail_host" value="{{ $settings->mail_host }}" class="w-full" placeholder="smtp.mailtrap.io" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Mail Port</label>
+                                    <x-text-input name="mail_port" value="{{ $settings->mail_port }}" class="w-full" placeholder="587" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Mail Username</label>
+                                    <x-text-input name="mail_username" value="{{ $settings->mail_username }}" class="w-full" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Mail Password</label>
+                                    <x-text-input type="password" name="mail_password" value="{{ $settings->mail_password }}" class="w-full" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Mail Encryption</label>
+                                    <select name="mail_encryption" class="w-full bg-white text-black border-zinc-300 rounded-lg">
+                                        <option value="tls" {{ $settings->mail_encryption == 'tls' ? 'selected' : '' }}>TLS</option>
+                                        <option value="ssl" {{ $settings->mail_encryption == 'ssl' ? 'selected' : '' }}>SSL</option>
+                                        <option value="" {{ !$settings->mail_encryption ? 'selected' : '' }}>None</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-zinc-800">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">From Address</label>
+                                    <x-text-input name="mail_from_address" value="{{ $settings->mail_from_address }}" class="w-full" placeholder="noreply@academy.com" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">From Name</label>
+                                    <x-text-input name="mail_from_name" value="{{ $settings->mail_from_name }}" class="w-full" placeholder="Academy Notifications" />
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-6">
+                                <button type="submit" class="bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-blue-400 transition">Save SMTP Settings</button>
                             </div>
                         </form>
                     </section>
