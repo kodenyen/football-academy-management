@@ -62,19 +62,21 @@ class NewsController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($news->featured_image) {
-                Storage::disk('public')->delete($news->featured_image);
-            }
-            $news->featured_image = $request->file('image')->store('news', 'public');
-        }
-
-        $news->update([
+        $data = [
             'title' => $request->title,
             'slug' => Str::slug($request->title) . '-' . time(),
             'content' => $request->content,
             'category' => $request->category,
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($news->featured_image) {
+                Storage::disk('public')->delete($news->featured_image);
+            }
+            $data['featured_image'] = $request->file('image')->store('news', 'public');
+        }
+
+        $news->update($data);
 
         return redirect()->route('website.news.index')->with('success', 'News post updated successfully!');
     }

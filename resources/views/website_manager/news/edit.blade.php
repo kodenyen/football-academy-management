@@ -7,6 +7,23 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+                <div class="bg-green-600 text-white p-5 rounded-2xl mb-8 shadow-xl shadow-green-600/20 flex items-center font-black uppercase text-xs tracking-widest">
+                    <i class="fa-solid fa-circle-check mr-3 text-lg"></i>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="bg-red-600 text-white p-5 rounded-2xl mb-8 shadow-xl shadow-red-600/20 font-bold text-xs">
+                    <ul class="list-disc list-inside">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
             <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
                 <form action="{{ route('website.news.update', $post) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
