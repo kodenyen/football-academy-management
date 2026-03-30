@@ -36,6 +36,7 @@
                              <a href="#about-page" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-green-500">Manage About Page</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
+                             <a href="#gallery-mgmt" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-blue-500">Manage Gallery</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
                              <a href="#smtp" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">SMTP Settings</a>
                              <a href="#form-builder" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Form Builder</a>
@@ -135,7 +136,7 @@
                     </section>
 
                     <!-- About Page Management Panel -->
-                    <section id="about-page" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                    <section id="about-page" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl" x-data="{ editFacility: null }">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
                             <i class="fa-solid fa-circle-info text-green-500 mr-3"></i> Manage About Page
                         </h3>
@@ -192,18 +193,53 @@
                                         </div>
                                         <span class="text-xs font-bold uppercase italic text-white">{{ $facility->name }}</span>
                                     </div>
-                                    <form action="{{ route('website.settings.deleteFacility', $facility) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                                    </form>
+                                    <div class="flex items-center space-x-2">
+                                        <button type="button" @click="editFacility = @js($facility)" class="text-blue-500 hover:text-blue-400 p-2 transition"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <form action="{{ route('website.settings.deleteFacility', $facility) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-red-500 hover:text-red-400 p-2 transition"><i class="fa-solid fa-trash"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
                                 @endforeach
+
+                                <!-- Edit Facility Modal -->
+                                <template x-if="editFacility">
+                                    <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+                                        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 max-w-lg w-full shadow-2xl" @click.away="editFacility = null">
+                                            <div class="flex justify-between items-center mb-8">
+                                                <h4 class="text-2xl font-black uppercase italic text-white tracking-tighter">Edit Facility</h4>
+                                                <button type="button" @click="editFacility = null" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                            </div>
+                                            
+                                            <form :action="'{{ route('website.settings.updateFacility', ['facility' => 'ID_PLACEHOLDER']) }}'.replace('ID_PLACEHOLDER', editFacility.id)" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                                @csrf @method('PUT')
+                                                <div>
+                                                    <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Facility Name</label>
+                                                    <x-text-input name="name" x-model="editFacility.name" required class="w-full" />
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Change Image (Optional)</label>
+                                                    <input type="file" name="image" class="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-300 hover:file:bg-zinc-700">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Description</label>
+                                                    <textarea name="description" x-model="editFacility.description" class="w-full bg-white border-zinc-300 text-black rounded-xl focus:ring-green-500 focus:border-green-500 h-32 text-sm"></textarea>
+                                                </div>
+                                                <div class="flex justify-end space-x-4 pt-4">
+                                                    <button type="button" @click="editFacility = null" class="text-zinc-500 text-xs font-bold uppercase hover:text-white transition">Cancel</button>
+                                                    <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black text-xs uppercase hover:bg-green-400 transition shadow-lg shadow-green-500/20">Update Facility</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </section>
 
                     <!-- Slider Panel -->
-                    <section id="slider" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                    <section id="slider" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl" x-data="{ editSlider: null }">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
                             <i class="fa-solid fa-images text-green-500 mr-3"></i> Home Hero Slider
                         </h3>
@@ -229,21 +265,57 @@
                         <!-- List Sliders -->
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             @foreach($sliders as $slider)
-                            <div class="relative group rounded-lg overflow-hidden border border-zinc-800">
-                                <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-32 object-cover opacity-60">
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/60">
-                                    <form action="{{ route('website.settings.deleteSlider', $slider) }}" method="POST">
+                            <div class="relative group rounded-lg overflow-hidden border border-zinc-800 bg-black aspect-video">
+                                <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40 space-x-3">
+                                    <button type="button" @click="editSlider = @js($slider)" class="bg-blue-600 text-white p-2.5 rounded-full hover:scale-110 transition shadow-lg"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <form action="{{ route('website.settings.deleteSlider', $slider) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="bg-red-500 text-white p-2 rounded-full hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="submit" class="bg-red-600 text-white p-2.5 rounded-full hover:scale-110 transition shadow-lg"><i class="fa-solid fa-trash"></i></button>
                                     </form>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-2 bg-black/60 backdrop-blur-sm">
+                                    <p class="text-[10px] font-bold text-white truncate text-center uppercase">{{ $slider->heading }}</p>
                                 </div>
                             </div>
                             @endforeach
+
+                            <!-- Edit Slider Modal -->
+                            <template x-if="editSlider">
+                                <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+                                    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 max-w-lg w-full shadow-2xl" @click.away="editSlider = null">
+                                        <div class="flex justify-between items-center mb-8">
+                                            <h4 class="text-2xl font-black uppercase italic text-white tracking-tighter">Edit Slider</h4>
+                                            <button type="button" @click="editSlider = null" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                        </div>
+                                        
+                                        <form :action="'{{ route('website.settings.updateSlider', ['slider' => 'ID_PLACEHOLDER']) }}'.replace('ID_PLACEHOLDER', editSlider.id)" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                            @csrf @method('PUT')
+                                            <div>
+                                                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Heading</label>
+                                                <x-text-input name="heading" x-model="editSlider.heading" class="w-full" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Sub Heading</label>
+                                                <x-text-input name="sub_heading" x-model="editSlider.sub_heading" class="w-full" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Change Image (Optional)</label>
+                                                <input type="file" name="image" class="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-300 hover:file:bg-zinc-700">
+                                            </div>
+                                            <div class="flex justify-end space-x-4 pt-4">
+                                                <button type="button" @click="editSlider = null" class="text-zinc-500 text-xs font-bold uppercase hover:text-white transition">Cancel</button>
+                                                <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black text-xs uppercase hover:bg-green-400 transition shadow-lg shadow-green-500/20">Update Slider</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
                     </section>
 
                     <!-- Academy Programs Panel -->
-                    <section id="programs" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                    <section id="programs" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl" x-data="{ editProgram: null }">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
                             <i class="fa-solid fa-trophy text-green-500 mr-3"></i> Academy Programs
                         </h3>
@@ -263,7 +335,7 @@
                             </div>
                             <div class="mt-4">
                                 <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Short Description</label>
-                                <textarea name="description" class="w-full bg-white border-zinc-300 text-black focus:ring-green-500 focus:border-green-500"></textarea>
+                                <textarea name="description" class="w-full bg-white border-zinc-300 text-black focus:ring-green-500 focus:border-green-500 rounded-lg"></textarea>
                             </div>
                             <div class="mt-4 flex justify-end">
                                 <button type="submit" class="bg-zinc-800 text-white px-6 py-2 rounded-lg font-bold text-xs uppercase hover:bg-zinc-700 transition">Add Program</button>
@@ -282,12 +354,99 @@
                                             <div class="w-full h-full flex items-center justify-center text-zinc-700"><i class="fa-solid fa-image"></i></div>
                                         @endif
                                     </div>
-                                    <span class="font-bold text-lg italic uppercase">{{ $program->name }}</span>
+                                    <div>
+                                        <span class="font-bold text-lg italic uppercase block text-white">{{ $program->name }}</span>
+                                        <p class="text-[10px] text-zinc-500 line-clamp-1">{{ $program->description }}</p>
+                                    </div>
                                 </div>
-                                <form action="{{ route('website.settings.deleteProgram', $program) }}" method="POST">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-400 p-2"><i class="fa-solid fa-trash"></i></button>
-                                </form>
+                                <div class="flex items-center space-x-3">
+                                    <button type="button" @click="editProgram = @js($program)" class="flex items-center space-x-2 bg-blue-600/10 text-blue-500 hover:bg-blue-600 hover:text-white px-4 py-2 rounded-lg transition border border-blue-500/20">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <span class="text-[10px] font-black uppercase tracking-widest">Edit</span>
+                                    </button>
+                                    <form action="{{ route('website.settings.deleteProgram', $program) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this program?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="flex items-center space-x-2 bg-red-600/10 text-red-500 hover:bg-red-600 hover:text-white px-4 py-2 rounded-lg transition border border-red-500/20">
+                                            <i class="fa-solid fa-trash"></i>
+                                            <span class="text-[10px] font-black uppercase tracking-widest">Delete</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            @endforeach
+
+                            <!-- Edit Modal -->
+                            <div x-show="editProgram" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+                                <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 max-w-lg w-full shadow-2xl" @click.away="editProgram = null">
+                                    <div class="flex justify-between items-center mb-8">
+                                        <h4 class="text-2xl font-black uppercase italic text-white tracking-tighter">Edit Program</h4>
+                                        <button type="button" @click="editProgram = null" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                    </div>
+                                    
+                                    <form x-bind:action="'{{ route('website.settings.updateProgram', ['program' => 'ID_PLACEHOLDER']) }}'.replace('ID_PLACEHOLDER', editProgram ? editProgram.id : '')" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                        @csrf @method('PUT')
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Category Name</label>
+                                            <x-text-input name="name" x-model="editProgram ? editProgram.name : ''" required class="w-full" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Change Image (Optional)</label>
+                                            <input type="file" name="image" class="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-300 hover:file:bg-zinc-700">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Description</label>
+                                            <textarea name="description" x-model="editProgram ? editProgram.description : ''" class="w-full bg-white border-zinc-300 text-black rounded-xl focus:ring-green-500 focus:border-green-500 h-32 text-sm"></textarea>
+                                        </div>
+                                        <div class="flex justify-end space-x-4 pt-4">
+                                            <button type="button" @click="editProgram = null" class="text-zinc-500 text-xs font-bold uppercase hover:text-white transition">Cancel</button>
+                                            <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black text-xs uppercase hover:bg-green-400 transition shadow-lg shadow-green-500/20">Update Program</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Gallery Management Panel -->
+                    <section id="gallery-mgmt" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-camera text-blue-500 mr-3"></i> Media Gallery
+                        </h3>
+                        
+                        <!-- Add to Gallery -->
+                        <form action="{{ route('website.gallery.store') }}" method="POST" enctype="multipart/form-data" class="mb-10 p-6 bg-black rounded-xl border border-zinc-800">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Image Title (Optional)</label>
+                                    <x-text-input name="title" class="w-full" placeholder="e.g. Training Session" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Select Image</label>
+                                    <div class="flex items-center space-x-4">
+                                        <input type="file" name="file" required class="text-xs text-gray-400">
+                                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold text-xs uppercase hover:bg-blue-500 transition whitespace-nowrap">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- List Gallery Items -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            @foreach($gallery as $item)
+                            <div class="relative group aspect-square rounded-lg overflow-hidden border border-zinc-800 bg-black">
+                                <img src="{{ asset('storage/' . $item->file_path) }}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40">
+                                    <form action="{{ route('website.gallery.destroy', $item) }}" method="POST" onsubmit="return confirm('Remove this image?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="bg-red-500 text-white p-2 rounded-full hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                @if($item->title)
+                                <div class="absolute bottom-0 left-0 right-0 p-2 bg-black/60 backdrop-blur-sm">
+                                    <p class="text-[9px] font-black uppercase text-white truncate text-center">{{ $item->title }}</p>
+                                </div>
+                                @endif
                             </div>
                             @endforeach
                         </div>

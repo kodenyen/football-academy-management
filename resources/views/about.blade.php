@@ -47,7 +47,17 @@
                 </div>
 
                 <div class="flex items-center space-x-6">
-                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="btn-primary py-2.5 px-6 text-xs">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
+                        <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
+                    @endauth
+                    
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-900 p-2 hover:bg-slate-100 rounded-xl transition">
+                        <i class="fa-solid fa-bars-staggered text-2xl" x-show="!mobileMenuOpen"></i>
+                        <i class="fa-solid fa-xmark text-2xl" x-show="mobileMenuOpen"></i>
+                    </button>
                 </div>
             </div>
         </div>

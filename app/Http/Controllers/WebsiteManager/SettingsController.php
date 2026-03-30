@@ -7,6 +7,7 @@ use App\Models\SiteSetting;
 use App\Models\HeroSlider;
 use App\Models\AcademyProgram;
 use App\Models\FormField;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +24,9 @@ class SettingsController extends Controller
         $trialFields = FormField::where('form_type', 'trial')->orderBy('order')->get();
         $coachFields = FormField::where('form_type', 'coach')->orderBy('order')->get();
         $facilities = \App\Models\Facility::orderBy('order')->get();
+        $gallery = Gallery::latest()->get();
         
-        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities'));
+        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities', 'gallery'));
     }
 
     public function updateGeneral(Request $request)
@@ -74,9 +76,35 @@ class SettingsController extends Controller
         return back()->with('success', 'Slider image added!');
     }
 
+    public function updateSlider(Request $request, HeroSlider $slider)
+    {
+        $request->validate([
+            'image' => 'nullable|image|max:3072',
+            'heading' => 'nullable|string',
+            'sub_heading' => 'nullable|string',
+        ]);
+
+        $data = [
+            'heading' => $request->heading,
+            'sub_heading' => $request->sub_heading,
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($slider->image_path) {
+                Storage::disk('public')->delete($slider->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('sliders', 'public');
+        }
+
+        $slider->update($data);
+        return back()->with('success', 'Slider image updated!');
+    }
+
     public function deleteSlider(HeroSlider $slider)
     {
-        Storage::disk('public')->delete($slider->image_path);
+        if ($slider->image_path) {
+            Storage::disk('public')->delete($slider->image_path);
+        }
         $slider->delete();
         return back()->with('success', 'Slider image removed!');
     }
@@ -102,6 +130,30 @@ class SettingsController extends Controller
         ]);
 
         return back()->with('success', 'Program added successfully!');
+    }
+
+    public function updateProgram(Request $request, AcademyProgram $program)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'nullable|string',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($program->image) {
+                Storage::disk('public')->delete($program->image);
+            }
+            $data['image'] = $request->file('image')->store('programs', 'public');
+        }
+
+        $program->update($data);
+        return back()->with('success', 'Program updated successfully!');
     }
 
     public function deleteProgram(AcademyProgram $program)

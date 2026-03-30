@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    //
+    protected $fillable = [
+        'title',
+        'file_path',
+        'type',
+        'is_featured',
+    ];
 }

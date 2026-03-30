@@ -47,6 +47,30 @@ class AboutPageController extends Controller
         return back()->with('success', 'Facility added successfully!');
     }
 
+    public function updateFacility(Request $request, Facility $facility)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($facility->image) {
+                Storage::disk('public')->delete($facility->image);
+            }
+            $data['image'] = $request->file('image')->store('facilities', 'public');
+        }
+
+        $facility->update($data);
+        return back()->with('success', 'Facility updated successfully!');
+    }
+
     public function deleteFacility(Facility $facility)
     {
         if ($facility->image) {

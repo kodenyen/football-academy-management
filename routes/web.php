@@ -45,8 +45,10 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     Route::post('/settings/payment', [\App\Http\Controllers\WebsiteManager\PaymentSettingsController::class, 'update'])->name('settings.updatePayment');
     Route::post('/settings/mail', [WebsiteSettingsController::class, 'updateMail'])->name('settings.updateMail');
     Route::post('/settings/slider', [WebsiteSettingsController::class, 'storeSlider'])->name('settings.storeSlider');
+    Route::put('/settings/slider/{slider}', [WebsiteSettingsController::class, 'updateSlider'])->name('settings.updateSlider');
     Route::delete('/settings/slider/{slider}', [WebsiteSettingsController::class, 'deleteSlider'])->name('settings.deleteSlider');
     Route::post('/settings/program', [WebsiteSettingsController::class, 'storeProgram'])->name('settings.storeProgram');
+    Route::put('/settings/program/{program}', [WebsiteSettingsController::class, 'updateProgram'])->name('settings.updateProgram');
     Route::delete('/settings/program/{program}', [WebsiteSettingsController::class, 'deleteProgram'])->name('settings.deleteProgram');
     
     // Form Builder
@@ -60,7 +62,12 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     // About Page Management
     Route::post('/settings/about', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'updateAbout'])->name('settings.updateAbout');
     Route::post('/settings/facility', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'storeFacility'])->name('settings.storeFacility');
+    Route::put('/settings/facility/{facility}', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'updateFacility'])->name('settings.updateFacility');
     Route::delete('/settings/facility/{facility}', [\App\Http\Controllers\WebsiteManager\AboutPageController::class, 'deleteFacility'])->name('settings.deleteFacility');
+
+    // Gallery Management
+    Route::post('/gallery', [\App\Http\Controllers\WebsiteManager\GalleryController::class, 'store'])->name('gallery.store');
+    Route::delete('/gallery/{gallery}', [\App\Http\Controllers\WebsiteManager\GalleryController::class, 'destroy'])->name('gallery.destroy');
 });
 
 // Player Utilities

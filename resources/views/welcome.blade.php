@@ -51,11 +51,11 @@
 
                 <div class="flex items-center space-x-6">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn-primary py-2.5 px-6 text-xs">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
-                        <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
+                        <a href="{{ url('/dashboard') }}" class="hidden sm:block text-xs font-black text-primary uppercase tracking-[0.2em] hover:text-slate-900 transition">Dashboard</a>
                     @endauth
+                    
+                    <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
+                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
                     
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-900 p-2 hover:bg-slate-100 rounded-xl transition">
                         <i class="fa-solid fa-bars-staggered text-2xl" x-show="!mobileMenuOpen"></i>
@@ -78,6 +78,9 @@
                 <a href="{{ route('showcase') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Showcase</a>
                 <a href="{{ route('contact') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Contact</a>
                 <div class="pt-6 border-t border-slate-100 flex flex-col space-y-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="text-center font-black uppercase text-xs tracking-widest text-primary">Dashboard</a>
+                    @endauth
                     <a href="{{ route('login') }}" class="text-center font-black uppercase text-xs tracking-widest text-slate-900">Log In</a>
                     <a href="{{ route('register.trial') }}" class="btn-primary text-center">Join the Academy</a>
                 </div>
