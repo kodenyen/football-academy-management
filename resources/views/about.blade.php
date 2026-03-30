@@ -106,7 +106,7 @@
                 
                 <div class="relative group">
                     <div class="aspect-square bg-slate-950 rounded-[4rem] overflow-hidden border-[16px] border-slate-50 shadow-2xl relative">
-                        <iframe class="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 transition duration-1000 opacity-80" 
+                        <iframe class="absolute inset-0 w-full h-full transition duration-1000" 
                                 src="https://www.youtube.com/embed/{{ $settings->about_video_id ?? 'dQw4w9WgXcQ' }}?autoplay=1&mute=1&loop=1&playlist={{ $settings->about_video_id ?? 'dQw4w9WgXcQ' }}&controls=0" 
                                 frameborder="0" allow="autoplay; encrypted-media"></iframe>
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
