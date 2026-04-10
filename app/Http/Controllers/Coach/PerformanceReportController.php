@@ -26,7 +26,7 @@ class PerformanceReportController extends Controller
             'metrics' => 'nullable|array',
         ]);
 
-        PerformanceReport::create([
+        $report = PerformanceReport::create([
             'player_id' => $request->player_id,
             'coach_id' => Auth::id(),
             'date' => $request->date,
@@ -35,6 +35,22 @@ class PerformanceReportController extends Controller
             'detailed_metrics' => $request->metrics,
         ]);
 
-        return back()->with('success', 'Performance report uploaded!');
+        // Sync player's core stats based on this report
+        if ($request->has('metrics')) {
+            $player = Player::find($request->player_id);
+            $newStats = [];
+            foreach ($request->metrics as $key => $value) {
+                // Convert 1-10 rating to 1-100 percentage
+                $newStats[$key] = (int)$value * 10;
+            }
+            
+            // Merge with existing stats or just overwrite with latest
+            $player->stats = array_merge($player->stats ?? [
+                'speed' => 50, 'dribbling' => 50, 'shooting' => 50, 'passing' => 50
+            ], $newStats);
+            $player->save();
+        }
+
+        return back()->with('success', 'Performance report uploaded and player stats updated!');
     }
 }

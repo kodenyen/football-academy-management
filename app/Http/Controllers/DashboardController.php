@@ -15,7 +15,16 @@ class DashboardController extends Controller
         if ($user->isAdmin()) {
             return view('dashboard.admin');
         } elseif ($user->isCoach()) {
-            return view('dashboard.coach');
+            $fixtures = \App\Models\MatchFixture::where('match_date', '>=', now())
+                ->orderBy('match_date', 'asc')
+                ->take(3)
+                ->get();
+            $recentReports = \App\Models\PerformanceReport::with('player.user')
+                ->where('coach_id', $user->id)
+                ->latest()
+                ->take(5)
+                ->get();
+            return view('dashboard.coach', compact('fixtures', 'recentReports'));
         } elseif ($user->isWebsiteManager()) {
             return redirect()->route('website.settings.index');
         } else {
