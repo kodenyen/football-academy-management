@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="flex items-center space-x-6">
-                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
+                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Us</a>
                 </div>
             </div>
         </div>

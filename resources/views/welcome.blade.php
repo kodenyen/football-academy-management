@@ -55,7 +55,7 @@
                     @endauth
                     
                     <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
-                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Elite</a>
+                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Us</a>
                     
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-900 p-2 hover:bg-slate-100 rounded-xl transition">
                         <i class="fa-solid fa-bars-staggered text-2xl" x-show="!mobileMenuOpen"></i>
@@ -317,7 +317,7 @@
                         <li><a href="{{ route('about') }}" class="text-slate-400 hover:text-primary transition">Philosophy</a></li>
                         <li><a href="{{ route('gallery') }}" class="text-slate-400 hover:text-primary transition">Media Hub</a></li>
                         <li><a href="{{ route('showcase') }}" class="text-slate-400 hover:text-primary transition">Talent Showcase</a></li>
-                        <li><a href="{{ route('register.trial') }}" class="text-slate-400 hover:text-primary transition">Join Elite</a></li>
+                        <li><a href="{{ route('register.trial') }}" class="text-slate-400 hover:text-primary transition">Join Us</a></li>
                     </ul>
                 </div>
             </div>
