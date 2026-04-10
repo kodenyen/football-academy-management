@@ -42,6 +42,9 @@
                         </div>
 
                         <div class="mt-8 space-y-3">
+                             <a href="{{ route('profile.edit') }}" class="block w-full border border-zinc-700 text-gray-300 py-3 rounded-xl font-bold hover:bg-zinc-800 transition flex items-center justify-center">
+                                <i class="fa-solid fa-pen mr-2"></i> Edit Profile
+                             </a>
                              @if($player)
                              <a href="{{ route('player.pdf', $player) }}" class="block w-full bg-zinc-800 text-white py-3 rounded-xl font-bold hover:bg-zinc-700 transition flex items-center justify-center">
                                 <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i> Download Profile CV
