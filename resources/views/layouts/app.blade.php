@@ -15,6 +15,15 @@
         <!-- Scripts -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Link copied to clipboard!');
+                }).catch(err => {
+                    console.error('Error in copying text: ', err);
+                });
+            }
+        </script>
     </head>
     @php
         $siteSettings = \App\Models\SiteSetting::first();

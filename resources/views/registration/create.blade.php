@@ -36,8 +36,12 @@
 
         <div class="max-w-xl w-full card-elite-dark bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             <div class="text-center mb-10">
-                <h1 class="text-4xl font-black heading-elite tracking-tight mb-2">Book Your <span class="text-primary">Trial</span></h1>
-                <p class="text-slate-400 font-medium italic">Unleash your potential with the elite academy.</p>
+                <h1 class="text-4xl font-black heading-elite tracking-tight mb-2">
+                    {{ isset($isDirect) ? 'Player' : 'Book Your' }} <span class="text-primary">{{ isset($isDirect) ? 'Registration' : 'Trial' }}</span>
+                </h1>
+                <p class="text-slate-400 font-medium italic">
+                    {{ isset($isDirect) ? 'Complete your official academy registration.' : 'Unleash your potential with the elite academy.' }}
+                </p>
             </div>
 
             @if(session('success'))
@@ -45,12 +49,16 @@
                     <i class="fa-solid fa-circle-check text-xl"></i>
                     <div>
                         <p class="font-black uppercase text-sm tracking-widest">{{ session('success') }}</p>
-                        <a href="/" class="text-xs underline hover:text-white transition uppercase font-bold mt-1 inline-block">Return Home</a>
+                        @if(isset($isDirect))
+                            <a href="{{ route('login') }}" class="text-xs underline hover:text-white transition uppercase font-bold mt-1 inline-block">Login Now</a>
+                        @else
+                            <a href="/" class="text-xs underline hover:text-white transition uppercase font-bold mt-1 inline-block">Return Home</a>
+                        @endif
                     </div>
                 </div>
             @endif
 
-            <form action="{{ route('register.store') }}" method="POST" class="space-y-8">
+            <form action="{{ isset($isDirect) ? route('register.store_direct') : route('register.store') }}" method="POST" class="space-y-8">
                 @csrf
                 <div class="space-y-6">
                     <div>
@@ -72,16 +80,24 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Contact Info</label>
-                        <input type="text" name="contact_number" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="WhatsApp / Contact Number">
+                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Contact & Login</label>
+                        <div class="space-y-4">
+                            <input type="email" name="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="Email Address (For Login)">
+                            <input type="text" name="contact_number" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-slate-600 font-medium" placeholder="WhatsApp / Contact Number">
+                        </div>
+                        @if(isset($isDirect))
+                            <p class="text-[10px] text-primary/60 font-bold uppercase mt-2 ml-1 italic">* Your phone number will be your temporary password.</p>
+                        @endif
                     </div>
 
+                    @if(!isset($isDirect))
                     <div>
                         <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">Schedule</label>
                         <div class="relative">
                             <input type="date" name="trial_date" required class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium">
                         </div>
                     </div>
+                    @endif
 
                     <!-- Custom Fields -->
                     @if(count($customFields) > 0)
