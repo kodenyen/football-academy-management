@@ -13,7 +13,11 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            return view('dashboard.admin');
+            $totalPlayers = \App\Models\Player::count();
+            $totalCoaches = \App\Models\Coach::count();
+            $pendingTrialsCount = \App\Models\Registration::where('status', 'pending')->count();
+            $recentTrials = \App\Models\Registration::latest()->take(5)->get();
+            return view('dashboard.admin', compact('totalPlayers', 'totalCoaches', 'pendingTrialsCount', 'recentTrials'));
         } elseif ($user->isCoach()) {
             $fixtures = \App\Models\MatchFixture::where('match_date', '>=', now())
                 ->orderBy('match_date', 'asc')

@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
+        {{ __('Admin Dashboard') }}
     </x-slot>
 
     <div class="py-12">
@@ -11,16 +9,16 @@
                 <!-- Stat Card -->
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <div class="text-gray-400 text-sm uppercase font-black">Total Players</div>
-                    <div class="text-3xl font-black text-green-500 mt-2">124</div>
+                    <div class="text-3xl font-black text-green-500 mt-2">{{ $totalPlayers }}</div>
                 </div>
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('admin.coaches.index') }}'">
                     <div class="text-gray-400 text-sm uppercase font-black">Total Coaches</div>
-                    <div class="text-3xl font-black text-green-500 mt-2">5</div>
+                    <div class="text-3xl font-black text-green-500 mt-2">{{ $totalCoaches }}</div>
                     <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Coaches →</div>
                 </div>
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('admin.trials.index') }}'">
                     <div class="text-gray-400 text-sm uppercase font-black">Pending Trials</div>
-                    <div class="text-3xl font-black text-yellow-500 mt-2">12</div>
+                    <div class="text-3xl font-black text-yellow-500 mt-2">{{ $pendingTrialsCount }}</div>
                     <div class="text-[10px] text-gray-600 mt-2 uppercase font-black">Manage Trials →</div>
                 </div>
                 <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg p-6 hover:border-green-500 transition cursor-pointer" onclick="window.location='{{ route('website.settings.index') }}'">
@@ -64,14 +62,30 @@
                                 </tr>
                             </thead>
                             <tbody class="text-sm">
+                                @forelse($recentTrials as $trial)
                                 <tr class="border-b border-zinc-800/50">
-                                    <td class="py-4">John Doe</td>
-                                    <td class="py-4">12</td>
-                                    <td class="py-4">Forward</td>
-                                    <td class="py-4">Apr 10, 2026</td>
-                                    <td class="py-4"><span class="bg-yellow-500/10 text-yellow-500 px-2 py-1 rounded text-[10px] font-bold uppercase">Pending</span></td>
-                                    <td class="py-4"><button class="text-green-500 font-bold hover:underline">Manage</button></td>
+                                    <td class="py-4 font-bold">{{ $trial->name }}</td>
+                                    <td class="py-4">{{ $trial->age }}</td>
+                                    <td class="py-4">{{ $trial->position }}</td>
+                                    <td class="py-4 italic">{{ $trial->trial_date ? \Carbon\Carbon::parse($trial->trial_date)->format('M d, Y') : 'N/A' }}</td>
+                                    <td class="py-4">
+                                        @if($trial->status == 'pending')
+                                            <span class="bg-yellow-500/10 text-yellow-500 px-2 py-1 rounded text-[10px] font-bold uppercase border border-yellow-500/20">Pending</span>
+                                        @elseif($trial->status == 'approved')
+                                            <span class="bg-green-500/10 text-green-500 px-2 py-1 rounded text-[10px] font-bold uppercase border border-green-500/20">Approved</span>
+                                        @else
+                                            <span class="bg-red-500/10 text-red-500 px-2 py-1 rounded text-[10px] font-bold uppercase border border-red-500/20">{{ $trial->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-4">
+                                        <a href="{{ route('admin.trials.index') }}" class="text-green-500 font-bold hover:underline">Manage</a>
+                                    </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="py-4 text-center text-gray-500 italic">No trial registrations found.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
