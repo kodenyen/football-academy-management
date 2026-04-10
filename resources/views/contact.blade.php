@@ -43,6 +43,7 @@
                     <a href="{{ route('about') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">About</a>
                     <a href="{{ route('gallery') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Gallery</a>
                     <a href="{{ route('showcase') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Showcase</a>
+                    <a href="/#support" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Support</a>
                     <a href="{{ route('contact') }}" class="text-xs font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full">Contact</a>
                 </div>
 
@@ -160,10 +161,16 @@
                                        class="w-full bg-slate-50 text-slate-900 rounded-[2rem] border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 p-6 font-black uppercase italic text-lg outline-none transition-all">
                             </div>
                         </div>
+                        @php
+                            $supportCampaign = null;
+                            if(request('support')) {
+                                $supportCampaign = \App\Models\FundingCampaign::find(request('support'));
+                            }
+                        @endphp
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4 ml-2">Strategic Inquiry</label>
                             <textarea name="message" rows="5" placeholder="How can our elite coaches assist you?" required 
-                                      class="w-full bg-slate-50 text-slate-900 rounded-[2.5rem] border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 p-8 font-black uppercase italic text-lg outline-none transition-all resize-none"></textarea>
+                                      class="w-full bg-slate-50 text-slate-900 rounded-[2.5rem] border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 p-8 font-black uppercase italic text-lg outline-none transition-all resize-none">{{ $supportCampaign ? 'I would like to support the "' . $supportCampaign->title . '" fund. Please provide more details on how I can contribute.' : '' }}</textarea>
                         </div>
                         <button type="submit" class="btn-primary w-full py-6 text-sm">Deploy Message</button>
                     </form>
@@ -187,6 +194,13 @@
                 @endif
                 <span class="text-3xl font-black italic tracking-tighter uppercase text-white">ThinkRight<span class="text-primary">FA</span></span>
             </a>
+            <div class="mt-10 flex flex-wrap justify-center gap-8 text-[10px] font-black uppercase tracking-[0.3em]">
+                <a href="{{ route('about') }}" class="text-slate-400 hover:text-primary transition">Philosophy</a>
+                <a href="{{ route('gallery') }}" class="text-slate-400 hover:text-primary transition">Media Hub</a>
+                <a href="{{ route('showcase') }}" class="text-slate-400 hover:text-primary transition">Talent Showcase</a>
+                <a href="{{ route('donate.index') }}" class="text-slate-400 hover:text-primary transition">Support Fund</a>
+                <a href="{{ route('register.trial') }}" class="text-slate-400 hover:text-primary transition">Join Us</a>
+            </div>
             <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-10">
                 {{ $settings->footer_text ?? '© THINK RIGHT FOOTBALL ACADEMY. All Rights Reserved.' }}
             </p>

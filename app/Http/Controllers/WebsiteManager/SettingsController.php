@@ -8,6 +8,7 @@ use App\Models\HeroSlider;
 use App\Models\AcademyProgram;
 use App\Models\FormField;
 use App\Models\Gallery;
+use App\Models\FundingCampaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,8 +26,63 @@ class SettingsController extends Controller
         $coachFields = FormField::where('form_type', 'coach')->orderBy('order')->get();
         $facilities = \App\Models\Facility::orderBy('order')->get();
         $gallery = Gallery::latest()->get();
+        $campaigns = FundingCampaign::latest()->get();
         
-        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities', 'gallery'));
+        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities', 'gallery', 'campaigns'));
+    }
+
+    public function storeCampaign(Request $request)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'target_amount' => 'nullable|numeric|min:0',
+            'image' => 'nullable|image|max:2048',
+            'show_progress' => 'boolean',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('campaigns', 'public');
+        }
+
+        $data['show_progress'] = $request->has('show_progress');
+
+        FundingCampaign::create($data);
+        return back()->with('success', 'Funding campaign created!');
+    }
+
+    public function updateCampaign(Request $request, FundingCampaign $campaign)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'target_amount' => 'nullable|numeric|min:0',
+            'image' => 'nullable|image|max:2048',
+            'show_progress' => 'boolean',
+            'is_active' => 'boolean',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($campaign->image) {
+                Storage::disk('public')->delete($campaign->image);
+            }
+            $data['image'] = $request->file('image')->store('campaigns', 'public');
+        }
+
+        $data['show_progress'] = $request->has('show_progress');
+        $data['is_active'] = $request->has('is_active');
+
+        $campaign->update($data);
+        return back()->with('success', 'Funding campaign updated!');
+    }
+
+    public function deleteCampaign(FundingCampaign $campaign)
+    {
+        if ($campaign->image) {
+            Storage::disk('public')->delete($campaign->image);
+        }
+        $campaign->delete();
+        return back()->with('success', 'Funding campaign removed!');
     }
 
     public function updateGeneral(Request $request)

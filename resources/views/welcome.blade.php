@@ -237,6 +237,60 @@
     </section>
     @endif
 
+    @if($campaigns->count() > 0)
+    <!-- Funding Campaigns Section -->
+    <section id="support" class="py-32 bg-slate-950 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-24">
+                <span class="text-[10px] font-black uppercase text-primary tracking-[0.3em] mb-4 inline-block">Support Our Mission</span>
+                <h2 class="text-4xl md:text-7xl font-black uppercase tracking-tighter italic text-white leading-none">Empower The <span class="text-primary">Future</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                @foreach($campaigns as $campaign)
+                <div class="group bg-slate-900 border border-slate-800 rounded-[3rem] overflow-hidden hover:border-primary/30 transition duration-700">
+                    <div class="flex flex-col md:flex-row h-full">
+                        <div class="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
+                            @if($campaign->image)
+                                <img src="{{ asset('storage/' . $campaign->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 opacity-80 group-hover:opacity-100">
+                            @else
+                                <div class="w-full h-full bg-slate-800 flex items-center justify-center text-slate-700 text-5xl italic font-black">TRFA</div>
+                            @endif
+                            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent"></div>
+                        </div>
+                        <div class="md:w-1/2 p-10 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-black uppercase italic text-white tracking-tighter leading-none mb-4 group-hover:text-primary transition-colors">{{ $campaign->title }}</h3>
+                                <p class="text-slate-400 text-sm font-medium italic leading-relaxed mb-8">{{ $campaign->description }}</p>
+                                
+                                @if($campaign->show_progress)
+                                <div class="space-y-3 mb-8">
+                                    <div class="flex justify-between text-[10px] font-black uppercase tracking-[0.2em]">
+                                        <span class="text-slate-500">Raised: ₦{{ number_format($campaign->current_amount) }}</span>
+                                        <span class="text-primary">{{ $campaign->progress }}%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-700">
+                                        <div class="bg-primary h-full rounded-full transition-all duration-1000 group-hover:brightness-110" style="width: {{ $campaign->progress }}%"></div>
+                                    </div>
+                                    <div class="text-[9px] font-bold text-slate-600 uppercase tracking-widest text-right">Target: ₦{{ number_format($campaign->target_amount) }}</div>
+                                </div>
+                                @endif
+                            </div>
+
+                            <a href="{{ route('donate.index', ['campaign' => $campaign->id]) }}" class="btn-primary w-full py-4 text-[10px] flex items-center justify-center space-x-3">
+                                <i class="fa-solid fa-heart text-base"></i>
+                                <span>Support Fund</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- Latest News -->
     @if($posts->count() > 0)
     <section class="py-32 bg-white">
@@ -317,6 +371,7 @@
                         <li><a href="{{ route('about') }}" class="text-slate-400 hover:text-primary transition">Philosophy</a></li>
                         <li><a href="{{ route('gallery') }}" class="text-slate-400 hover:text-primary transition">Media Hub</a></li>
                         <li><a href="{{ route('showcase') }}" class="text-slate-400 hover:text-primary transition">Talent Showcase</a></li>
+                        <li><a href="{{ route('donate.index') }}" class="text-slate-400 hover:text-primary transition">Support Fund</a></li>
                         <li><a href="{{ route('register.trial') }}" class="text-slate-400 hover:text-primary transition">Join Us</a></li>
                     </ul>
                 </div>

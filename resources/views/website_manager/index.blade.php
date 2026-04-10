@@ -524,6 +524,106 @@
                         </form>
                     </section>
 
+                    <!-- Funding Campaigns -->
+                    <section id="campaigns" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                        <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
+                            <i class="fa-solid fa-hand-holding-dollar text-green-500 mr-3"></i> Funding Campaigns
+                        </h3>
+
+                        <form action="{{ route('website.settings.storeCampaign') }}" method="POST" enctype="multipart/form-data" class="bg-black/40 p-8 rounded-2xl border border-zinc-800 mb-12 space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Campaign Title</label>
+                                    <x-text-input name="title" class="w-full" required placeholder="e.g. New Equipment Fund" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Target Amount (NGN)</label>
+                                    <x-text-input type="number" name="target_amount" class="w-full" placeholder="e.g. 500000" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Campaign Description</label>
+                                <textarea name="description" rows="3" class="w-full bg-white text-black border-zinc-300 rounded-lg focus:ring-green-500" placeholder="Explain the purpose of this fund..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Campaign Image</label>
+                                    <input type="file" name="image" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-zinc-800 file:text-white hover:file:bg-zinc-700">
+                                </div>
+                                <div class="flex items-center space-x-6">
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <div class="relative">
+                                            <input type="checkbox" name="show_progress" checked class="sr-only peer">
+                                            <div class="w-10 h-6 bg-zinc-700 rounded-full peer peer-checked:bg-green-500 transition-colors"></div>
+                                            <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4"></div>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-400 group-hover:text-white transition uppercase tracking-widest">Show Progress Meter</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-6 border-t border-zinc-800">
+                                <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition">Create Campaign</button>
+                            </div>
+                        </form>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            @foreach($campaigns as $campaign)
+                            <div class="bg-black border border-zinc-800 rounded-2xl overflow-hidden hover:border-green-500/50 transition duration-500 group">
+                                <div class="h-48 bg-zinc-800 relative">
+                                    @if($campaign->image)
+                                        <img src="{{ asset('storage/' . $campaign->image) }}" class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-4xl text-zinc-700"><i class="fa-solid fa-image"></i></div>
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
+                                        <h4 class="text-xl font-black uppercase italic text-white">{{ $campaign->title }}</h4>
+                                    </div>
+                                    <div class="absolute top-4 right-4">
+                                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest {{ $campaign->is_active ? 'bg-green-500 text-black' : 'bg-red-500 text-white' }}">
+                                            {{ $campaign->is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="p-8 space-y-6">
+                                    <p class="text-xs text-gray-500 italic leading-relaxed">{{ $campaign->description }}</p>
+                                    
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <span class="block text-[10px] font-black uppercase text-gray-500 tracking-widest mb-1">Raised</span>
+                                            <span class="text-xl font-black text-green-500">₦{{ number_format($campaign->current_amount, 2) }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="block text-[10px] font-black uppercase text-gray-500 tracking-widest mb-1">Target</span>
+                                            <span class="text-xl font-black text-white">₦{{ number_format($campaign->target_amount, 2) }}</span>
+                                        </div>
+                                    </div>
+
+                                    @if($campaign->show_progress)
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                                            <span class="text-gray-500">Progress</span>
+                                            <span class="text-green-500">{{ $campaign->progress }}%</span>
+                                        </div>
+                                        <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                                            <div class="bg-green-500 h-full rounded-full transition-all duration-1000" style="width: {{ $campaign->progress }}%"></div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    <div class="flex items-center space-x-4 pt-4 border-t border-zinc-800">
+                                        <button onclick="toggleEditCampaign({{ $campaign->id }})" class="text-xs font-black uppercase text-blue-500 hover:text-blue-400 transition">Edit Details</button>
+                                        <form action="{{ route('website.settings.deleteCampaign', $campaign) }}" method="POST" onsubmit="return confirm('Remove this campaign?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-xs font-black uppercase text-red-500 hover:text-red-400 transition">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </section>
+
                     <!-- Form Builder Panel -->
                     <section id="form-builder" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">

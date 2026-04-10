@@ -70,6 +70,11 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     // Gallery Management
     Route::post('/gallery', [\App\Http\Controllers\WebsiteManager\GalleryController::class, 'store'])->name('gallery.store');
     Route::delete('/gallery/{gallery}', [\App\Http\Controllers\WebsiteManager\GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+    // Funding Campaigns
+    Route::post('/settings/campaign', [WebsiteSettingsController::class, 'storeCampaign'])->name('settings.storeCampaign');
+    Route::put('/settings/campaign/{campaign}', [WebsiteSettingsController::class, 'updateCampaign'])->name('settings.updateCampaign');
+    Route::delete('/settings/campaign/{campaign}', [WebsiteSettingsController::class, 'deleteCampaign'])->name('settings.deleteCampaign');
 });
 
 // Player Utilities
@@ -85,5 +90,10 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/player-profile', [\App\Http\Controllers\PlayerController::class, 'updateProfile'])->name('player.profile.update');
 });
+
+// Donation Routes
+Route::get('/donate', [\App\Http\Controllers\DonationController::class, 'index'])->name('donate.index');
+Route::post('/donate/initialize', [\App\Http\Controllers\DonationController::class, 'initialize'])->name('donate.initialize');
+Route::get('/donate/callback', [\App\Http\Controllers\DonationController::class, 'callback'])->name('donate.callback');
 
 require __DIR__.'/auth.php';

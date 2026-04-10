@@ -14,6 +14,7 @@ class Payment extends Model
         'status',
         'payment_type',
         'payment_data',
+        'campaign_id',
     ];
 
     protected $casts = [

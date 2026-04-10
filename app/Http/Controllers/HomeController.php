@@ -9,6 +9,7 @@ use App\Models\MatchFixture;
 use App\Models\SiteSetting;
 use App\Models\HeroSlider;
 use App\Models\AcademyProgram;
+use App\Models\FundingCampaign;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,8 @@ class HomeController extends Controller
         $programs = AcademyProgram::orderBy('order')->get();
         $posts = Post::latest()->take(3)->get();
         $upcomingMatches = MatchFixture::where('status', 'scheduled')->orderBy('match_date')->take(3)->get();
+        $campaigns = FundingCampaign::where('is_active', true)->latest()->get();
         
-        return view('welcome', compact('settings', 'sliders', 'programs', 'posts', 'upcomingMatches'));
+        return view('welcome', compact('settings', 'sliders', 'programs', 'posts', 'upcomingMatches', 'campaigns'));
     }
 }
