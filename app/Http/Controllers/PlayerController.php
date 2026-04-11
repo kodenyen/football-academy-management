@@ -13,9 +13,11 @@ class PlayerController extends Controller
 {
     public function downloadPdf(Player $player)
     {
+        $settings = \App\Models\SiteSetting::first() ?? \App\Models\SiteSetting::create();
         $data = [
             'player' => $player->load('user'),
             'stats' => $player->stats ?? ['speed' => 50, 'dribbling' => 50, 'shooting' => 50, 'passing' => 50],
+            'settings' => $settings
         ];
         
         $pdf = Pdf::loadView('player.pdf', $data);
