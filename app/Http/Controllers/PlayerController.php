@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
-use Illuminate\Http\Request;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode;
 
 class PlayerController extends Controller
 {
@@ -26,10 +29,18 @@ class PlayerController extends Controller
 
     public function generateQr(Player $player)
     {
-        $url = route('showcase', ['player' => $player->id]); // Link to public profile in showcase
-        $qrCode = new QrCode($url);
-        $writer = new PngWriter();
-        $result = $writer->write($qrCode);
+        $url = route('showcase', ['player' => $player->id]);
+        
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($url)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(ErrorCorrectionLevel::High)
+            ->size(300)
+            ->margin(10)
+            ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+            ->build();
         
         return response($result->getString())->header('Content-Type', 'image/png');
     }

@@ -219,10 +219,12 @@
                 <div class="qr-box">
                     @php
                         $qrUrl = route('showcase', ['player' => $player->id]);
-                        $qrCode = new \Endroid\QrCode\QrCode($qrUrl);
-                        $qrCode->setSize(100);
-                        $writer = new \Endroid\QrCode\Writer\PngWriter();
-                        $result = $writer->write($qrCode);
+                        $result = \Endroid\QrCode\Builder\Builder::create()
+                            ->writer(new \Endroid\QrCode\Writer\PngWriter())
+                            ->data($qrUrl)
+                            ->size(100)
+                            ->margin(0)
+                            ->build();
                         $qrBase64 = base64_encode($result->getString());
                     @endphp
                     <img src="data:image/png;base64,{{ $qrBase64 }}" style="width: 100%; height: 100%;">
