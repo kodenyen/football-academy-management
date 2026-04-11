@@ -36,6 +36,7 @@
                              <a href="#about-page" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-green-500">Manage About Page</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
+                             <a href="#campaigns" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-yellow-500">Funding Campaigns</a>
                              <a href="#gallery-mgmt" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-blue-500">Manage Gallery</a>
                              <a href="#paystack" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Paystack Settings</a>
                              <a href="#smtp" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">SMTP Settings</a>
@@ -525,7 +526,7 @@
                     </section>
 
                     <!-- Funding Campaigns -->
-                    <section id="campaigns" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                    <section id="campaigns" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl" x-data="{ editCampaign: null }">
                         <h3 class="text-xl font-black uppercase italic text-white mb-8 flex items-center">
                             <i class="fa-solid fa-hand-holding-dollar text-green-500 mr-3"></i> Funding Campaigns
                         </h3>
@@ -554,7 +555,7 @@
                                 <div class="flex items-center space-x-6">
                                     <label class="flex items-center space-x-3 cursor-pointer group">
                                         <div class="relative">
-                                            <input type="checkbox" name="show_progress" checked class="sr-only peer">
+                                            <input type="checkbox" name="show_progress" value="1" checked class="sr-only peer">
                                             <div class="w-10 h-6 bg-zinc-700 rounded-full peer peer-checked:bg-green-500 transition-colors"></div>
                                             <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4"></div>
                                         </div>
@@ -612,7 +613,7 @@
                                     @endif
 
                                     <div class="flex items-center space-x-4 pt-4 border-t border-zinc-800">
-                                        <button onclick="toggleEditCampaign({{ $campaign->id }})" class="text-xs font-black uppercase text-blue-500 hover:text-blue-400 transition">Edit Details</button>
+                                        <button type="button" @click="editCampaign = @js($campaign)" class="text-xs font-black uppercase text-blue-500 hover:text-blue-400 transition">Edit Details</button>
                                         <form action="{{ route('website.settings.deleteCampaign', $campaign) }}" method="POST" onsubmit="return confirm('Remove this campaign?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-xs font-black uppercase text-red-500 hover:text-red-400 transition">Delete</button>
@@ -622,6 +623,60 @@
                             </div>
                             @endforeach
                         </div>
+
+                        <!-- Edit Campaign Modal -->
+                        <template x-if="editCampaign">
+                            <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+                                <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 max-w-lg w-full shadow-2xl" @click.away="editCampaign = null">
+                                    <div class="flex justify-between items-center mb-8">
+                                        <h4 class="text-2xl font-black uppercase italic text-white tracking-tighter">Edit Campaign</h4>
+                                        <button type="button" @click="editCampaign = null" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                    </div>
+                                    
+                                    <form :action="'{{ route('website.settings.updateCampaign', ['campaign' => 'ID_PLACEHOLDER']) }}'.replace('ID_PLACEHOLDER', editCampaign.id)" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                        @csrf @method('PUT')
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Campaign Title</label>
+                                            <x-text-input name="title" x-model="editCampaign.title" required class="w-full" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Target Amount (NGN)</label>
+                                            <x-text-input type="number" name="target_amount" x-model="editCampaign.target_amount" class="w-full" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Description</label>
+                                            <textarea name="description" x-model="editCampaign.description" class="w-full bg-white border-zinc-300 text-black rounded-xl focus:ring-green-500 h-32 text-sm"></textarea>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                                <div class="relative">
+                                                    <input type="checkbox" name="show_progress" value="1" :checked="editCampaign.show_progress" class="sr-only peer">
+                                                    <div class="w-10 h-6 bg-zinc-700 rounded-full peer peer-checked:bg-green-500 transition-colors"></div>
+                                                    <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4"></div>
+                                                </div>
+                                                <span class="text-[10px] font-bold text-gray-400 group-hover:text-white transition uppercase tracking-widest">Progress Meter</span>
+                                            </label>
+                                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                                <div class="relative">
+                                                    <input type="checkbox" name="is_active" value="1" :checked="editCampaign.is_active" class="sr-only peer">
+                                                    <div class="w-10 h-6 bg-zinc-700 rounded-full peer peer-checked:bg-green-500 transition-colors"></div>
+                                                    <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4"></div>
+                                                </div>
+                                                <span class="text-[10px] font-bold text-gray-400 group-hover:text-white transition uppercase tracking-widest">Active Status</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Change Image (Optional)</label>
+                                            <input type="file" name="image" class="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-300 hover:file:bg-zinc-700">
+                                        </div>
+                                        <div class="flex justify-end space-x-4 pt-4">
+                                            <button type="button" @click="editCampaign = null" class="text-zinc-500 text-xs font-bold uppercase hover:text-white transition">Cancel</button>
+                                            <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black text-xs uppercase hover:bg-green-400 transition">Update Campaign</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </template>
                     </section>
 
                     <!-- Form Builder Panel -->
