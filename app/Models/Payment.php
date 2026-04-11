@@ -25,4 +25,9 @@ class Payment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function campaign()
+    {
+        return $this->belongsTo(FundingCampaign::class, 'campaign_id');
+    }
 }

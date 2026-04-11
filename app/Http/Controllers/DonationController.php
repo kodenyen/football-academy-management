@@ -98,6 +98,13 @@ class DonationController extends Controller
                             $campaign->increment('current_amount', $payment->amount);
                         }
                     }
+
+                    // Send Thank You Email
+                    try {
+                        Mail::to($payment->email)->send(new DonationThankYou($payment));
+                    } catch (\Exception $e) {
+                        Log::error('Could not send donation thank you email: ' . $e->getMessage());
+                    }
                     
                     return redirect()->route('home')->with('success', 'Thank you for your generous donation!');
                 }

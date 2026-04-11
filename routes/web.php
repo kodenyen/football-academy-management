@@ -28,8 +28,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('coaches', AdminCoachController::class);
     Route::get('/trials', [\App\Http\Controllers\Admin\TrialController::class, 'index'])->name('trials.index');
-    Route::patch('/trials/{registration}', [\App\Http\Controllers\Admin\TrialController::class, 'updateStatus'])->name('trials.update');
-});
+    Route::post('/trials/{registration}', [\App\Http\Controllers\Admin\TrialController::class, 'updateStatus'])->name('trials.update');
+
+    // Payment Logs
+    Route::get('/payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
+    });
 
 // Coach Routes
 Route::middleware(['auth', 'verified'])->prefix('coach')->name('coach.')->group(function () {

@@ -17,7 +17,8 @@ class DashboardController extends Controller
             $totalCoaches = \App\Models\Coach::count();
             $pendingTrialsCount = \App\Models\Registration::where('status', 'pending')->count();
             $recentTrials = \App\Models\Registration::latest()->take(5)->get();
-            return view('dashboard.admin', compact('totalPlayers', 'totalCoaches', 'pendingTrialsCount', 'recentTrials'));
+            $totalRevenue = \App\Models\Payment::where('status', 'success')->sum('amount');
+            return view('dashboard.admin', compact('totalPlayers', 'totalCoaches', 'pendingTrialsCount', 'recentTrials', 'totalRevenue'));
         } elseif ($user->isCoach()) {
             $fixtures = \App\Models\MatchFixture::where('match_date', '>=', now())
                 ->orderBy('match_date', 'asc')

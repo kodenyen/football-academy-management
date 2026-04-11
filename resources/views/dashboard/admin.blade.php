@@ -72,6 +72,13 @@
                     </div>
                     <i class="fa-solid fa-calendar-days text-3xl text-green-500 opacity-50"></i>
                 </div>
+                <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl flex items-center justify-between hover:border-green-500 transition cursor-pointer md:col-span-2" onclick="window.location='{{ route('admin.payments.index') }}'">
+                    <div>
+                        <h3 class="font-black uppercase italic text-white">Donation Logs</h3>
+                        <p class="text-xs text-gray-500 mt-1">Audit all incoming funds. Total Verified: <span class="text-green-500 font-bold">₦{{ number_format($totalRevenue, 2) }}</span></p>
+                    </div>
+                    <i class="fa-solid fa-file-invoice-dollar text-3xl text-green-500 opacity-50"></i>
+                </div>
             </div>
 
             <div class="bg-zinc-900 border border-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
