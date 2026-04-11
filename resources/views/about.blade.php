@@ -40,10 +40,10 @@
                 
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Home</a>
-                    <a href="{{ route('about') }}" class="text-xs font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full">About</a>
+                    <a href="{{ route('about') }}" class="text-xs font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full">About Us</a>
                     <a href="{{ route('gallery') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Gallery</a>
                     <a href="{{ route('showcase') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Showcase</a>
-                    <a href="/#support" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Support</a>
+                    <a href="{{ route('donate.index') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Support Us</a>
                     <a href="{{ route('contact') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Contact</a>
                 </div>
 

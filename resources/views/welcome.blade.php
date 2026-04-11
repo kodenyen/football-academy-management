@@ -42,9 +42,10 @@
                 <div class="hidden lg:block">
                     <div class="ml-10 flex items-center space-x-1">
                         <a href="/" class="px-4 py-2 text-xs font-black text-primary uppercase tracking-widest bg-primary/10 rounded-full">Home</a>
-                        <a href="{{ route('about') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">About</a>
+                        <a href="{{ route('about') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">About Us</a>
                         <a href="{{ route('gallery') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Gallery</a>
                         <a href="{{ route('showcase') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Showcase</a>
+                        <a href="{{ route('donate.index') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Support Us</a>
                         <a href="{{ route('contact') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Contact</a>
                     </div>
                 </div>
@@ -76,6 +77,7 @@
                 <a href="{{ route('about') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">About Us</a>
                 <a href="{{ route('gallery') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Gallery</a>
                 <a href="{{ route('showcase') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Showcase</a>
+                <a href="{{ route('donate.index') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Support Us</a>
                 <a href="{{ route('contact') }}" class="block px-6 py-4 rounded-2xl text-lg font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-tight transition">Contact</a>
                 <div class="pt-6 border-t border-slate-100 flex flex-col space-y-4">
                     @auth
@@ -98,7 +100,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center text-center p-6">
                         <div class="max-w-5xl">
-                            <span class="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8 animate-bounce">Elite Football Academy</span>
+                            <span class="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8 animate-bounce">{{ $settings->academy_name ?? 'Think Right Football Academy' }}</span>
                             <h1 class="text-5xl sm:text-7xl md:text-9xl font-black italic tracking-tighter leading-[0.9] mb-8 uppercase text-white">
                                 {!! str_replace(' ', '<br class="hidden md:block">', $slider->heading) !!}
                             </h1>
