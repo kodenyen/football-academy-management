@@ -219,15 +219,16 @@
                 <div class="qr-box">
                     @php
                         $qrUrl = route('showcase', ['player' => $player->id]);
-                        $result = \Endroid\QrCode\Builder\Builder::create()
+                        $qrResult = \Endroid\QrCode\Builder\Builder::create()
                             ->writer(new \Endroid\QrCode\Writer\PngWriter())
                             ->data($qrUrl)
+                            ->encoding(new \Endroid\QrCode\Encoding\Encoding('UTF-8'))
                             ->size(100)
                             ->margin(0)
                             ->build();
-                        $qrBase64 = base64_encode($result->getString());
+                        $qrBase64 = base64_encode($qrResult->getString());
                     @endphp
-                    <img src="data:image/png;base64,{{ $qrBase64 }}" style="width: 100%; height: 100%;">
+                    <img src="data:image/png;base64,{{ $qrBase64 }}" style="width: 100px; height: 100px; display: block;">
                 </div>
                 <div style="font-size: 7px; font-weight: 900; text-transform: uppercase; color: #94a3b8;">Scan for Live Profile</div>
             </div>

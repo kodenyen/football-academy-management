@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\Label\Label;
-use Endroid\QrCode\Logo\Logo;
 use Endroid\QrCode\RoundBlockSizeMode;
+use Illuminate\Http\Request;
 
 class PlayerController extends Controller
 {
@@ -33,7 +33,6 @@ class PlayerController extends Controller
         
         $result = Builder::create()
             ->writer(new PngWriter())
-            ->writerOptions([])
             ->data($url)
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(ErrorCorrectionLevel::High)
