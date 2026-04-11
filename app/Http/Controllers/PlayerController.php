@@ -27,7 +27,7 @@ class PlayerController extends Controller
     public function generateQr(Player $player)
     {
         $url = route('showcase', ['player' => $player->id]); // Link to public profile in showcase
-        $qrCode = QrCode::create($url);
+        $qrCode = new QrCode($url);
         $writer = new PngWriter();
         $result = $writer->write($qrCode);
         

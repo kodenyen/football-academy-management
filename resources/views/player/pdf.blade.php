@@ -217,7 +217,15 @@
             </div>
             <div class="qr-section">
                 <div class="qr-box">
-                    <img src="data:image/png;base64,{{ base64_encode(QrCode::format('png')->size(100)->generate(route('showcase', ['player' => $player->id]))) }}">
+                    @php
+                        $qrUrl = route('showcase', ['player' => $player->id]);
+                        $qrCode = new \Endroid\QrCode\QrCode($qrUrl);
+                        $qrCode->setSize(100);
+                        $writer = new \Endroid\QrCode\Writer\PngWriter();
+                        $result = $writer->write($qrCode);
+                        $qrBase64 = base64_encode($result->getString());
+                    @endphp
+                    <img src="data:image/png;base64,{{ $qrBase64 }}" style="width: 100%; height: 100%;">
                 </div>
                 <div style="font-size: 7px; font-weight: 900; text-transform: uppercase; color: #94a3b8;">Scan for Live Profile</div>
             </div>
