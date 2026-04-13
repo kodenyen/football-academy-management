@@ -78,6 +78,11 @@ Route::middleware(['auth', 'verified'])->prefix('website-manager')->name('websit
     Route::post('/settings/campaign', [WebsiteSettingsController::class, 'storeCampaign'])->name('settings.storeCampaign');
     Route::put('/settings/campaign/{campaign}', [WebsiteSettingsController::class, 'updateCampaign'])->name('settings.updateCampaign');
     Route::delete('/settings/campaign/{campaign}', [WebsiteSettingsController::class, 'deleteCampaign'])->name('settings.deleteCampaign');
+
+    // Showcase Videos
+    Route::post('/settings/showcase', [WebsiteSettingsController::class, 'storeShowcase'])->name('settings.storeShowcase');
+    Route::put('/settings/showcase/{showcase}', [WebsiteSettingsController::class, 'updateShowcase'])->name('settings.updateShowcase');
+    Route::delete('/settings/showcase/{showcase}', [WebsiteSettingsController::class, 'deleteShowcase'])->name('settings.deleteShowcase');
 });
 
 // Player Utilities

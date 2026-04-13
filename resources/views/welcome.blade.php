@@ -40,23 +40,23 @@
                 
                 <!-- Desktop Menu -->
                 <div class="hidden lg:block">
-                    <div class="ml-10 flex items-center space-x-1">
-                        <a href="/" class="px-4 py-2 text-xs font-black text-primary uppercase tracking-widest bg-primary/10 rounded-full">Home</a>
-                        <a href="{{ route('about') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">About Us</a>
-                        <a href="{{ route('gallery') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Gallery</a>
-                        <a href="{{ route('showcase') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Showcase</a>
-                        <a href="{{ route('donate.index') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Support Us</a>
-                        <a href="{{ route('contact') }}" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest">Contact</a>
+                    <div class="ml-6 flex items-center space-x-0.5">
+                        <a href="/" class="px-3 py-2 text-xs font-black text-primary uppercase tracking-widest bg-primary/10 rounded-full whitespace-nowrap">Home</a>
+                        <a href="{{ route('about') }}" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest whitespace-nowrap">About Us</a>
+                        <a href="{{ route('gallery') }}" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest whitespace-nowrap">Gallery</a>
+                        <a href="{{ route('showcase') }}" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest whitespace-nowrap">Showcase</a>
+                        <a href="{{ route('donate.index') }}" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest whitespace-nowrap">Support Us</a>
+                        <a href="{{ route('contact') }}" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-primary transition uppercase tracking-widest whitespace-nowrap">Contact</a>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-4">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="hidden sm:block text-xs font-black text-primary uppercase tracking-[0.2em] hover:text-slate-900 transition">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="hidden sm:block text-xs font-black text-primary uppercase tracking-[0.2em] hover:text-slate-900 transition whitespace-nowrap">Dashboard</a>
                     @endauth
                     
-                    <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
-                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Us</a>
+                    <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition whitespace-nowrap">Log in</a>
+                    <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-6 text-xs whitespace-nowrap">Join Us</a>
                     
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-900 p-2 hover:bg-slate-100 rounded-xl transition">
                         <i class="fa-solid fa-bars-staggered text-2xl" x-show="!mobileMenuOpen"></i>

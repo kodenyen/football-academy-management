@@ -34,6 +34,7 @@
                              <a href="#contact" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Contact Info</a>
                              <a href="#content" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Site Content</a>
                              <a href="#about-page" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-green-500">Manage About Page</a>
+                             <a href="#showcase-mgmt" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-red-500">Showcase Videos</a>
                              <a href="#slider" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Hero Slider</a>
                              <a href="#programs" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold">Manage Programs</a>
                              <a href="#campaigns" class="block px-4 py-3 rounded-xl hover:bg-zinc-800 transition font-bold text-yellow-500">Funding Campaigns</a>
@@ -521,6 +522,111 @@
                                 <button type="submit" class="bg-blue-500 text-white px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-blue-400 transition">Save SMTP Settings</button>
                             </div>
                         </form>
+                    </section>
+
+                    <!-- Showcase Videos -->
+                    <section id="showcase-mgmt" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl" x-data="{ editShowcase: null }">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-xl font-black uppercase italic text-white flex items-center">
+                                <i class="fa-solid fa-clapperboard text-green-500 mr-3"></i> Talent Showcase Videos
+                            </h3>
+                        </div>
+
+                        <form action="{{ route('website.settings.storeShowcase') }}" method="POST" class="bg-black/40 p-8 rounded-2xl border border-zinc-800 mb-12 space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Highlight Title / Player Name</label>
+                                    <x-text-input name="title" class="w-full" required placeholder="e.g. John Doe Highlight Reel" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Player Position (Optional)</label>
+                                    <x-text-input name="position" class="w-full" placeholder="e.g. Center Forward" />
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">YouTube URL</label>
+                                    <x-text-input name="youtube_url" class="w-full" required placeholder="https://www.youtube.com/watch?v=..." />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Link to Student Profile (Optional)</label>
+                                    <select name="player_id" class="w-full bg-white text-black border-zinc-300 rounded-lg focus:ring-green-500 font-bold">
+                                        <option value="">No Link (Team/Generic Video)</option>
+                                        @foreach($players as $player)
+                                            <option value="{{ $player->id }}">{{ $player->user->name }} ({{ $player->position }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-6 border-t border-zinc-800">
+                                <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-green-400 transition shadow-lg shadow-green-500/20">Add Video to Showcase</button>
+                            </div>
+                        </form>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            @foreach($showcaseVideos as $video)
+                            <div class="bg-black border border-zinc-800 rounded-2xl overflow-hidden hover:border-green-500/50 transition group">
+                                <div class="aspect-video bg-zinc-800 relative">
+                                    <img src="https://img.youtube.com/vi/{{ $video->video_id }}/mqdefault.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <i class="fa-solid fa-play text-white text-3xl opacity-50 group-hover:scale-125 transition"></i>
+                                    </div>
+                                    <div class="absolute top-4 right-4">
+                                        <span class="px-2 py-1 rounded bg-black/80 text-[8px] font-black uppercase text-white">{{ $video->is_active ? 'Public' : 'Hidden' }}</span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="text-white font-black uppercase italic text-sm mb-1 truncate">{{ $video->title }}</h4>
+                                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-4">{{ $video->position ?? 'Academy Feature' }}</p>
+                                    
+                                    <div class="flex items-center space-x-4 pt-4 border-t border-zinc-800">
+                                        <button type="button" @click="editShowcase = @js($video)" class="text-[10px] font-black uppercase text-blue-500 hover:text-blue-400 transition">Edit</button>
+                                        <form action="{{ route('website.settings.deleteShowcase', $video) }}" method="POST" onsubmit="return confirm('Remove this video?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-[10px] font-black uppercase text-red-500 hover:text-red-400 transition">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Edit Video Modal -->
+                        <div x-show="editShowcase" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 max-w-lg w-full shadow-2xl" @click.away="editShowcase = null">
+                                <div class="flex justify-between items-center mb-8">
+                                    <h4 class="text-2xl font-black uppercase italic text-white tracking-tighter">Edit Highlight</h4>
+                                    <button type="button" @click="editShowcase = null" class="text-zinc-500 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                </div>
+                                
+                                <form x-bind:action="'{{ route('website.settings.updateShowcase', ['showcase' => 'ID_PLACEHOLDER']) }}'.replace('ID_PLACEHOLDER', editShowcase ? editShowcase.id : '')" method="POST" class="space-y-6">
+                                    @csrf @method('PUT')
+                                    <div>
+                                        <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Title</label>
+                                        <x-text-input name="title" x-model="editShowcase ? editShowcase.title : ''" required class="w-full" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">YouTube URL</label>
+                                        <x-text-input name="youtube_url" x-model="editShowcase ? editShowcase.youtube_url : ''" required class="w-full" />
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <div class="relative">
+                                                <input type="checkbox" name="is_active" value="1" :checked="editShowcase ? editShowcase.is_active : false" class="sr-only peer">
+                                                <div class="w-10 h-6 bg-zinc-700 rounded-full peer peer-checked:bg-green-500 transition-colors"></div>
+                                                <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4"></div>
+                                            </div>
+                                            <span class="text-[10px] font-bold text-gray-400 group-hover:text-white transition uppercase tracking-widest">Show Publicly</span>
+                                        </label>
+                                    </div>
+                                    <div class="flex justify-end space-x-4 pt-4">
+                                        <button type="button" @click="editShowcase = null" class="text-zinc-500 text-xs font-bold uppercase hover:text-white transition">Cancel</button>
+                                        <button type="submit" class="bg-green-500 text-black px-8 py-3 rounded-xl font-black text-xs uppercase hover:bg-green-400 transition">Update Highlight</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </section>
 
                     <!-- Funding Campaigns -->

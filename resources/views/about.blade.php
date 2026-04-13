@@ -38,21 +38,21 @@
                     </a>
                 </div>
                 
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="/" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Home</a>
-                    <a href="{{ route('about') }}" class="text-xs font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full">About Us</a>
-                    <a href="{{ route('gallery') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Gallery</a>
-                    <a href="{{ route('showcase') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Showcase</a>
-                    <a href="{{ route('donate.index') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Support Us</a>
-                    <a href="{{ route('contact') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition">Contact</a>
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="/" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition whitespace-nowrap">Home</a>
+                    <a href="{{ route('about') }}" class="text-xs font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full whitespace-nowrap">About Us</a>
+                    <a href="{{ route('gallery') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition whitespace-nowrap">Gallery</a>
+                    <a href="{{ route('showcase') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition whitespace-nowrap">Showcase</a>
+                    <a href="{{ route('donate.index') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition whitespace-nowrap">Support Us</a>
+                    <a href="{{ route('contact') }}" class="text-xs font-black text-slate-900 uppercase tracking-widest hover:text-primary transition whitespace-nowrap">Contact</a>
                 </div>
 
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-4">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn-primary py-2.5 px-6 text-xs">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="btn-primary py-2.5 px-6 text-xs whitespace-nowrap">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition">Log in</a>
-                        <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-8 text-xs">Join Us</a>
+                        <a href="{{ route('login') }}" class="hidden sm:block text-xs font-black text-slate-900 uppercase tracking-[0.2em] hover:text-primary transition whitespace-nowrap">Log in</a>
+                        <a href="{{ route('register.trial') }}" class="btn-primary py-3 px-6 text-xs whitespace-nowrap">Join Us</a>
                     @endauth
                     
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-900 p-2 hover:bg-slate-100 rounded-xl transition">

@@ -9,6 +9,8 @@ use App\Models\AcademyProgram;
 use App\Models\FormField;
 use App\Models\Gallery;
 use App\Models\FundingCampaign;
+use App\Models\ShowcaseVideo;
+use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,8 +29,66 @@ class SettingsController extends Controller
         $facilities = \App\Models\Facility::orderBy('order')->get();
         $gallery = Gallery::latest()->get();
         $campaigns = FundingCampaign::latest()->get();
+        $showcaseVideos = ShowcaseVideo::with('player.user')->orderBy('order')->get();
+        $players = Player::with('user')->get();
         
-        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities', 'gallery', 'campaigns'));
+        return view('website_manager.index', compact('settings', 'sliders', 'programs', 'trialFields', 'coachFields', 'facilities', 'gallery', 'campaigns', 'showcaseVideos', 'players'));
+    }
+
+    public function storeShowcase(Request $request)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'youtube_url' => 'required|url',
+            'player_id' => 'nullable|exists:players,id',
+        ]);
+
+        $videoId = $this->extractYoutubeId($request->youtube_url);
+        if (!$videoId) {
+            return back()->with('error', 'Invalid YouTube URL.');
+        }
+
+        ShowcaseVideo::create(array_merge($data, [
+            'video_id' => $videoId,
+            'order' => ShowcaseVideo::count() + 1
+        ]));
+
+        return back()->with('success', 'Showcase video added!');
+    }
+
+    public function updateShowcase(Request $request, ShowcaseVideo $showcase)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'youtube_url' => 'required|url',
+            'player_id' => 'nullable|exists:players,id',
+            'is_active' => 'boolean',
+        ]);
+
+        $videoId = $this->extractYoutubeId($request->youtube_url);
+        if (!$videoId) {
+            return back()->with('error', 'Invalid YouTube URL.');
+        }
+
+        $data['video_id'] = $videoId;
+        $data['is_active'] = $request->has('is_active');
+
+        $showcase->update($data);
+        return back()->with('success', 'Showcase video updated!');
+    }
+
+    public function deleteShowcase(ShowcaseVideo $showcase)
+    {
+        $showcase->delete();
+        return back()->with('success', 'Showcase video removed!');
+    }
+
+    private function extractYoutubeId($url)
+    {
+        preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/", $url, $matches);
+        return $matches[1] ?? null;
     }
 
     public function storeCampaign(Request $request)
