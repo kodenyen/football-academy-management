@@ -224,11 +224,11 @@
                             size: 100,
                             margin: 0
                         );
-                        $writer = new \Endroid\QrCode\Writer\PngWriter();
+                        $writer = new \Endroid\QrCode\Writer\SvgWriter();
                         $qrResult = $writer->write($qrCode);
                         $qrBase64 = base64_encode($qrResult->getString());
                     @endphp
-                    <img src="data:image/png;base64,{{ $qrBase64 }}" style="width: 100px; height: 100px; display: block;">
+                    <img src="data:image/svg+xml;base64,{{ $qrBase64 }}" style="width: 100px; height: 100px; display: block;">
                 </div>
                 <div style="font-size: 7px; font-weight: 900; text-transform: uppercase; color: #94a3b8;">Scan for Live Profile</div>
             </div>

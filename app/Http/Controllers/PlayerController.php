@@ -6,7 +6,7 @@ use App\Models\Player;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\RoundBlockSizeMode;
@@ -40,10 +40,10 @@ class PlayerController extends Controller
             roundBlockSizeMode: RoundBlockSizeMode::Margin
         );
 
-        $writer = new PngWriter();
+        $writer = new SvgWriter();
         $result = $writer->write($qrCode);
         
-        return response($result->getString())->header('Content-Type', 'image/png');
+        return response($result->getString())->header('Content-Type', 'image/svg+xml');
     }
 
     public function updateProfile(Request $request)
