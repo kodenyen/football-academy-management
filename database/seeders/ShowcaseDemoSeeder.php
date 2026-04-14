@@ -15,27 +15,27 @@ class ShowcaseDemoSeeder extends Seeder
             $q->where('email', 'player@trfa.com');
         })->first();
 
-        // 1. Linked Highlight (Hybrid)
+        // 1. Linked Highlight (Hybrid) - Using a skills/training video that allows embedding
         ShowcaseVideo::updateOrCreate(
-            ['youtube_url' => 'https://www.youtube.com/watch?v=8_8Xm_idOfE'],
+            ['youtube_url' => 'https://www.youtube.com/watch?v=aqidX7_8Irw'],
             [
                 'player_id' => $player?->id,
-                'title' => 'Demo Student - Midfield Maestro',
-                'position' => 'Center Midfielder',
-                'video_id' => '8_8Xm_idOfE',
+                'title' => 'Demo Student - Technical Mastery',
+                'position' => 'Midfield General',
+                'video_id' => 'aqidX7_8Irw',
                 'order' => 1,
                 'is_active' => true,
             ]
         );
 
-        // 2. Academy Feature (Video Only)
+        // 2. Academy Feature (Video Only) - Professional training session
         ShowcaseVideo::updateOrCreate(
-            ['youtube_url' => 'https://www.youtube.com/watch?v=In_SAm8X8Nc'],
+            ['youtube_url' => 'https://www.youtube.com/watch?v=Pb6_N-FePFM'],
             [
                 'player_id' => null,
-                'title' => 'TRFA Elite Training Session',
-                'position' => 'Academy Feature',
-                'video_id' => 'In_SAm8X8Nc',
+                'title' => 'Elite Academy Training Drills',
+                'position' => 'Academy Showcase',
+                'video_id' => 'Pb6_N-FePFM',
                 'order' => 2,
                 'is_active' => true,
             ]
