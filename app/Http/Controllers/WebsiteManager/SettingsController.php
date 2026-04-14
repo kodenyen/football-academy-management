@@ -159,6 +159,11 @@ class SettingsController extends Controller
             'secondary_color' => 'sometimes|required|string',
             'background_color' => 'sometimes|required|string',
             'about_us_content' => 'nullable|string',
+            'heading_font' => 'nullable|string',
+            'body_font' => 'nullable|string',
+            'hero_heading_size' => 'nullable|string',
+            'hero_subheading_size' => 'nullable|string',
+            'section_heading_size' => 'nullable|string',
         ]);
 
         if ($request->hasFile('logo')) {

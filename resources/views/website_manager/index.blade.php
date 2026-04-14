@@ -83,6 +83,33 @@
                                     <input type="color" name="background_color" value="{{ $settings->background_color ?? '#18181b' }}" class="w-full h-10 bg-white border-zinc-300 rounded">
                                 </div>
                             </div>
+
+                            <div class="pt-8 border-t border-zinc-800">
+                                <h4 class="text-sm font-black uppercase tracking-widest text-green-500 mb-6">Typography Settings</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Heading Font (Google Font Name)</label>
+                                        <x-text-input name="heading_font" value="{{ $settings->heading_font ?? 'Inter' }}" class="w-full" placeholder="e.g. Montserrat, Russo One" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Body Font (Google Font Name)</label>
+                                        <x-text-input name="body_font" value="{{ $settings->body_font ?? 'Inter' }}" class="w-full" placeholder="e.g. Open Sans, Roboto" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Hero Heading Size (Tailwind Classes)</label>
+                                        <x-text-input name="hero_heading_size" value="{{ $settings->hero_heading_size ?? 'text-5xl md:text-8xl' }}" class="w-full" placeholder="text-5xl md:text-8xl" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Hero Subheading Size (Tailwind Classes)</label>
+                                        <x-text-input name="hero_subheading_size" value="{{ $settings->hero_subheading_size ?? 'text-lg md:text-xl' }}" class="w-full" placeholder="text-lg md:text-xl" />
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Section Heading Size (Tailwind Classes)</label>
+                                        <x-text-input name="section_heading_size" value="{{ $settings->section_heading_size ?? 'text-4xl md:text-6xl' }}" class="w-full" placeholder="text-4xl md:text-6xl" />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="flex justify-end pt-4">
                                 <button type="submit" class="bg-green-500 text-black px-6 py-2 rounded-lg font-black uppercase text-xs tracking-widest hover:bg-green-400 transition">Save Branding</button>
                             </div>
