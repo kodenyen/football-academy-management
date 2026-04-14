@@ -4,13 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $settings->academy_name }} - Elite Football Excellence</title>
+    
+    <!-- Dynamic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ str_replace(' ', '+', $settings->heading_font ?? 'Inter') }}:wght@400;700;900&family={{ str_replace(' ', '+', $settings->body_font ?? 'Inter') }}:wght@400;500;600&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: {{ $settings->primary_color ?? '#00FF41' }};
             --secondary-color: {{ $settings->secondary_color ?? '#0f172a' }};
+            --heading-font: '{{ $settings->heading_font ?? 'Inter' }}', sans-serif;
+            --body-font: '{{ $settings->body_font ?? 'Inter' }}', sans-serif;
         }
+        body { font-family: var(--body-font); }
+        h1, h2, h3, h4, h5, h6, .heading-elite { font-family: var(--heading-font); }
+        
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
         .border-primary { border-color: var(--primary-color); }
@@ -101,10 +112,10 @@
                     <div class="absolute inset-0 flex items-center justify-center text-center p-6">
                         <div class="max-w-5xl">
                             <span class="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8 animate-bounce">{{ $settings->academy_name ?? 'Think Right Football Academy' }}</span>
-                            <h1 class="text-5xl sm:text-7xl md:text-9xl font-black italic tracking-tighter leading-[0.9] mb-8 uppercase text-white">
+                            <h1 class="{{ $settings->hero_heading_size ?? 'text-5xl sm:text-7xl md:text-9xl' }} font-black italic tracking-tighter leading-[0.9] mb-8 uppercase text-white">
                                 {!! str_replace(' ', '<br class="hidden md:block">', $slider->heading) !!}
                             </h1>
-                            <p class="text-base sm:text-xl text-slate-300 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">{{ $slider->sub_heading }}</p>
+                            <p class="{{ $settings->hero_subheading_size ?? 'text-base sm:text-xl' }} text-slate-300 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">{{ $slider->sub_heading }}</p>
                             <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                                 <a href="{{ route('register.trial') }}" class="btn-primary px-12 py-5 text-sm w-full sm:w-auto">Book Your Trial Now</a>
                                 <a href="{{ route('about') }}" class="px-12 py-5 border-2 border-white/20 hover:border-white/40 text-white rounded-2xl font-black uppercase tracking-widest transition backdrop-blur-sm text-sm w-full sm:w-auto">Learn More</a>
@@ -297,7 +308,7 @@
     @if($posts->count() > 0)
     <section class="py-32 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-20 italic uppercase tracking-tighter text-slate-900">Latest <span class="text-primary">Intel</span></h2>
+            <h2 class="{{ $settings->section_heading_size ?? 'text-4xl md:text-6xl' }} font-black mb-20 italic uppercase tracking-tighter text-slate-900">Latest <span class="text-primary">Intel</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 @foreach($posts as $post)
                 <div class="group text-left">

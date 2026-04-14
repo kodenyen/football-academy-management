@@ -4,13 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>About Us - {{ $settings->academy_name }} - Elite Football Excellence</title>
+
+    <!-- Dynamic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ str_replace(' ', '+', $settings->heading_font ?? 'Inter') }}:wght@400;700;900&family={{ str_replace(' ', '+', $settings->body_font ?? 'Inter') }}:wght@400;500;600&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: {{ $settings->primary_color ?? '#00FF41' }};
             --secondary-color: {{ $settings->secondary_color ?? '#0f172a' }};
+            --heading-font: '{{ $settings->heading_font ?? 'Inter' }}', sans-serif;
+            --body-font: '{{ $settings->body_font ?? 'Inter' }}', sans-serif;
         }
+        body { font-family: var(--body-font); }
+        h1, h2, h3, h4, h5, h6, .heading-elite { font-family: var(--heading-font); }
+
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
         .border-primary { border-color: var(--primary-color); }
@@ -129,7 +140,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-24">
                 <span class="text-[10px] font-black uppercase text-primary tracking-[0.3em] mb-4 inline-block">Professional Environment</span>
-                <h2 class="text-4xl md:text-7xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">World-Class <span class="text-primary">Facilities</span></h2>
+                <h2 class="{{ $settings->section_heading_size ?? 'text-4xl md:text-7xl' }} font-black uppercase tracking-tighter italic text-slate-900 leading-none">World-Class <span class="text-primary">Facilities</span></h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

@@ -3,19 +3,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Media Gallery - {{ $settings->academy_name }} - Elite Football Excellence</title>
+    <title>Gallery - {{ $settings->academy_name }} - Elite Football Excellence</title>
+
+    <!-- Dynamic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ str_replace(' ', '+', $settings->heading_font ?? 'Inter') }}:wght@400;700;900&family={{ str_replace(' ', '+', $settings->body_font ?? 'Inter') }}:wght@400;500;600&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: {{ $settings->primary_color ?? '#00FF41' }};
             --secondary-color: {{ $settings->secondary_color ?? '#0f172a' }};
+            --heading-font: '{{ $settings->heading_font ?? 'Inter' }}', sans-serif;
+            --body-font: '{{ $settings->body_font ?? 'Inter' }}', sans-serif;
         }
+        body { font-family: var(--body-font); }
+        h1, h2, h3, h4, h5, h6, .heading-elite { font-family: var(--heading-font); }
+
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
         .border-primary { border-color: var(--primary-color); }
     </style>
-</head>
+    </head>
 <body class="text-slate-900 font-sans antialiased bg-white selection:bg-primary/30">
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200" x-data="{ mobileMenuOpen: false }">

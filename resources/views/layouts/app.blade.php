@@ -7,10 +7,18 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        @php
+            $siteSettings = \App\Models\SiteSetting::first();
+            $primaryColor = $siteSettings->primary_color ?? '#00FF41';
+            $secondaryColor = $siteSettings->secondary_color ?? '#0f172a';
+            $headingFont = $siteSettings->heading_font ?? 'Inter';
+            $bodyFont = $siteSettings->body_font ?? 'Inter';
+        @endphp
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family={{ str_replace(' ', '+', $headingFont) }}:wght@400;700;800&family={{ str_replace(' ', '+', $bodyFont) }}:wght@400;500;600&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -25,17 +33,16 @@
             }
         </script>
     </head>
-    @php
-        $siteSettings = \App\Models\SiteSetting::first();
-        $primaryColor = $siteSettings->primary_color ?? '#00FF41';
-        $secondaryColor = $siteSettings->secondary_color ?? '#0f172a';
-    @endphp
     <style>
         :root {
             --primary-color: {{ $primaryColor }};
             --secondary-color: {{ $secondaryColor }};
+            --heading-font: '{{ $headingFont }}', sans-serif;
+            --body-font: '{{ $bodyFont }}', sans-serif;
         }
-        body { background-color: #f1f5f9; color: #0f172a; }
+        body { background-color: #f1f5f9; color: #0f172a; font-family: var(--body-font); }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--heading-font); }
+        
         .bg-primary { background-color: var(--primary-color) !important; }
         .text-primary { color: var(--primary-color) !important; }
         .border-primary { border-color: var(--primary-color) !important; }
