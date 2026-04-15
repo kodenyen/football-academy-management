@@ -105,7 +105,7 @@
         <div class="absolute inset-0 bg-primary/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <span class="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8">Scouting Network</span>
-            <h1 class="text-5xl md:text-8xl font-black italic tracking-tighter uppercase text-white leading-none mb-10">
+            <h1 class="{{ $settings->hero_heading_size ?? 'text-5xl md:text-8xl' }} font-black italic tracking-tighter uppercase text-white leading-none mb-10">
                 Talent <span class="text-primary">Showcase</span>
             </h1>
             <p class="text-slate-400 max-w-2xl mx-auto text-lg font-medium leading-relaxed italic">The digital frontier for the world's next football icons.</p>
