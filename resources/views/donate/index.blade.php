@@ -97,12 +97,12 @@
                         <span>Secure Donation</span>
                     </button>
 
-                    <div class="flex items-center justify-center space-x-4 opacity-30 grayscale">
-                        <img src="https://paystack.com/assets/img/login/paystack-logo.png" class="h-4">
-                        <div class="h-4 w-px bg-slate-700"></div>
-                        <span class="text-[8px] font-black uppercase tracking-widest">Secured by Paystack</span>
-                    </div>
-                </form>
+                    <div class="flex items-center justify-center space-x-4 opacity-60">
+                        <i class="fa-solid fa-lock text-[10px] text-gray-400"></i>
+                        <img src="https://paystack.com/assets/img/login/paystack-logo.png" class="h-3" onerror="this.src='https://dashboard.paystack.com/assets/images/logo.svg'">
+                        <div class="h-4 w-px bg-slate-800"></div>
+                        <span class="text-[8px] font-black uppercase tracking-widest text-gray-400">Secured by Paystack</span>
+                    </div>                </form>
             </div>
 
             <p class="text-center text-slate-600 text-[10px] mt-12 uppercase tracking-[0.2em] font-black">
