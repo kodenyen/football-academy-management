@@ -27,7 +27,7 @@
         .border-primary { border-color: var(--primary-color); }
     </style>
     </head>
-<body class="text-slate-900 font-sans antialiased bg-white selection:bg-primary/30">
+<body class="text-slate-900 font-sans antialiased bg-white selection:bg-primary/30" x-data="{ activeImage: null }">
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,7 +114,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
                 @forelse($items as $item)
-                <div class="group relative aspect-[4/5] bg-slate-950 rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition duration-700">
+                <div class="group relative aspect-[4/5] bg-slate-950 rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition duration-700 cursor-pointer"
+                     @click="activeImage = @js($item)">
                     <img src="{{ asset('storage/' . $item->file_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 opacity-80 group-hover:opacity-100">
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition p-10 flex flex-col justify-end">
@@ -137,6 +138,36 @@
             <div class="mt-20">
                 {{ $items->links() }}
             </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div x-show="activeImage" 
+         x-cloak
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-slate-950/95 backdrop-blur-2xl"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         @keydown.escape.window="activeImage = null">
+        
+        <div class="relative w-full max-w-5xl max-h-full flex flex-col items-center" @click.away="activeImage = null">
+            <div class="relative w-full rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,255,65,0.1)] border border-white/10">
+                <template x-if="activeImage">
+                    <img :src="'/storage/' + activeImage.file_path" 
+                         class="w-full h-auto max-h-[80vh] object-contain bg-black/40">
+                </template>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                    <h3 x-text="activeImage?.title || 'TRFA Action'" class="text-2xl font-black text-white italic uppercase tracking-tighter"></h3>
+                </div>
+            </div>
+            
+            <button @click="activeImage = null" class="mt-8 w-16 h-16 bg-white/10 hover:bg-primary hover:text-slate-950 rounded-full flex items-center justify-center transition-all duration-300 text-white group">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
         </div>
     </div>
 

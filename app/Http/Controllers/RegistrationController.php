@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use App\Models\FormField;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class RegistrationController extends Controller
 {
@@ -49,7 +51,10 @@ class RegistrationController extends Controller
             }
         }
 
-        Registration::create(array_merge($validated, ['custom_fields' => $customData]));
+        Registration::create(array_merge($validated, [
+            'registration_type' => 'trial',
+            'custom_fields' => $customData
+        ]));
 
         return back()->with('success', 'Registration submitted successfully!');
     }
@@ -57,42 +62,57 @@ class RegistrationController extends Controller
     public function storeDirect(Request $request)
     {
         $rules = [
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:5|max:25',
+            'first_name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|string',
+            'address' => 'required|string',
+            'lga' => 'required|string',
+            'state_of_origin' => 'required|string',
             'position' => 'required|string',
             'contact_number' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'passport_number' => 'nullable|string',
+            'passport_issuing_date' => 'nullable|date',
+            'passport_expiry_date' => 'nullable|date',
+            'passport_photo' => 'required|image|max:2048',
+            'guardian_name' => 'required|string',
+            'guardian_contact' => 'required|string',
+            'guardian_address' => 'required|string',
         ];
-
-        $customFields = FormField::where('form_type', 'trial')->get();
-        foreach($customFields as $field) {
-            if($field->is_required) {
-                $rules['custom_' . $field->field_name] = 'required';
-            }
-        }
 
         $validated = $request->validate($rules);
 
-        $customData = [];
-        foreach($customFields as $field) {
-            $key = 'custom_' . $field->field_name;
-            if($request->has($key)) {
-                $customData[$field->field_name] = $request->input($key);
-            }
+        // Calculate age from DOB
+        $dob = new \DateTime($request->date_of_birth);
+        $now = new \DateTime();
+        $age = $now->diff($dob)->y;
+        $validated['age'] = $age;
+
+        // Handle Passport Photo
+        if ($request->hasFile('passport_photo')) {
+            $validated['passport_photo'] = $request->file('passport_photo')->store('passports', 'public');
         }
 
-        $registration = Registration::create(array_merge($validated, [
-            'status' => 'approved', 
-            'trial_date' => now(),
-            'custom_fields' => $customData
-        ]));
+        // Handle Signatures (Base64 from canvas)
+        $validated['player_signature'] = $request->player_signature;
+        $validated['guardian_signature'] = $request->guardian_signature;
+
+        $fullName = $request->first_name . ' ' . $request->surname;
+        $validated['name'] = $fullName;
+        $validated['registration_type'] = 'player';
+        $validated['status'] = 'approved';
+        $validated['trial_date'] = now();
+
+        $registration = Registration::create($validated);
 
         // Auto-create user and player
         $password = $registration->contact_number;
         $user = \App\Models\User::create([
-            'name' => $registration->name,
+            'name' => $fullName,
             'email' => $registration->email,
-            'password' => \Illuminate\Support\Facades\Hash::make($password),
+            'password' => Hash::make($password),
             'role' => 'player',
         ]);
 
@@ -100,6 +120,7 @@ class RegistrationController extends Controller
             'user_id' => $user->id,
             'age' => $registration->age,
             'position' => $registration->position,
+            'profile_photo' => $registration->passport_photo,
             'stats' => ['speed' => 50, 'dribbling' => 50, 'shooting' => 50, 'passing' => 50],
         ]);
 
