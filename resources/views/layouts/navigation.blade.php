@@ -34,6 +34,9 @@
                         <x-nav-link :href="route('admin.coaches.index')" :active="request()->routeIs('admin.coaches.*')">
                             {{ __('Coaches') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.players.index')" :active="request()->routeIs('admin.players.*')">
+                            {{ __('Players') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.trials.index')" :active="request()->routeIs('admin.trials.*')">
                             {{ __('Trial Requests') }}
                         </x-nav-link>
@@ -115,6 +118,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.players.index')" :active="request()->routeIs('admin.players.*')">
+                    {{ __('Manage Players') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -31,18 +31,30 @@
         <!-- Logo -->
         <div class="mb-12 text-center transform transition duration-700 hover:scale-110">
             <a href="/" class="flex items-center justify-center space-x-3">
-                <div class="bg-primary p-2 rounded-xl rotate-12 group-hover:rotate-0 transition-transform">
-                    <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
+                @if($settings && $settings->logo)
+                    <img src="{{ asset('storage/' . $settings->logo) }}" alt="Logo" class="w-16 h-16 object-contain">
+                @else
+                    <div class="bg-primary p-2 rounded-xl rotate-12 group-hover:rotate-0 transition-transform">
+                        <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                @endif
                 <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">
-                    ThinkRight<span class="text-primary">FA</span>
+                    {{ $settings->site_name ?? 'ThinkRight' }}<span class="text-primary">{{ $settings->site_suffix ?? 'FA' }}</span>
                 </span>
             </a>
         </div>
 
         <div class="{{ isset($isDirect) ? 'max-w-4xl' : 'max-w-xl' }} w-full card-elite-dark bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            @if(isset($isDirect))
+            <div class="bg-blue-500/10 border border-blue-500/50 p-4 rounded-xl mb-8 text-center animate-pulse">
+                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">
+                    <i class="fa-solid fa-circle-info mr-2"></i> After registration, use your <span class="text-white">Email</span> as Username and <span class="text-white">Phone Number</span> as Password to login.
+                </p>
+            </div>
+            @endif
+
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-black heading-elite tracking-tight mb-2">
                     {{ isset($isDirect) ? 'Player' : 'Book Your' }} <span class="text-primary">{{ isset($isDirect) ? 'Registration' : 'Trial' }}</span>

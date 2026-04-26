@@ -29,6 +29,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('coaches', AdminCoachController::class);
     Route::get('/trials', [\App\Http\Controllers\Admin\TrialController::class, 'index'])->name('trials.index');
     Route::patch('/trials/{registration}', [\App\Http\Controllers\Admin\TrialController::class, 'updateStatus'])->name('trials.update');
+    
+    // Player Management
+    Route::get('/players', [\App\Http\Controllers\Admin\PlayerManagementController::class, 'index'])->name('players.index');
+    Route::get('/players/{player}', [\App\Http\Controllers\Admin\PlayerManagementController::class, 'show'])->name('players.show');
+    Route::delete('/players/{player}', [\App\Http\Controllers\Admin\PlayerManagementController::class, 'destroy'])->name('players.destroy');
 
     // Payment Logs
     Route::get('/payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
