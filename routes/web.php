@@ -117,14 +117,14 @@ Route::get('/run-deploy', function () {
             $output .= "App Key Generated.<br>";
         }
 
-        // 2. Clear Caches
+        // 2. Run migrations FIRST (Creates the 'cache' and 'sessions' tables)
+        Artisan::call('migrate', ['--force' => true]);
+        $output .= "Migrations Run Successfully.<br>";
+
+        // 3. Now clear Caches safely
         Artisan::call('config:clear');
         Artisan::call('cache:clear');
         $output .= "Caches Cleared.<br>";
-
-        // 3. Run migrations
-        Artisan::call('migrate', ['--force' => true]);
-        $output .= "Migrations Run.<br>";
 
         // 4. Run seeds
         Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
