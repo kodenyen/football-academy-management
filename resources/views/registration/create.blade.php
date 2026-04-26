@@ -27,25 +27,22 @@
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/5 rounded-full blur-[100px] -z-10 animate-pulse" style="animation-delay: 2s"></div>
 
-    <div class="flex flex-col items-center justify-center px-4 py-16">
-        <!-- Logo -->
-        <div class="mb-12 text-center transform transition duration-700 hover:scale-110">
-            <a href="/" class="flex items-center justify-center space-x-3">
-                @if($settings && $settings->logo)
-                    <img src="{{ asset('storage/' . $settings->logo) }}" alt="Logo" class="w-16 h-16 object-contain">
-                @else
-                    <div class="bg-primary p-2 rounded-xl rotate-12 group-hover:rotate-0 transition-transform">
-                        <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                @endif
-                <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">
-                    {{ $settings->site_name ?? 'ThinkRight' }}<span class="text-primary">{{ $settings->site_suffix ?? 'FA' }}</span>
-                </span>
-            </a>
-        </div>
-
+    <div class="mb-12 text-center transform transition duration-700 hover:scale-110">
+        <a href="/" class="flex items-center justify-center space-x-3">
+            @if($settings && $settings->academy_logo)
+                <img src="{{ asset('storage/' . $settings->academy_logo) }}" alt="Logo" class="w-16 h-16 object-contain">
+            @else
+                <div class="bg-primary p-2 rounded-xl rotate-12 group-hover:rotate-0 transition-transform">
+                    <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+            @endif
+            <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">
+                {{ $settings->academy_name ?? 'ThinkRightFA' }}
+            </span>
+        </a>
+    </div>
         <div class="{{ isset($isDirect) ? 'max-w-4xl' : 'max-w-xl' }} w-full card-elite-dark bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             @if(isset($isDirect))
             <div class="bg-blue-500/10 border border-blue-500/50 p-4 rounded-xl mb-8 text-center animate-pulse">
