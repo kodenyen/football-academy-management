@@ -126,7 +126,8 @@ Route::get('/run-deploy', function () {
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
         Artisan::call('route:clear');
-        $output .= "All Caches (Config, Cache, View, Route) Cleared.<br>";
+        Artisan::call('storage:link');
+        $output .= "All Caches Cleared and Storage Link Created.<br>";
 
         // 4. Run seeds
         Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
