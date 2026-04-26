@@ -104,4 +104,20 @@ Route::get('/donate', [\App\Http\Controllers\DonationController::class, 'index']
 Route::post('/donate/initialize', [\App\Http\Controllers\DonationController::class, 'initialize'])->name('donate.initialize');
 Route::get('/donate/callback', [\App\Http\Controllers\DonationController::class, 'callback'])->name('donate.callback');
 
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-deploy', function () {
+    try {
+        // Run migrations
+        Artisan::call('migrate', ['--force' => true]);
+        // Run seeds
+        Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
+        
+        return "Deployment commands finished successfully!<br><pre>" . Artisan::output() . "</pre>";
+    } catch (\Exception $e) {
+        return "Error during deployment: " . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';
