@@ -130,7 +130,8 @@ Route::get('/run-deploy', function () {
 
         // 4. Run seeds
         Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
-        $output .= "Database Seeded.<br>";
+        Artisan::call('db:seed', ['--class' => 'DemoUserSeeder', '--force' => true]);
+        $output .= "Database Seeded (Academy & Demo Users).<br>";
         
         return "Deployment commands finished successfully!<br><br>" . $output . "<br><pre>" . Artisan::output() . "</pre>";
     } catch (\Exception $e) {
