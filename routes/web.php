@@ -109,14 +109,30 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/run-deploy', function () {
     try {
-        // Run migrations
-        Artisan::call('migrate', ['--force' => true]);
-        // Run seeds
-        Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
+        $output = "";
         
-        return "Deployment commands finished successfully!<br><pre>" . Artisan::output() . "</pre>";
+        // 1. Generate Key if missing
+        if (!config('app.key')) {
+            Artisan::call('key:generate', ['--force' => true]);
+            $output .= "App Key Generated.<br>";
+        }
+
+        // 2. Clear Caches
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+        $output .= "Caches Cleared.<br>";
+
+        // 3. Run migrations
+        Artisan::call('migrate', ['--force' => true]);
+        $output .= "Migrations Run.<br>";
+
+        // 4. Run seeds
+        Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
+        $output .= "Database Seeded.<br>";
+        
+        return "Deployment commands finished successfully!<br><br>" . $output . "<br><pre>" . Artisan::output() . "</pre>";
     } catch (\Exception $e) {
-        return "Error during deployment: " . $e->getMessage();
+        return "Error during deployment: " . $e->getMessage() . "<br><br>Trace: " . $e->getTraceAsString();
     }
 });
 
