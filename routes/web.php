@@ -121,10 +121,12 @@ Route::get('/run-deploy', function () {
         Artisan::call('migrate', ['--force' => true]);
         $output .= "Migrations Run Successfully.<br>";
 
-        // 3. Now clear Caches safely
+        // 3. Now clear ALL Caches safely
         Artisan::call('config:clear');
         Artisan::call('cache:clear');
-        $output .= "Caches Cleared.<br>";
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        $output .= "All Caches (Config, Cache, View, Route) Cleared.<br>";
 
         // 4. Run seeds
         Artisan::call('db:seed', ['--class' => 'AcademySeeder', '--force' => true]);
