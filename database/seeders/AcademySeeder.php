@@ -58,7 +58,7 @@ class AcademySeeder extends Seeder
         ]);
 
         // Posts
-        \App\Models\Post::updateOrCreate(['slug' => 'academy-resumes'], [
+        \App\Models\Post::firstOrCreate(['slug' => 'academy-resumes'], [
             'title' => 'Academy Resumes Next Week',
             'content' => 'We are excited to announce that training will resume on Monday.',
             'user_id' => 1,
@@ -66,7 +66,7 @@ class AcademySeeder extends Seeder
         ]);
 
         // Site Settings
-        \App\Models\SiteSetting::updateOrCreate(['id' => 1], [
+        \App\Models\SiteSetting::firstOrCreate(['id' => 1], [
             'academy_name' => 'THINK RIGHT FOOTBALL ACADEMY',
             'primary_color' => '#00FF41',
             'secondary_color' => '#000000',
@@ -86,7 +86,7 @@ class AcademySeeder extends Seeder
         ];
 
         foreach ($programs as $prog) {
-            \App\Models\AcademyProgram::updateOrCreate(['name' => $prog['name']], $prog);
+            \App\Models\AcademyProgram::firstOrCreate(['name' => $prog['name']], $prog);
         }
 
         // Default Facilities
@@ -97,11 +97,11 @@ class AcademySeeder extends Seeder
         ];
 
         foreach ($facilities as $fac) {
-            \App\Models\Facility::updateOrCreate(['name' => $fac['name']], $fac);
+            \App\Models\Facility::firstOrCreate(['name' => $fac['name']], $fac);
         }
 
         // Matches
-        \App\Models\MatchFixture::updateOrCreate(['opponent' => 'Lagos City FC', 'team_category' => 'U15'], [
+        \App\Models\MatchFixture::firstOrCreate(['opponent' => 'Lagos City FC', 'team_category' => 'U15'], [
             'match_date' => now()->addDays(5),
             'venue' => 'Main Stadium',
             'status' => 'scheduled',
