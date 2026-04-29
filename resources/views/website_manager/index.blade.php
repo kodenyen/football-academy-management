@@ -1,11 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-200 leading-tight italic uppercase">
-            {{ __('Website Management') }}
-        </h2>
+        {{ __('Website Management') }}
     </x-slot>
 
-    <div class="py-12 text-gray-100" x-data="{ 
+    <div class="min-h-screen bg-zinc-950 -mt-10 -mx-4 sm:-mx-6 lg:-mx-8 py-12 text-gray-100" x-data="{ 
         activeTab: window.location.hash ? window.location.hash.substring(1) : 'general',
         editFacility: null,
         editSlider: null,
