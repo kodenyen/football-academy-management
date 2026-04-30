@@ -12,10 +12,9 @@ class ShowcaseController extends Controller
 {
     public function index()
     {
-        $settings = SiteSetting::first();
-        $videos = ShowcaseVideo::with('player.user')
-            ->where('is_active', true)
-            ->orderBy('order')
+        $settings = SiteSetting::first() ?? new SiteSetting();
+        $videos = ShowcaseVideo::where('is_active', '!=', 0)
+            ->orderBy('order', 'asc')
             ->get();
             
         return view('showcase.index', compact('videos', 'settings'));
