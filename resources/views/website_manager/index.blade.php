@@ -132,6 +132,15 @@
                                     </div>
                                 </div>
                                 <div class="space-y-2">
+                                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Showcase Hero Image</label>
+                                    <div class="flex items-center gap-6 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                        @if($settings->showcase_hero)
+                                            <img src="{{ asset('storage/' . $settings->showcase_hero) }}" class="h-12 w-auto object-contain">
+                                        @endif
+                                        <input type="file" name="showcase_hero" class="text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300">
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
                                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</label>
                                     <x-text-input name="email" value="{{ $settings->email }}" class="w-full border-slate-200 rounded-2xl py-4" />
                                 </div>

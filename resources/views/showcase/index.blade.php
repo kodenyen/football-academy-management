@@ -76,15 +76,45 @@
     </nav>
 
     <!-- Header Section -->
-    <section class="bg-white border-b border-slate-200 py-20 overflow-hidden relative">
+    <section class="bg-white border-b border-slate-200 py-20 overflow-hidden relative min-h-[500px] flex items-center">
         <div class="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-3xl">
-                <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6">Talent Hub</span>
-                <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase text-slate-900 leading-none mb-6">
-                    Elite <span class="text-primary">Showcase</span>
-                </h1>
-                <p class="text-slate-500 text-lg font-medium italic max-w-xl">Discover the future of professional football. Our top-tier talent highlight reels and performance reports.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="max-w-2xl lg:w-1/2">
+                    <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6">Talent Hub</span>
+                    <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase text-slate-900 leading-none mb-6">
+                        Elite <span class="text-primary">Showcase</span>
+                    </h1>
+                    <p class="text-slate-500 text-lg font-medium italic max-w-xl">Discover the future of professional football. Our top-tier talent highlight reels and performance reports.</p>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="relative w-full aspect-square max-w-md mx-auto">
+                        <!-- Decorative Elements -->
+                        <div class="absolute -inset-4 bg-primary/10 rounded-[3rem] rotate-6"></div>
+                        <div class="absolute -inset-4 border-2 border-slate-100 rounded-[3rem] -rotate-3"></div>
+                        
+                        <!-- Main Hero Image -->
+                        <div class="relative h-full w-full bg-slate-200 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
+                            <img src="{{ $settings->showcase_hero ? asset('storage/' . $settings->showcase_hero) : 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=800' }}" 
+                                 class="w-full h-full object-cover"
+                                 alt="Showcase Hero">
+                            
+                            <!-- Floating Badge -->
+                            <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 animate-bounce">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-slate-900">
+                                        <i class="fa-solid fa-trophy"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-black uppercase text-slate-400 leading-none">Elite Status</p>
+                                        <p class="text-xs font-black text-slate-900 uppercase">Verified Talent</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

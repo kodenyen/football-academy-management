@@ -173,6 +173,13 @@ class SettingsController extends Controller
             $data['academy_logo'] = $request->file('logo')->store('site', 'public');
         }
 
+        if ($request->hasFile('showcase_hero')) {
+            if ($settings->showcase_hero) {
+                Storage::disk('public')->delete($settings->showcase_hero);
+            }
+            $data['showcase_hero'] = $request->file('showcase_hero')->store('site', 'public');
+        }
+
         $settings->update($data);
         return back()->with('success', 'Site settings updated successfully!');
     }
