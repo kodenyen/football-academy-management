@@ -128,9 +128,9 @@
                 <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-500">
                     <!-- Video Thumbnail -->
                     <div class="aspect-video relative overflow-hidden cursor-pointer bg-slate-900" @click="activeVideo = @js($video)">
-                        <img src="https://img.youtube.com/vi/{{ $video->video_id }}/maxresdefault.jpg" 
-                             onerror="this.src='https://img.youtube.com/vi/{{ $video->video_id }}/mqdefault.jpg'"
-                             class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                        <img src="https://img.youtube.com/vi/{{ $video->video_id }}/hqdefault.jpg" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100"
+                             alt="{{ $video->title }}">
                         
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transform group-hover:scale-110 group-hover:bg-primary transition duration-500">
