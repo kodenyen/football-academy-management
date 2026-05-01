@@ -312,18 +312,22 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 @foreach($posts as $post)
                 <div class="group text-left">
-                    <div class="aspect-[4/3] bg-slate-950 rounded-[2.5rem] overflow-hidden mb-8 relative">
-                        @if($post->featured_image)
-                            <img src="{{ asset('storage/' . $post->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 opacity-80">
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
-                        <div class="absolute top-6 left-6">
-                            <span class="px-4 py-1.5 bg-primary text-slate-950 text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">{{ $post->category }}</span>
+                    <a href="{{ route('news.show', $post->slug) }}" class="block">
+                        <div class="aspect-[4/3] bg-slate-950 rounded-[2.5rem] overflow-hidden mb-8 relative">
+                            @if($post->featured_image)
+                                <img src="{{ asset('storage/' . $post->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 opacity-80">
+                            @endif
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                            <div class="absolute top-6 left-6">
+                                <span class="px-4 py-1.5 bg-primary text-slate-950 text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">{{ $post->category }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <h3 class="text-2xl font-black mb-4 group-hover:text-primary transition duration-300 italic uppercase text-slate-900 tracking-tighter leading-none">{{ $post->title }}</h3>
+                    </a>
+                    <a href="{{ route('news.show', $post->slug) }}" class="block group-hover:text-primary transition-colors duration-300">
+                        <h3 class="text-2xl font-black mb-4 italic uppercase text-slate-900 tracking-tighter leading-none">{{ $post->title }}</h3>
+                    </a>
                     <p class="text-slate-500 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">{{ Str::limit($post->content, 120) }}</p>
-                    <a href="#" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 group-hover:text-primary transition-colors flex items-center">
+                    <a href="{{ route('news.show', $post->slug) }}" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 group-hover:text-primary transition-colors flex items-center">
                         Read Analysis <i class="fa-solid fa-arrow-right-long ml-3"></i>
                     </a>
                 </div>

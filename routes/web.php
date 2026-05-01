@@ -11,6 +11,7 @@ Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->n
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/gallery', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
 Route::get('/showcase', [\App\Http\Controllers\ShowcaseController::class, 'index'])->name('showcase');
+Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 Route::get('/register-trial', [RegistrationController::class, 'create'])->name('register.trial');
 Route::get('/register-player', [RegistrationController::class, 'direct'])->name('register.player');
 Route::post('/register-trial', [RegistrationController::class, 'store'])->name('register.store');
