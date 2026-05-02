@@ -210,50 +210,57 @@
                 <a href="{{ route('showcase') }}" class="text-xs font-black uppercase tracking-widest text-primary border-b-2 border-primary pb-1 hover:text-white hover:border-white transition">View All Matches</a>
             </div>
             
-            <div class="grid grid-cols-1 gap-6">
+            <div class="grid grid-cols-1 gap-4">
                 @foreach($upcomingMatches as $match)
-                <div class="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between hover:border-primary/50 transition duration-500 group">
-                    <div class="flex items-center space-x-8 md:space-x-16 mb-10 lg:mb-0">
-                        <div class="text-center group-hover:scale-110 transition duration-500">
-                            <div class="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-700 p-4">
+                <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/50 p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center justify-between hover:bg-slate-900/60 hover:border-primary/30 transition-all duration-500 group">
+                    <!-- Teams -->
+                    <div class="flex items-center justify-center md:justify-start space-x-6 md:space-x-12 w-full md:w-auto">
+                        <!-- Home Team -->
+                        <div class="flex flex-col items-center w-24">
+                            <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center mb-2 border border-slate-700/50 p-3 group-hover:scale-110 transition duration-500">
                                 @if($settings->academy_logo)
                                     <img src="{{ asset('storage/' . $settings->academy_logo) }}" class="w-full h-full object-contain">
                                 @else
-                                    <span class="text-3xl font-black italic text-primary">TR</span>
+                                    <span class="text-xl font-black italic text-primary">TR</span>
                                 @endif
                             </div>
-                            <span class="block text-xl font-black uppercase tracking-tighter">TRFA</span>
+                            <span class="text-[10px] font-black uppercase tracking-tighter text-slate-300">TRFA</span>
                         </div>
-                        <div class="text-center">
+
+                        <!-- Score/VS -->
+                        <div class="flex flex-col items-center min-w-[100px]">
                             @if($match->status === 'played')
-                                <div class="flex items-center space-x-4">
-                                    <span class="text-5xl font-black text-white italic">{{ $match->our_score ?? 0 }}</span>
-                                    <span class="text-2xl font-black text-primary italic">-</span>
-                                    <span class="text-5xl font-black text-white italic">{{ $match->opponent_score ?? 0 }}</span>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-3xl font-black text-white italic tracking-tighter">{{ $match->our_score ?? 0 }}</span>
+                                    <span class="text-xl font-black text-primary italic opacity-50">-</span>
+                                    <span class="text-3xl font-black text-white italic tracking-tighter">{{ $match->opponent_score ?? 0 }}</span>
                                 </div>
-                                <span class="block text-[10px] text-primary uppercase font-black tracking-widest mt-2">FINAL RESULT</span>
+                                <span class="text-[8px] text-primary font-black uppercase tracking-widest mt-1">FINAL</span>
                             @else
-                                <span class="text-4xl font-black text-primary italic">VS</span>
-                                <span class="block text-[10px] text-slate-500 uppercase font-black tracking-widest mt-2">KICK OFF</span>
+                                <span class="text-2xl font-black text-primary italic opacity-40">VS</span>
+                                <span class="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">UPCOMING</span>
                             @endif
                         </div>
-                        <div class="text-center group-hover:scale-110 transition duration-500">
-                            <div class="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-700">
-                                <span class="text-3xl font-black italic text-slate-400">{{ substr($match->opponent, 0, 1) }}</span>
+
+                        <!-- Away Team -->
+                        <div class="flex flex-col items-center w-24">
+                            <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center mb-2 border border-slate-700/50 group-hover:scale-110 transition duration-500">
+                                <span class="text-xl font-black italic text-slate-500">{{ substr($match->opponent, 0, 1) }}</span>
                             </div>
-                            <span class="block text-xl font-black uppercase tracking-tighter">{{ $match->opponent }}</span>
+                            <span class="text-[10px] font-black uppercase tracking-tighter text-slate-300 truncate w-full text-center">{{ $match->opponent }}</span>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10">
+
+                    <!-- Match Info -->
+                    <div class="flex items-center space-x-8 mt-8 md:mt-0 pt-6 md:pt-0 border-t md:border-t-0 border-slate-800/50 w-full md:w-auto justify-center md:justify-end">
                         <div class="text-center md:text-right">
-                            <span class="block font-black text-2xl uppercase tracking-tighter">{{ \Carbon\Carbon::parse($match->match_date)->format('d M') }}</span>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">{{ $match->venue }}</span>
+                            <span class="block font-black text-lg uppercase tracking-tighter text-white">{{ \Carbon\Carbon::parse($match->match_date)->format('d M, Y') }}</span>
+                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">{{ $match->venue }}</span>
                         </div>
-                        <div class="h-12 w-[1px] bg-slate-800 hidden md:block"></div>
+                        <div class="w-px h-8 bg-slate-800 hidden sm:block"></div>
                         <div class="text-center md:text-right">
-                             <span class="block font-black text-xl uppercase tracking-tighter">{{ \Carbon\Carbon::parse($match->match_date)->format('H:i') }}</span>
-                             <span class="text-[10px] text-primary font-black uppercase tracking-widest">GMT +1</span>
+                             <span class="block font-black text-lg uppercase tracking-tighter text-primary">{{ \Carbon\Carbon::parse($match->match_date)->format('H:i') }}</span>
+                             <span class="text-[8px] text-slate-600 font-black uppercase tracking-widest">LOCAL TIME</span>
                         </div>
                     </div>
                 </div>
