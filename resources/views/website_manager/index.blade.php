@@ -40,6 +40,12 @@
                             <i class="fa-solid fa-layer-group w-6 text-sm"></i> Content
                         </button>
 
+                        <button @click="activeTab = 'hero'; window.location.hash = 'hero'" 
+                                :class="activeTab === 'hero' ? 'bg-primary text-slate-900 shadow-md' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
+                                class="w-full flex items-center px-6 py-4 rounded-2xl transition-all duration-300 font-black uppercase text-[10px] tracking-widest text-left">
+                            <i class="fa-solid fa-images w-6 text-sm"></i> Hero Banners
+                        </button>
+
                         <button @click="activeTab = 'media'; window.location.hash = 'media'" 
                                 :class="activeTab === 'media' ? 'bg-primary text-slate-900 shadow-md' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
                                 class="w-full flex items-center px-6 py-4 rounded-2xl transition-all duration-300 font-black uppercase text-[10px] tracking-widest text-left">
@@ -299,9 +305,8 @@
                     </div>
                 </div>
 
-                <!-- Media & Gallery Tab -->
-                <div x-show="activeTab === 'media'" x-transition class="space-y-12">
-                    <!-- Sliders -->
+                <!-- Hero Banners Tab -->
+                <div x-show="activeTab === 'hero'" x-transition class="space-y-12">
                     <div class="bg-white border border-slate-200 p-10 rounded-[2.5rem] shadow-sm">
                         <h3 class="text-3xl font-black uppercase italic text-slate-900 mb-2 tracking-tighter leading-none">Hero Banners</h3>
                         <p class="text-slate-500 text-sm font-medium italic mb-10">Homepage background images.</p>
@@ -309,8 +314,18 @@
                         <form action="{{ route('website.settings.storeSlider') }}" method="POST" enctype="multipart/form-data" class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 mb-10 space-y-6">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <input type="file" name="image" required class="text-xs">
-                                <x-text-input name="heading" placeholder="Main Heading" class="w-full border-slate-200 rounded-xl" />
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Background Image</label>
+                                    <input type="file" name="image" required class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Main Heading</label>
+                                    <x-text-input name="heading" placeholder="e.g. Elite Training" class="w-full border-slate-200 rounded-xl" />
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sub Heading</label>
+                                <textarea name="sub_heading" placeholder="Short description for the slide..." class="w-full border-slate-200 rounded-xl focus:ring-primary h-24 italic text-xs"></textarea>
                             </div>
                             <div class="flex justify-end">
                                 <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Add Slide</button>
@@ -322,10 +337,49 @@
                             <div class="relative group aspect-video rounded-2xl overflow-hidden border border-slate-200">
                                 <img src="{{ asset('storage/' . $slider->image_path) }}" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 gap-4">
-                                    <button @click="editSlider = @js($slider)" class="text-white"><i class="fa-solid fa-pen"></i></button>
+                                    <button @click="editSlider = @js($slider)" class="text-white bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-pen text-sm"></i></button>
                                     <form action="{{ route('website.settings.deleteSlider', $slider) }}" method="POST">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="submit" class="text-white bg-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-trash text-sm"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div x-show="activeTab === 'media'" x-transition class="space-y-12">
+                    <div class="bg-white border border-slate-200 p-10 rounded-[2.5rem] shadow-sm">
+                        <h3 class="text-3xl font-black uppercase italic text-slate-900 mb-2 tracking-tighter leading-none">Media Gallery</h3>
+                        <p class="text-slate-500 text-sm font-medium italic mb-10">Manage photos in the academy vault.</p>
+
+                        <form action="{{ route('website.gallery.store') }}" method="POST" enctype="multipart/form-data" class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 mb-10 space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Upload Image</label>
+                                    <input type="file" name="file" required class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Caption (Optional)</label>
+                                    <x-text-input name="title" placeholder="Image Title" class="w-full border-slate-200 rounded-xl" />
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Upload to Gallery</button>
+                            </div>
+                        </form>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                            @foreach($gallery as $item)
+                            <div class="relative group aspect-square rounded-2xl overflow-hidden border border-slate-200">
+                                <img src="{{ asset('storage/' . $item->file_path) }}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <form action="{{ route('website.gallery.destroy', $item) }}" method="POST">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="text-white bg-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-trash text-sm"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -558,6 +612,106 @@
                     <div class="flex justify-end pt-4 gap-4">
                         <button type="button" @click="editFacility = null" class="text-slate-500 font-black uppercase text-[10px]">Cancel</button>
                         <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Slider Modal -->
+        <div x-show="editSlider" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <div class="bg-white rounded-[2.5rem] p-10 max-w-lg w-full shadow-2xl relative" @click.away="editSlider = null">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-2xl font-black uppercase italic text-slate-900">Edit Slide</h4>
+                    <button type="button" @click="editSlider = null"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                
+                <form :action="'{{ route('website.settings.updateSlider', ['slider' => 'ID_PLACE_HOLDER']) }}'.replace('ID_PLACE_HOLDER', editSlider ? editSlider.id : '')" method="POST" enctype="multipart/form-data" class="space-y-8">
+                    @csrf @method('PUT')
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Heading</label>
+                        <x-text-input name="heading" x-model="editSlider ? editSlider.heading : ''" class="w-full border-slate-200 rounded-2xl py-4" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sub Heading</label>
+                        <textarea name="sub_heading" x-model="editSlider ? editSlider.sub_heading : ''" class="w-full border-slate-200 rounded-2xl p-6 italic text-sm"></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Update Image (Optional)</label>
+                        <input type="file" name="image" class="block w-full text-xs text-slate-500">
+                    </div>
+                    <div class="flex justify-end pt-4 gap-4">
+                        <button type="button" @click="editSlider = null" class="text-slate-500 font-black uppercase text-[10px]">Cancel</button>
+                        <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Update Slide</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Showcase Modal -->
+        <div x-show="editShowcase" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <div class="bg-white rounded-[2.5rem] p-10 max-w-lg w-full shadow-2xl relative" @click.away="editShowcase = null">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-2xl font-black uppercase italic text-slate-900">Edit Showcase</h4>
+                    <button type="button" @click="editShowcase = null"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                
+                <form :action="'{{ route('website.settings.updateShowcase', ['showcase' => 'ID_PLACE_HOLDER']) }}'.replace('ID_PLACE_HOLDER', editShowcase ? editShowcase.id : '')" method="POST" class="space-y-8">
+                    @csrf @method('PUT')
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Title</label>
+                        <x-text-input name="title" x-model="editShowcase ? editShowcase.title : ''" required class="w-full border-slate-200 rounded-2xl py-4" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">YouTube URL</label>
+                        <x-text-input name="youtube_url" x-model="editShowcase ? editShowcase.youtube_url : ''" required class="w-full border-slate-200 rounded-2xl py-4" />
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="is_active" :checked="editShowcase ? editShowcase.is_active : true" class="rounded border-slate-300 text-primary focus:ring-primary">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Active / Visible</label>
+                    </div>
+                    <div class="flex justify-end pt-4 gap-4">
+                        <button type="button" @click="editShowcase = null" class="text-slate-500 font-black uppercase text-[10px]">Cancel</button>
+                        <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Update Highlight</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Campaign Modal -->
+        <div x-show="editCampaign" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <div class="bg-white rounded-[2.5rem] p-10 max-w-lg w-full shadow-2xl relative" @click.away="editCampaign = null">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-2xl font-black uppercase italic text-slate-900">Edit Campaign</h4>
+                    <button type="button" @click="editCampaign = null"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                
+                <form :action="'{{ route('website.settings.updateCampaign', ['campaign' => 'ID_PLACE_HOLDER']) }}'.replace('ID_PLACE_HOLDER', editCampaign ? editCampaign.id : '')" method="POST" enctype="multipart/form-data" class="space-y-8">
+                    @csrf @method('PUT')
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Campaign Title</label>
+                        <x-text-input name="title" x-model="editCampaign ? editCampaign.title : ''" required class="w-full border-slate-200 rounded-2xl py-4" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Target Amount (₦)</label>
+                        <x-text-input type="number" name="target_amount" x-model="editCampaign ? editCampaign.target_amount : ''" required class="w-full border-slate-200 rounded-2xl py-4" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Description</label>
+                        <textarea name="description" x-model="editCampaign ? editCampaign.description : ''" class="w-full border-slate-200 rounded-2xl p-6 italic text-sm"></textarea>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" name="show_progress" :checked="editCampaign ? editCampaign.show_progress : true" class="rounded border-slate-300 text-primary">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Show Progress</label>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" name="is_active" :checked="editCampaign ? editCampaign.is_active : true" class="rounded border-slate-300 text-primary">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Active</label>
+                        </div>
+                    </div>
+                    <div class="flex justify-end pt-4 gap-4">
+                        <button type="button" @click="editCampaign = null" class="text-slate-500 font-black uppercase text-[10px]">Cancel</button>
+                        <button type="submit" class="bg-primary text-slate-900 px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Update Campaign</button>
                     </div>
                 </form>
             </div>
