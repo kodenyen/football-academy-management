@@ -19,7 +19,7 @@ class HomeController extends Controller
         $sliders = HeroSlider::where('is_active', true)->orderBy('order')->get();
         $programs = AcademyProgram::orderBy('order')->get();
         $posts = Post::latest()->take(3)->get();
-        $upcomingMatches = MatchFixture::where('status', 'scheduled')->orderBy('match_date')->take(3)->get();
+        $upcomingMatches = MatchFixture::orderBy('match_date', 'desc')->take(3)->get();
         $campaigns = FundingCampaign::where('is_active', true)->latest()->get();
         
         return view('welcome', compact('settings', 'sliders', 'programs', 'posts', 'upcomingMatches', 'campaigns'));

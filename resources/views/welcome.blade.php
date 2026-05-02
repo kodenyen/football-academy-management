@@ -215,14 +215,27 @@
                 <div class="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between hover:border-primary/50 transition duration-500 group">
                     <div class="flex items-center space-x-8 md:space-x-16 mb-10 lg:mb-0">
                         <div class="text-center group-hover:scale-110 transition duration-500">
-                            <div class="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-700">
-                                <span class="text-3xl font-black italic text-primary">TR</span>
+                            <div class="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-700 p-4">
+                                @if($settings->academy_logo)
+                                    <img src="{{ asset('storage/' . $settings->academy_logo) }}" class="w-full h-full object-contain">
+                                @else
+                                    <span class="text-3xl font-black italic text-primary">TR</span>
+                                @endif
                             </div>
                             <span class="block text-xl font-black uppercase tracking-tighter">TRFA</span>
                         </div>
                         <div class="text-center">
-                            <span class="text-4xl font-black text-primary italic">VS</span>
-                            <span class="block text-[10px] text-slate-500 uppercase font-black tracking-widest mt-2">KICK OFF</span>
+                            @if($match->status === 'played')
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-5xl font-black text-white italic">{{ $match->our_score ?? 0 }}</span>
+                                    <span class="text-2xl font-black text-primary italic">-</span>
+                                    <span class="text-5xl font-black text-white italic">{{ $match->opponent_score ?? 0 }}</span>
+                                </div>
+                                <span class="block text-[10px] text-primary uppercase font-black tracking-widest mt-2">FINAL RESULT</span>
+                            @else
+                                <span class="text-4xl font-black text-primary italic">VS</span>
+                                <span class="block text-[10px] text-slate-500 uppercase font-black tracking-widest mt-2">KICK OFF</span>
+                            @endif
                         </div>
                         <div class="text-center group-hover:scale-110 transition duration-500">
                             <div class="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-700">
