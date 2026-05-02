@@ -268,7 +268,13 @@
                             @if($campaign->image)
                                 <img src="{{ asset('storage/' . $campaign->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 opacity-80 group-hover:opacity-100">
                             @else
-                                <div class="w-full h-full bg-slate-800 flex items-center justify-center text-slate-700 text-5xl italic font-black">TRFA</div>
+                                <div class="w-full h-full bg-slate-800 flex items-center justify-center p-12">
+                                    @if($settings->academy_logo)
+                                        <img src="{{ asset('storage/' . $settings->academy_logo) }}" class="w-full h-full object-contain opacity-20 group-hover:opacity-40 transition-opacity duration-700">
+                                    @else
+                                        <span class="text-slate-700 text-5xl italic font-black">TRFA</span>
+                                    @endif
+                                </div>
                             @endif
                             <div class="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent"></div>
                         </div>
